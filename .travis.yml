@@ -13,7 +13,7 @@ branches:
 install:
   - bundle install
 script:
-  - chmod 777 ./scripts/detupdb.sh
+  - chmod 777 ./scripts/setupdb.sh
   - ./scripts/setupdb.sh
   - rake test --trace
 deploy:
