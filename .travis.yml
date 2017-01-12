@@ -1,0 +1,22 @@
+language: ruby
+cache: bundler
+rvm:
+  - 2.3.0
+git:
+  submodules: false
+env:
+  global:
+    - RACK_ENV=test
+branches:
+  only:
+    - master
+install:
+  - bundle install
+script:
+  - ./scripts/setupdb.sh
+  - rake test --trace
+deploy:
+  provider: heroku
+  api_key: "9951e24c-b489-48fe-8a60-b325e8d850dd"
+  app: wulf-usa
+  run: "rake db:migrate --trace"
