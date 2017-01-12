@@ -5,4 +5,4 @@
 4. When you are done, submit a pull request and assign one of the project admins to perform a code review.
 5. When all status checks pass and your code review comes back with no changes requested, you may perform the pull.
 
-If you have any questions, please discuss them with the organization members at https://wulf-southeast.slack.com
+If you have any questions, please discuss them with the organization members at https://wulf-southeast.slack.com    
