@@ -157,22 +157,22 @@ end
 post '/sso/author/new' do
   # This page requires at least administrator privileges.
   redirect '/author/home' unless login_admin?
-  #begin
+  begin
     # Create new Account model object.
-  acc = Account.new()
+    acc = Account.new()
     # Fill in all needed values.
-  acc.username = params['username']
-  acc.password = params['password']
-  if params['type'] == 'admin'
-    acc.is_super = true
-  else
-    acc.is_super = false
-  end
+    acc.username = params['username']
+    acc.password = params['password']
+    if params['type'] == 'admin'
+      acc.is_super = true
+    else
+      acc.is_super = false
+    end
     # Save new model object to DB.
-  acc.save!
-  #rescue
+    acc.save!
+  rescue
     # User does not exist or some kind of save error occured.
-  #end
+  end
   # Redirect to users dashboard page.
   redirect '/author/users'
 end
