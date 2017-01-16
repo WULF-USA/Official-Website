@@ -10,21 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112020202) do
+ActiveRecord::Schema.define(version: 20170116010102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "accounts", force: :cascade do |t|
     t.string   "username"
-    t.string   "password"
     t.boolean  "is_super"
-    t.boolean  "perm_articles"
-    t.boolean  "perm_news"
-    t.boolean  "perm_videos"
-    t.boolean  "perm_links"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "password_hash"
   end
 
 end

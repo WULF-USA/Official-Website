@@ -26,19 +26,27 @@
                           =user.username
                       </td>
                       <td>
-                          <form action="/sso/author/pass" method="POST">
+                          <form action="/sso/author/pass/#{user.username}" method="POST">
                               <input type="password" name="newpassword">
                               <input type="submit" name="operation" value="Update">
                           </form>
                       </td>
                       <td>
-                          <form action="/sso/author/remove" method="POST">
+                          <form action="/sso/author/remove/#{user.username}" method="POST">
                               <input type="submit" name="operation" value="Delete">
                           </form>
                       </td>
                     </tr>
               </tbody>
             </table>
+            <h2>New user</h2>
+            <form action="/sso/author/new" method="POST">
+              <input type="text" name="username" placeholder="Username"><br>
+              <input type="password" name="password" placeholder="Password"><br>
+              <input type="radio" name="type" value="admin"> Admin<br>
+              <input type="radio" name="type" value="user" checked> User<br>
+              <input type="submit" name="operation" value="Create">
+            </form>
           </div>
         </div>
       </div>

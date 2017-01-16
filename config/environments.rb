@@ -27,7 +27,7 @@ configure :development do
 	ActiveRecord::Base.establish_connection(
 			:adapter  => 'postgresql',
 			:host     => 'localhost',
-			:username => 'ubuntu',
+			:username => 'postgres',
 			:password => 'test',
 			:database => 'wulfusa',
 			:pool => 5

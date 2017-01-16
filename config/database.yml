@@ -2,7 +2,7 @@ development:
   adapter: postgresql
   database: wulfusa
   host: localhost
-  username: ubuntu
+  username: postgres
   password: test
 test:
   adapter: postgresql

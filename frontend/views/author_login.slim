@@ -1,15 +1,10 @@
 <div class="container">
-    <form class="form-signin" action="/author/login" method="post">
+    <form class="form-signin" action="/sso/author/login" method="post">
         <h2 class="form-signin-heading">SSO Admin Sign-in</h2>
-        <label for="inputEmail" class="sr-only">Username</label>
-        <input type="email" id="inputUser" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputUser" class="sr-only">Username</label>
+        <input type="text" name="inputUser" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <!--<div class="checkbox">
-            <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>-->
+        <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
     </form>
 </div>
