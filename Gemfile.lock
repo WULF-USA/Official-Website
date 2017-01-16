@@ -13,6 +13,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (7.1.4)
+    bcrypt (3.1.11)
     concurrent-ruby (1.0.4)
     domain_name (0.5.20161129)
       unf (>= 0.0.5, < 1.0.0)
@@ -64,6 +65,7 @@ PLATFORMS
 DEPENDENCIES
   activemodel
   activerecord
+  bcrypt
   json
   pg
   puma

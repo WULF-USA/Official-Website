@@ -14,5 +14,6 @@ gem 'pg'
 gem 'rake'
 gem 'activemodel'
 gem 'json'
+gem 'bcrypt'
 gem 'rack-test'
 #gem 'codacy-coverage', group: :test, require: nil

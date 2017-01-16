@@ -29,6 +29,7 @@ configure :development do
 			:host     => 'localhost',
 			:username => 'postgres',
 			:password => 'test',
-			:database => 'wulfusa'
+			:database => 'wulfusa',
+			:pool => 5
 	)
 end
