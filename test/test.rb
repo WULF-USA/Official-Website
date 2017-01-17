@@ -5,6 +5,7 @@ require_relative '../frontend/main'
 
 class TestVersion < Test::Unit::TestCase
     include Rack::Test::Methods
+    self.test_order = :defined
   
     # Initialize testing objects.
     def app
@@ -57,7 +58,7 @@ class TestVersion < Test::Unit::TestCase
         content1 = 'Test content post.'
         title2 = 'Test title test 2'
         content2 = 'Test content post test 2.'
-        wrapper_blog_api(title1, content1, title2, content2)
+        wrapper_blog_api(title1, content1, title2, content2, 1)
     end
     
     # Test blog posting abilities with odd inputs.
@@ -66,7 +67,7 @@ class TestVersion < Test::Unit::TestCase
         content1 = "',.;[]*-+"
         title2 = '&copy;'
         content2 = 'Test content'
-        wrapper_blog_api(title1, content1, title2, content2)
+        wrapper_blog_api(title1, content1, title2, content2, 2)
     end
     
     # Test basic news posting abilities.
@@ -75,7 +76,7 @@ class TestVersion < Test::Unit::TestCase
         content1 = 'Test content post.'
         title2 = 'Test title test 2'
         content2 = 'Test content post test 2.'
-        wrapper_news_api(title1, content1, title2, content2)
+        wrapper_news_api(title1, content1, title2, content2, 3)
     end
     
     # Test news posting abilities with odd inputs.
@@ -84,6 +85,6 @@ class TestVersion < Test::Unit::TestCase
         content1 = "',.;[]*-+"
         title2 = '&copy;'
         content2 = 'Test content'
-        wrapper_news_api(title1, content1, title2, content2)
+        wrapper_news_api(title1, content1, title2, content2, 4)
     end
 end
