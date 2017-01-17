@@ -4,6 +4,9 @@ rvm:
   - 2.3.0
 git:
   submodules: false
+addons:
+  code_climate:
+    repo_token: xxxxxxxxxxxxxxxxxxxxxxxx
 env:
   global:
     - RACK_ENV=test
@@ -15,6 +18,8 @@ install:
 script:
   - ./scripts/setupdb.sh
   - rake test --trace
+after_success:
+  - bundle exec codeclimate-test-reporter
 deploy:
   provider: heroku
   api_key: "9951e24c-b489-48fe-8a60-b325e8d850dd"
