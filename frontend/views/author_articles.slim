@@ -1,0 +1,43 @@
+    == slim :_partial_navbar
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          == slim :_partial_author_sidbar
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Blog Posts</h1>
+
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Date Uploaded</th>
+                  <th>Date Modified</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                - @articles.each do |article|
+                    <tr>
+                      <td><a href="/blog/#{article.id}">#{article.title}</a></td>
+                      <td>#{article.author}</td>
+                      <td>#{article.created_at}</td>
+                      <td>#{article.updated_at}</td>
+                      <td>
+                        - if @auth_user == article.author || login_admin? || login_super?
+                          <a href="/author/articles/edit/#{article.id}">Edit</a><br>
+                          <a href="/author/articles/delete/#{article.id}">Delete</a>
+                      </td>
+                    </tr>
+              </tbody>
+            </table>
+            <a href="/author/articles/create">New Blog Post</a>
+          </div>
+        </div>
+      </div>
+    </div>

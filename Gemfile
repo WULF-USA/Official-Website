@@ -16,6 +16,7 @@ gem 'activemodel'
 gem 'json'
 gem 'bcrypt'
 gem 'rack-test'
+gem 'actionview'
 group :test do
     gem "simplecov"
     gem "codeclimate-test-reporter", "~> 1.0.0"

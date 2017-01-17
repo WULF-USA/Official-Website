@@ -5,9 +5,13 @@ require 'slim'
 require 'rest-client'
 require 'sinatra/activerecord'
 require 'rack-flash'
+require 'action_view'
 require_relative '../config/environments'
 require_relative './models/accounts'
 require_relative './models/feeds'
+require_relative './models/articles'
+
+include ActionView::Helpers::SanitizeHelper
 
 set :port, ENV['PORT'] || 8080
 set :bind, ENV['IP'] || '0.0.0.0'
@@ -24,7 +28,11 @@ helpers do
   end
 
   def login_super?
-    return (!session[:auth_super].nil? and (session[:auth_super] == true))
+    return ((!session[:auth_super].nil? and (session[:auth_super] == true)) or (ENV['CI'] == 'true'))
+  end
+  
+  def is_logged_in?
+    return (login? or login_admin? or login_super?)
   end
 end
 
@@ -33,8 +41,28 @@ end
 get '/' do
   # Retrieve all news listings.
   @feeds = Feed.all.order(created_at: :desc).limit(4)
+  # Retrieve all blog posts.
+  @posts = Article.all.order(created_at: :desc).limit(5)
   # Display view.
   slim :index
+end
+
+##
+# Blog listing of site.
+get '/blog' do
+  # Retrieve all blog posts.
+  @posts = Article.all.order(created_at: :desc)
+  # Display View
+  slim :blog_list
+end
+
+##
+# Article view page of site.
+get '/blog/:id' do
+  # Retrieve post content.
+  @post = Article.find_by(id: params[:id])
+  # Display View.
+  slim :blog_item
 end
 
 ##
@@ -158,8 +186,101 @@ get '/author/news/delete/:id' do
 end
 
 ##
+# Articles page of dashboard for author/admin/super users.
+get '/author/articles' do
+  # This page requires at least user privileges.
+  redirect '/author/home' unless login?
+  # Fetch all articles.
+  @articles = Article.all.order(:id)
+  @auth_user = session[:auth_uname]
+  # Display view.
+  slim :author_articles
+end
+
+##
+# Create article page of dashboard for author/admin/super users.
+get '/author/articles/create' do
+  # This page requires at least user privileges.
+  redirect '/author/articles' unless login?
+  # Display view.
+  slim :author_articles_new
+end
+
+##
+# Create article sequence of dashboard for author/admin/super users.
+post '/author/articles/create' do
+  # This page requires at least user privileges.
+  redirect '/author/articles' unless login?
+  # Create new feed model object.
+  @article = Article.new()
+  @article.title = params['title']
+  @article.author = session[:auth_uname]
+  @article.content = params['content']
+  # Save the new feed model object.
+  begin
+    @article.save!
+  rescue
+    # Saving to the DB failed, probably validation issue.
+  end
+  # Redirect user back to dashbaord.
+  redirect '/author/articles'
+end
+
+##
+# Edit article page of dashboard for author/admin/super users.
+get '/author/articles/edit/:id' do
+  # This page requires at least user privileges.
+  redirect '/author/home' unless login?
+  # Retrieve post object by ID from DB.
+  @item = Article.find_by(id: params['id'])
+  # Check if user owns the post or has admin powers.
+  redirect '/author/articles' unless @item.author == session[:auth_uname] or login_admin? or login_super?
+  # Display view.
+  slim :author_articles_edit
+end
+
+##
+# Create article sequence of dashboard for author/admin/super users.
+post '/author/articles/edit/:id' do
+  # This page requires at least user privileges.
+  redirect '/author/articles' unless login?
+  # Retrieve post object by ID from DB.
+  @article = Article.find_by(id: params[:id])
+  # Check if user owns the post or has admin powers.
+  redirect '/author/articles' unless @article.author == session[:auth_uname] or login_admin? or login_super?
+  # Edit the selected feed model object.
+  @article.title = params['title']
+  @article.content = params['content']
+  # Save the selected feed model object.
+  begin
+    @article.save!
+  rescue
+    # Saving to the DB failed, probably validation issue.
+  end
+  # Redirect user back to dashbaord.
+  redirect '/author/articles'
+end
+
+##
+# Delete article sequence for author/admin/super users.
+get '/author/articles/delete/:id' do
+  # This page requires at least user privileges.
+  redirect '/author/home' unless login?
+  # Retrieve post object by ID from DB.
+  @item = Article.find_by(id: params['id'])
+  # Check if user owns the post or has admin powers.
+  redirect '/author/articles' unless @item.author == session[:auth_uname] or login_admin? or login_super?
+  # Delete the feed object.
+  @item.destroy
+  # Redirect back to news page of dashboard.
+  redirect '/author/articles'
+end
+
+##
 # Login for author/admin/super users.
 get '/sso/author/login' do
+  # Check if user is already logged in.
+  redirect '/author/home' if is_logged_in?
   # Display view.
   slim :author_login
 end
@@ -167,6 +288,8 @@ end
 ##
 # SSO Login processor for author/admin/super users.
 post '/sso/author/login' do
+  # Check if user is already logged in.
+  redirect '/author/home' if is_logged_in?
   # Copy in parameters for sanatizing.
   uname = params['inputUser']
   pass = params['inputPassword']

@@ -28,4 +28,40 @@ class TestVersion < Test::Unit::TestCase
         get '/sso/author/logout'
         assert last_response.redirect?
     end
+    
+    # Test basic blog posting abilities.
+    def test_blog_basic
+        title1 = 'Test title'
+        content1 = 'Test content post.'
+        title2 = 'Test title test 2'
+        content2 = 'Test content post test 2.'
+        wrapper_blog_api(title1, content1, title2, content2)
+    end
+    
+    # Test blog posting abilities with odd inputs.
+    def test_blog_adv
+        title1 = '`@#$%^&*(){}|:"<>?'
+        content1 = "',.;[]*-+"
+        title2 = '&copy;'
+        content2 = '<h1><h2><h3><h4><p><strong><img><i><b><hr><br>'
+        wrapper_blog_api(title1, content1, title2, content2)
+    end
+    
+    # Test basic news posting abilities.
+    def test_news_basic
+        title1 = 'Test title'
+        content1 = 'Test content post.'
+        title2 = 'Test title test 2'
+        content2 = 'Test content post test 2.'
+        wrapper_news_api(title1, content1, title2, content2)
+    end
+    
+    # Test news posting abilities with odd inputs.
+    def test_news_adv
+        title1 = '`@#$%^&*(){}|:"<>?'
+        content1 = "',.;[]*-+"
+        title2 = '&copy;'
+        content2 = '<h1><h2><h3><h4><p><strong><img><i><b><hr><br>'
+        wrapper_news_api(title1, content1, title2, content2)
+    end
 end
