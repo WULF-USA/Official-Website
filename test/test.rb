@@ -18,13 +18,13 @@ class TestVersion < Test::Unit::TestCase
     end
     
     # Test login page.
-    def test_homepage
+    def test_login_static
         get '/sso/author/login'
         assert last_response.ok?
     end
     
     # Test logout sequence.
-    def test_homepage
+    def test_logout_static
         get '/sso/author/logout'
         assert last_response.redirect?
     end
