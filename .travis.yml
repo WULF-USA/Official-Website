@@ -6,7 +6,7 @@ git:
   submodules: false
 addons:
   code_climate:
-    repo_token: xxxxxxxxxxxxxxxxxxxxxxxx
+    repo_token: 3a37b06b904d7cd224d38b486334dd1c77c6eedf5efc96173531a470e9b8c8ea
 env:
   global:
     - RACK_ENV=test
