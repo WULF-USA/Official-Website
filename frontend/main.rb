@@ -139,11 +139,7 @@ post '/author/news/create' do
   @feed.author = login_username
   @feed.content = params['content']
   # Save the new feed model object.
-  begin
-    @feed.save!
-  rescue
-    # Saving to the DB failed, probably validation issue.
-  end
+  @feed.save!
   # Redirect user back to dashbaord.
   redirect '/author/news'
 end
@@ -174,11 +170,7 @@ post '/author/news/edit/:id' do
   @feed.title = params['title']
   @feed.content = params['content']
   # Save the selected feed model object.
-  begin
-    @feed.save!
-  rescue
-    # Saving to the DB failed, probably validation issue.
-  end
+  @feed.save!
   # Redirect user back to dashbaord.
   redirect '/author/news'
 end
@@ -229,11 +221,7 @@ post '/author/articles/create' do
   @article.author = login_username
   @article.content = params['content']
   # Save the new feed model object.
-  begin
-    @article.save!
-  rescue
-    # Saving to the DB failed, probably validation issue.
-  end
+  @article.save!
   # Redirect user back to dashbaord.
   redirect '/author/articles'
 end
@@ -264,11 +252,7 @@ post '/author/articles/edit/:id' do
   @article.title = params['title']
   @article.content = params['content']
   # Save the selected feed model object.
-  begin
     @article.save!
-  rescue
-    # Saving to the DB failed, probably validation issue.
-  end
   # Redirect user back to dashbaord.
   redirect '/author/articles'
 end
