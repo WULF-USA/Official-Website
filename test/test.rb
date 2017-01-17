@@ -29,6 +29,28 @@ class TestVersion < Test::Unit::TestCase
         assert last_response.redirect?
     end
     
+    # Test entire SSO module for super user.
+    def test_auth_cycle
+        # Get login page.
+        get '/sso/author/login'
+        assert last_response.ok?
+        # Submit login information.
+        post '/sso/author/login', {:inputUser => 'testuser', :inputPassword => 'testpassword'}
+        # Make sure we are redirected and follow it.
+        assert last_response.redirect?
+        follow_redirect!
+        assert_equal last_request.url, "http://example.org/author/home"
+        # Make sure we stay on the author dashboard.
+        assert last_response.ok?
+        # Now log out.
+        get '/sso/author/logout'
+        # Ensure we are redirected.
+        assert last_response.redirect?
+        follow_redirect!
+        assert_equal last_request.url, "http://example.org/"
+        assert last_response.ok?
+    end
+    
     # Test basic blog posting abilities.
     def test_blog_basic
         title1 = 'Test title'
