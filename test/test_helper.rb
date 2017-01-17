@@ -12,10 +12,12 @@ def wrapper_blog_api(title1, content1, title2, content2)
     get '/blog'
     assert last_response.ok?
     assert last_response.body.include?(title1)
+    assert last_response.body.include?('super')
     # Test post page.
     get '/blog/1'
     assert last_response.ok?
     assert last_response.body.include?(title1)
+    assert last_response.body.include?('super')
     assert last_response.body.include?(content1)
     # Edit post.
     post '/author/articles/edit', {:title => title2, :content => content2}
@@ -24,10 +26,12 @@ def wrapper_blog_api(title1, content1, title2, content2)
     get '/blog'
     assert last_response.ok?
     assert last_response.body.include?(title2)
+    assert last_response.body.include?('super')
     # Test post page.
     get '/blog/1'
     assert last_response.ok?
     assert last_response.body.include?(title2)
+    assert last_response.body.include?('super')
     assert last_response.body.include?(content2)
     # Delete post.
     get '/author/articles/delete/1'
@@ -36,6 +40,7 @@ def wrapper_blog_api(title1, content1, title2, content2)
     get '/blog'
     assert last_response.ok?
     assert !last_response.body.include?(title2)
+    assert !last_response.body.include?('super')
     assert !last_response.body.include?(content2)
 end
 
@@ -50,10 +55,12 @@ def wrapper_news_api(title1, content1, title2, content2)
     get '/'
     assert last_response.ok?
     assert last_response.body.include?(title1)
+    assert last_response.body.include?('super')
     # Test post page.
     get '/news/1'
     assert last_response.ok?
     assert last_response.body.include?(title1)
+    assert last_response.body.include?('super')
     assert last_response.body.include?(content1)
     # Edit post.
     post '/author/news/edit', {:title => title2, :content => content2}
@@ -62,10 +69,12 @@ def wrapper_news_api(title1, content1, title2, content2)
     get '/'
     assert last_response.ok?
     assert last_response.body.include?(title2)
+    assert last_response.body.include?('super')
     # Test post page.
     get '/news/1'
     assert last_response.ok?
     assert last_response.body.include?(title2)
+    assert last_response.body.include?('super')
     assert last_response.body.include?(content2)
     # Delete post.
     get '/author/news/delete/1'
@@ -74,5 +83,6 @@ def wrapper_news_api(title1, content1, title2, content2)
     get '/'
     assert last_response.ok?
     assert !last_response.body.include?(title2)
+    assert !last_response.body.include?('super')
     assert !last_response.body.include?(content2)
 end

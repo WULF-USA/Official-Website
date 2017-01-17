@@ -43,7 +43,7 @@ class TestVersion < Test::Unit::TestCase
         title1 = '`@#$%^&*(){}|:"<>?'
         content1 = "',.;[]*-+"
         title2 = '&copy;'
-        content2 = '<h1><h2><h3><h4><p><strong><img><i><b><hr><br>'
+        content2 = 'Test content'
         wrapper_blog_api(title1, content1, title2, content2)
     end
     
@@ -61,7 +61,7 @@ class TestVersion < Test::Unit::TestCase
         title1 = '`@#$%^&*(){}|:"<>?'
         content1 = "',.;[]*-+"
         title2 = '&copy;'
-        content2 = '<h1><h2><h3><h4><p><strong><img><i><b><hr><br>'
+        content2 = 'Test content'
         wrapper_news_api(title1, content1, title2, content2)
     end
 end

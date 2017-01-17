@@ -34,6 +34,12 @@ helpers do
   def is_logged_in?
     return (login? or login_admin? or login_super?)
   end
+  
+  def login_username
+    return Nil unless is_logged_in?
+    return session[:auth_uname] unless login_super?
+    return 'super'
+  end
 end
 
 ##
@@ -101,7 +107,6 @@ get '/author/news' do
   redirect '/author/home' unless login?
   # Fetch all user accounts.
   @feeds = Feed.all.order(:id)
-  @auth_user = session[:auth_uname]
   # Display view.
   slim :author_news
 end
@@ -123,7 +128,7 @@ post '/author/news/create' do
   # Create new feed model object.
   @feed = Feed.new()
   @feed.title = params['title']
-  @feed.author = session[:auth_uname]
+  @feed.author = login_username
   @feed.content = params['content']
   # Save the new feed model object.
   begin
@@ -143,7 +148,7 @@ get '/author/news/edit/:id' do
   # Retrieve post object by ID from DB.
   @item = Feed.find_by(id: params['id'])
   # Check if user owns the post or has admin powers.
-  redirect '/author/news' unless @item.author == session[:auth_uname] or login_admin? or login_super?
+  redirect '/author/news' unless @item.author == login_username or login_admin? or login_super?
   # Display view.
   slim :author_news_edit
 end
@@ -156,7 +161,7 @@ post '/author/news/edit/:id' do
   # Retrieve post object by ID from DB.
   @feed = Feed.find_by(id: params[:id])
   # Check if user owns the post or has admin powers.
-  redirect '/author/news' unless @feed.author == session[:auth_uname] or login_admin? or login_super?
+  redirect '/author/news' unless @feed.author == login_username or login_admin? or login_super?
   # Edit the selected feed model object.
   @feed.title = params['title']
   @feed.content = params['content']
@@ -178,7 +183,7 @@ get '/author/news/delete/:id' do
   # Retrieve post object by ID from DB.
   @item = Feed.find_by(id: params['id'])
   # Check if user owns the post or has admin powers.
-  redirect '/author/news' unless @item.author == session[:auth_uname] or login_admin? or login_super?
+  redirect '/author/news' unless @item.author == login_username or login_admin? or login_super?
   # Delete the feed object.
   @item.destroy
   # Redirect back to news page of dashboard.
@@ -192,7 +197,6 @@ get '/author/articles' do
   redirect '/author/home' unless login?
   # Fetch all articles.
   @articles = Article.all.order(:id)
-  @auth_user = session[:auth_uname]
   # Display view.
   slim :author_articles
 end
@@ -214,7 +218,7 @@ post '/author/articles/create' do
   # Create new feed model object.
   @article = Article.new()
   @article.title = params['title']
-  @article.author = session[:auth_uname]
+  @article.author = login_username
   @article.content = params['content']
   # Save the new feed model object.
   begin
@@ -234,7 +238,7 @@ get '/author/articles/edit/:id' do
   # Retrieve post object by ID from DB.
   @item = Article.find_by(id: params['id'])
   # Check if user owns the post or has admin powers.
-  redirect '/author/articles' unless @item.author == session[:auth_uname] or login_admin? or login_super?
+  redirect '/author/articles' unless @item.author == login_username or login_admin? or login_super?
   # Display view.
   slim :author_articles_edit
 end
@@ -247,7 +251,7 @@ post '/author/articles/edit/:id' do
   # Retrieve post object by ID from DB.
   @article = Article.find_by(id: params[:id])
   # Check if user owns the post or has admin powers.
-  redirect '/author/articles' unless @article.author == session[:auth_uname] or login_admin? or login_super?
+  redirect '/author/articles' unless @article.author == login_username or login_admin? or login_super?
   # Edit the selected feed model object.
   @article.title = params['title']
   @article.content = params['content']
@@ -269,7 +273,7 @@ get '/author/articles/delete/:id' do
   # Retrieve post object by ID from DB.
   @item = Article.find_by(id: params['id'])
   # Check if user owns the post or has admin powers.
-  redirect '/author/articles' unless @item.author == session[:auth_uname] or login_admin? or login_super?
+  redirect '/author/articles' unless @item.author == login_username or login_admin? or login_super?
   # Delete the feed object.
   @item.destroy
   # Redirect back to news page of dashboard.

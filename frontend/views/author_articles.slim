@@ -29,7 +29,7 @@
                       <td>#{article.created_at}</td>
                       <td>#{article.updated_at}</td>
                       <td>
-                        - if @auth_user == article.author || login_admin? || login_super?
+                        - if login_username == article.author || login_admin? || login_super?
                           <a href="/author/articles/edit/#{article.id}">Edit</a><br>
                           <a href="/author/articles/delete/#{article.id}">Delete</a>
                       </td>
