@@ -1,0 +1,43 @@
+    == slim :_partial_navbar
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          == slim :_partial_author_sidbar
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">News</h1>
+
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Date Uploaded</th>
+                  <th>Date Modified</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                - @feeds.each do |feed|
+                    <tr>
+                      <td><a href="/news/#{feed.id}">#{feed.title}</a></td>
+                      <td>#{feed.author}</td>
+                      <td>#{feed.created_at}</td>
+                      <td>#{feed.updated_at}</td>
+                      <td>
+                        - if @auth_user == feed.author || login_admin? || login_super?
+                          <a href="/author/news/edit/#{feed.id}">Edit</a><br>
+                          <a href="/author/news/delete/#{feed.id}">Delete</a>
+                      </td>
+                    </tr>
+              </tbody>
+            </table>
+            <a href="/author/news/create">New Feed Item</a>
+          </div>
+        </div>
+      </div>
+    </div>

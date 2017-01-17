@@ -12,16 +12,12 @@
   <!-- Example row of columns -->
   <div class="row">
     <div class="col-md-4">
-      <h2>Blog</h2>
+      <h2>News</h2>
       <hr>
-      <h4>Title 1</h4>
-      <p>Content 1.</p>
-      <hr>
-      <h4>Title 2</h4>
-      <p>Content 2.</p>
-      <hr>
-      <h4>Title 3</h4>
-      <p>Content 3.</p>
+      - @feeds.each do |feed|
+        <h4><a href="/news/#{feed.id}">#{feed.title}</a></h4>
+        <h6>#{feed.author} | #{feed.updated_at}</h6>
+        <p>#{feed.content}</p>
       <hr>
       <p><a class="btn btn-default" href="#" role="button">Read more &raquo;</a></p>
     </div>
@@ -40,9 +36,18 @@
       <p><a class="btn btn-default" href="#" role="button">See more &raquo;</a></p>
     </div>
     <div class="col-md-4">
-      <h2>About WULF</h2>
-      <p>Add description here...</p>
-      <p><a class="btn btn-default" href="#" role="button">Continue reading &raquo;</a></p>
+      <h2>Blog</h2>
+      <hr>
+      <h4>Title 1</h4>
+      <p>Content 1.</p>
+      <hr>
+      <h4>Title 2</h4>
+      <p>Content 2.</p>
+      <hr>
+      <h4>Title 3</h4>
+      <p>Content 3.</p>
+      <hr>
+      <p><a class="btn btn-default" href="#" role="button">Read more &raquo;</a></p>
     </div>
   </div>
 
