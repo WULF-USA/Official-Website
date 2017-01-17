@@ -8,7 +8,7 @@
           == slim :_partial_author_sidbar
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">News</h1>
+          <h1 class="page-header">Blog Posts</h1>
 
           <div class="table-responsive">
             <table class="table table-striped">
@@ -22,21 +22,21 @@
                 </tr>
               </thead>
               <tbody>
-                - @feeds.each do |feed|
+                - @articles.each do |article|
                     <tr>
-                      <td><a href="/news/#{feed.id}">#{feed.title}</a></td>
-                      <td>#{feed.author}</td>
-                      <td>#{feed.created_at}</td>
-                      <td>#{feed.updated_at}</td>
+                      <td><a href="/blog/#{article.id}">#{article.title}</a></td>
+                      <td>#{article.author}</td>
+                      <td>#{article.created_at}</td>
+                      <td>#{article.updated_at}</td>
                       <td>
-                        - if login_username == feed.author || login_admin? || login_super?
-                          <a href="/author/news/edit/#{feed.id}">Edit</a><br>
-                          <a href="/author/news/delete/#{feed.id}">Delete</a>
+                        - if login_username == article.author || login_admin? || login_super?
+                          <a href="/author/articles/edit/#{article.id}">Edit</a><br>
+                          <a href="/author/articles/delete/#{article.id}">Delete</a>
                       </td>
                     </tr>
               </tbody>
             </table>
-            <a href="/author/news/create">New Feed Item</a>
+            <a href="/author/articles/create">New Blog Post</a>
           </div>
         </div>
       </div>

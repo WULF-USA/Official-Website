@@ -10,6 +10,8 @@ addons:
 env:
   global:
     - RACK_ENV=test
+    - APP_SUPER_UNAME=testuser
+    - APP_SUPER_PASSWD=testpassword
 branches:
   only:
     - master

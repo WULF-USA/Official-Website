@@ -51,3 +51,6 @@ build-iPhoneSimulator/
 
 # RubyMine
 /.idea/*
+
+# Coverage
+/coverage/*
