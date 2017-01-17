@@ -24,7 +24,7 @@
               <tbody>
                 - @feeds.each do |feed|
                     <tr>
-                      <td>#{feed.title}</td>
+                      <td><a href="/news/#{feed.id}">#{feed.title}</a></td>
                       <td>#{feed.author}</td>
                       <td>#{feed.created_at}</td>
                       <td>#{feed.updated_at}</td>
@@ -36,7 +36,7 @@
                     </tr>
               </tbody>
             </table>
-            <a href="/author/news/new">New Feed Item</a>
+            <a href="/author/news/create">New Feed Item</a>
           </div>
         </div>
       </div>

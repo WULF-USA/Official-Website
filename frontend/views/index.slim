@@ -14,11 +14,10 @@
     <div class="col-md-4">
       <h2>News</h2>
       <hr>
-      - for @feeds.each do |feed|
-        <h4>#{feed.title}</h4>
+      - @feeds.each do |feed|
+        <h4><a href="/news/#{feed.id}">#{feed.title}</a></h4>
         <h6>#{feed.author} | #{feed.updated_at}</h6>
         <p>#{feed.content}</p>
-      <hr>
       <hr>
       <p><a class="btn btn-default" href="#" role="button">Read more &raquo;</a></p>
     </div>

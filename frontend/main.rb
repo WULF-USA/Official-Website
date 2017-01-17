@@ -7,6 +7,7 @@ require 'sinatra/activerecord'
 require 'rack-flash'
 require_relative '../config/environments'
 require_relative './models/accounts'
+require_relative './models/feeds'
 
 set :port, ENV['PORT'] || 8080
 set :bind, ENV['IP'] || '0.0.0.0'
@@ -30,8 +31,19 @@ end
 ##
 # Index page of site.
 get '/' do
+  # Retrieve all news listings.
+  @feeds = Feed.all.order(created_at: :desc).limit(4)
   # Display view.
   slim :index
+end
+
+##
+# News item page of site.
+get '/news/:id' do
+  # Retrieve post object by ID from DB.
+  @item = Feed.find_by(id: params['id'])
+  # Display view.
+  slim :news_item
 end
 
 ##
@@ -67,12 +79,32 @@ get '/author/news' do
 end
 
 ##
-# Create new news item page of dashboard for author/admin/super users.
+# Create news item page of dashboard for author/admin/super users.
 get '/author/news/create' do
   # This page requires at least user privileges.
   redirect '/author/news' unless login?
   # Display view.
   slim :author_news_new
+end
+
+##
+# Create news item sequence of dashboard for author/admin/super users.
+post '/author/news/create' do
+  # This page requires at least user privileges.
+  redirect '/author/news' unless login?
+  # Create new feed model object.
+  @feed = Feed.new()
+  @feed.title = params['title']
+  @feed.author = session[:auth_uname]
+  @feed.content = params['content']
+  # Save the new feed model object.
+  begin
+    @feed.save!
+  rescue
+    # Saving to the DB failed, probably validation issue.
+  end
+  # Redirect user back to dashbaord.
+  redirect '/author/news'
 end
 
 ##
@@ -86,6 +118,28 @@ get '/author/news/edit/:id' do
   redirect '/author/news' unless @item.author == session[:auth_uname] or login_admin? or login_super?
   # Display view.
   slim :author_news_edit
+end
+
+##
+# Create news item sequence of dashboard for author/admin/super users.
+post '/author/news/edit/:id' do
+  # This page requires at least user privileges.
+  redirect '/author/news' unless login?
+  # Retrieve post object by ID from DB.
+  @feed = Feed.find_by(id: params[:id])
+  # Check if user owns the post or has admin powers.
+  redirect '/author/news' unless @feed.author == session[:auth_uname] or login_admin? or login_super?
+  # Edit the selected feed model object.
+  @feed.title = params['title']
+  @feed.content = params['content']
+  # Save the selected feed model object.
+  begin
+    @feed.save!
+  rescue
+    # Saving to the DB failed, probably validation issue.
+  end
+  # Redirect user back to dashbaord.
+  redirect '/author/news'
 end
 
 ##
