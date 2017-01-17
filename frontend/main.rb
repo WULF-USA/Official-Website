@@ -35,6 +35,75 @@ get '/' do
 end
 
 ##
+# Dashboard home page for author/admin/super users.
+get '/author/home' do
+  # This page requires at least user privileges.
+  redirect '/sso/author/login' unless login?
+  # Display view.
+  slim :author_home
+end
+
+##
+# Users page of dashboard for admin/super users.
+get '/author/users' do
+  # This page requires at least admin privileges.
+  redirect '/author/home' unless login_admin?
+  # Fetch all user accounts.
+  @users = Account.all.order(:id)
+  # Display view.
+  slim :author_users
+end
+
+##
+# News page of dashboard for author/admin/super users.
+get '/author/news' do
+  # This page requires at least user privileges.
+  redirect '/author/home' unless login?
+  # Fetch all user accounts.
+  @feeds = Feed.all.order(:id)
+  @auth_user = session[:auth_uname]
+  # Display view.
+  slim :author_news
+end
+
+##
+# Create new news item page of dashboard for author/admin/super users.
+get '/author/news/create' do
+  # This page requires at least user privileges.
+  redirect '/author/news' unless login?
+  # Display view.
+  slim :author_news_new
+end
+
+##
+# Edit news item page of dashboard for author/admin/super users.
+get '/author/news/edit/:id' do
+  # This page requires at least user privileges.
+  redirect '/author/home' unless login?
+  # Retrieve post object by ID from DB.
+  @item = Feed.find_by(id: params['id'])
+  # Check if user owns the post or has admin powers.
+  redirect '/author/news' unless @item.author == session[:auth_uname] or login_admin? or login_super?
+  # Display view.
+  slim :author_news_edit
+end
+
+##
+# Delete news item sequence for author/admin/super users.
+get '/author/news/delete/:id' do
+  # This page requires at least user privileges.
+  redirect '/author/home' unless login?
+  # Retrieve post object by ID from DB.
+  @item = Feed.find_by(id: params['id'])
+  # Check if user owns the post or has admin powers.
+  redirect '/author/news' unless @item.author == session[:auth_uname] or login_admin? or login_super?
+  # Delete the feed object.
+  @item.destroy
+  # Redirect back to news page of dashboard.
+  redirect '/author/news'
+end
+
+##
 # Login for author/admin/super users.
 get '/sso/author/login' do
   # Display view.
@@ -94,26 +163,6 @@ get '/sso/author/logout' do
   session[:auth_uname] = nil
   # Redirect to home page.
   redirect '/'
-end
-
-##
-# Dashboard home page for author/admin/super users.
-get '/author/home' do
-  # This page requires at least user privileges.
-  redirect '/sso/author/login' unless login?
-  # Display view.
-  slim :author_home
-end
-
-##
-# Users page of dashboard for admin/super users.
-get '/author/users' do
-  # This page requires at least admin privileges.
-  redirect '/author/home' unless login_admin?
-  # Fetch all user accounts.
-  @users = Account.all.order(:id)
-  # Display view.
-  slim :author_users
 end
 
 ##
