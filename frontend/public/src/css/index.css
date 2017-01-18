@@ -12,3 +12,19 @@
 .navbar {
     margin-bottom: 0px;
 }
+
+.content-box {
+    background-color: #ff0000;
+    border-radius: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 0 0 3px 3px #ff0000;
+}
+
+body {
+    background-color: #000000;
+}
+
+p {
+    color: #ffffff;
+}
