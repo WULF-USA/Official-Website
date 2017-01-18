@@ -1,0 +1,20 @@
+    == slim :_partial_navbar
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Resources</h1>
+          - @resources.each do |resource|
+              <h2>#{resource.title}</h2>
+              <h5>Submitted by #{resource.author} at #{resource.updated_at}</h5>
+              <p>#{resource.description}</p>
+              <p><a href="#{resource.url}">Visit resource >></a></p>
+              <hr>
+        </div>
+      </div>
+    </div>
