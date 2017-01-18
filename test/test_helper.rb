@@ -55,7 +55,7 @@ def wrapper_api(test_overview, test_detailed, url_create, url_edit, url_delete, 
     #assert last_response.body.include?(title1)
     #assert last_response.body.include?('super')
     # Test post page.
-    get (test_detailed)
+    get (test_detailed << id.to_s)
     assert last_response.ok?
     #assert last_response.body.include?(title1)
     #assert last_response.body.include?('super')
