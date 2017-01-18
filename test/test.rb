@@ -107,6 +107,6 @@ class TestVersion < Test::Unit::TestCase
         title2 = '&copy;'
         hyperlink2 = 'not.a.url'
         content2 = 'Test content post test 2.'
-        wrapper_resources_api(title1, hyperlink1, content1, title2, hyperlink2, content2, 1)
+        wrapper_resources_api(title1, hyperlink1, content1, title2, hyperlink2, content2, 2)
     end
 end

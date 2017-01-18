@@ -5,7 +5,7 @@ def wrapper_blog_api(title1, content1, title2, content2, id)
     payload1 = {:title => title1, :content => content1 }
     payload2 = {:title => title2, :content => content2 }
     wrapper_api('/blog',
-                '/blog/' << id,
+                '/blog/' + id,
                 '/author/articles/create',
                 '/author/articles/edit/',
                 '/author/articles/delete/',
@@ -18,7 +18,7 @@ def wrapper_news_api(title1, content1, title2, content2, id)
     payload1 = {:title => title1, :content => content1 }
     payload2 = {:title => title2, :content => content2 }
     wrapper_api('/',
-                '/news/' << id,
+                '/news/' + id,
                 '/author/news/create',
                 '/author/news/edit/',
                 '/author/news/delete/',
@@ -61,7 +61,7 @@ def wrapper_api(test_overview, test_detailed, url_create, url_edit, url_delete, 
     #assert last_response.body.include?('super')
     #assert last_response.body.include?(content1)
     # Edit post.
-    post (url_edit << id), payload2
+    post (url_edit + id), payload2
     assert last_response.redirect?
     # Test listing page.
     get test_overview
@@ -69,13 +69,13 @@ def wrapper_api(test_overview, test_detailed, url_create, url_edit, url_delete, 
     #assert last_response.body.include?(title2)
     #assert last_response.body.include?('super')
     # Test post page.
-    get (test_detailed << id)
+    get (test_detailed + id)
     assert last_response.ok?
     #assert last_response.body.include?(title2)
     #assert last_response.body.include?('super')
     #assert last_response.body.include?(content2)
     # Delete post.
-    get (url_delete << id)
+    get (url_delete + id)
     assert last_response.redirect?
     # Test listing page.
     get (test_overview)
