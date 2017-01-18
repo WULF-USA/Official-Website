@@ -10,6 +10,7 @@ require_relative '../config/environments'
 require_relative './models/accounts'
 require_relative './models/feeds'
 require_relative './models/articles'
+require_relative './models/resources'
 
 include ActionView::Helpers::SanitizeHelper
 
@@ -59,6 +60,15 @@ get '/' do
   @posts = Article.all.order(created_at: :desc).limit(5)
   # Display view.
   slim :index
+end
+
+##
+# Resources listing of site.
+get '/resources' do
+  # Retrieve resource list.
+  @resources = Resource.all.order(title: :asc)
+  # Display view.
+  slim :resource_list
 end
 
 ##
@@ -134,10 +144,7 @@ post '/author/news/create' do
   # This page requires at least user privileges.
   redirect '/author/news' unless login?
   # Create new feed model object.
-  @feed = Feed.new()
-  @feed.title = params['title']
-  @feed.author = login_username
-  @feed.content = params['content']
+  @feed = Feed.new(title: params['title'], author: login_username, content: params['content'])
   # Save the new feed model object.
   @feed.save!
   # Redirect user back to dashbaord.
@@ -216,10 +223,7 @@ post '/author/articles/create' do
   # This page requires at least user privileges.
   redirect '/author/articles' unless login?
   # Create new feed model object.
-  @article = Article.new()
-  @article.title = params['title']
-  @article.author = login_username
-  @article.content = params['content']
+  @article = Article.create(title: params['title'], author: login_username, content: params['content'])
   # Save the new feed model object.
   @article.save!
   # Redirect user back to dashbaord.
@@ -270,6 +274,64 @@ get '/author/articles/delete/:id' do
   @item.destroy
   # Redirect back to news page of dashboard.
   redirect '/author/articles'
+end
+
+##
+# Resources page of dashboard for author/admin/super users.
+get '/author/resources' do
+  # This page requires at least user privileges.
+  redirect '/author/home' unless login?
+  # Fetch all articles.
+  @resources = Resource.all.order(:id)
+  # Display view.
+  slim :author_resources
+end
+
+##
+# Create resource sequence of dashboard for author/admin/super users.
+post '/author/resources/create' do
+  # This page requires at least user privileges.
+  redirect '/author/resources' unless login?
+  # Create new resource object.
+  @resource = Resource.create(title: params['title'], author: login_username, url: params['hyperlink'], description: params['description'])
+  # Save the new resource object.
+  @resource.save!
+  # Redirect user back to dashbaord.
+  redirect '/author/resources'
+end
+
+##
+# Create resource sequence of dashboard for author/admin/super users.
+post '/author/resources/edit/:id' do
+  # This page requires at least user privileges.
+  redirect '/author/resources' unless login?
+  # Retrieve resource object by ID from DB.
+  @resource = Resource.find_by(id: params[:id])
+  # Check if user owns the resource or has admin powers.
+  redirect '/author/resources' unless @resource.author == login_username or login_admin? or login_super?
+  # Edit the selected resource object.
+  @resource.title = params['title']
+  @resource.url = params['hyperlink']
+  @resource.description = params['description']
+  # Save the selected resource object.
+  @resource.save!
+  # Redirect user back to dashbaord.
+  redirect '/author/resources'
+end
+
+##
+# Delete resource sequence for author/admin/super users.
+get '/author/resources/delete/:id' do
+  # This page requires at least user privileges.
+  redirect '/author/home' unless login?
+  # Retrieve post object by ID from DB.
+  @item = Resource.find_by(id: params['id'])
+  # Check if user owns the resource or has admin powers.
+  redirect '/author/resources' unless @item.author == login_username or login_admin? or login_super?
+  # Delete the resource object.
+  @item.destroy
+  # Redirect back to news page of dashboard.
+  redirect '/author/resources'
 end
 
 ##

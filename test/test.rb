@@ -87,4 +87,26 @@ class TestVersion < Test::Unit::TestCase
         content2 = 'Test content'
         wrapper_news_api(title1, content1, title2, content2, 2)
     end
+    
+    # Test basic resource posting abilities.
+    def test_resources_basic
+        title1 = 'Test title'
+        hyperlink1 = 'http://example.com'
+        content1 = 'Test content post.'
+        title2 = 'Test title test 2'
+        hyperlink2 = 'http://example.net'
+        content2 = 'Test content post test 2.'
+        wrapper_resources_api(title1, hyperlink1, content1, title2, hyperlink2, content2, 1)
+    end
+    
+    # Test resource posting abilities with odd inputs.
+    def test_resources_adv
+        title1 = '`@#$%^&*(){}|:"<>?'
+        hyperlink1 = 'ftp://example.com'
+        content1 = ',.;[]*-+'
+        title2 = '&copy;'
+        hyperlink2 = 'not.a.url'
+        content2 = 'Test content post test 2.'
+        wrapper_resources_api(title1, hyperlink1, content1, title2, hyperlink2, content2, 2)
+    end
 end

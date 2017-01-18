@@ -1,0 +1,69 @@
+    == slim :_partial_navbar
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          == slim :_partial_author_sidbar
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Resources</h1>
+
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Link</th>
+                  <th>Description</th>
+                  <th>Date Uploaded</th>
+                  <th>Date Modified</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                - @resources.each do |resource|
+                    - if login_username == resource.author || login_admin? || login_super?
+                        <tr>
+                          <form action="/author/resources/edit/#{resource.id}" method="POST">
+                              <td><input type="text" name="title" value="#{resource.title}" /></td>
+                              <td>#{resource.author}</td>
+                              <td><input type="text" name="hyperlink" value="#{resource.url}" /></td>
+                              <td><input type="text" name="description" value="#{resource.description}" /></td>
+                              <td>#{resource.created_at}</td>
+                              <td>#{resource.updated_at}</td>
+                              <td>
+                                  <input type="submit" name="operation" value="Edit" /><br>
+                                  <a href="/author/resources/delete/#{resource.id}">Delete</a>
+                              </td>
+                          </form>
+                        </tr>
+                    - else
+                        <tr>
+                          <td>#{resource.title}</td>
+                          <td>#{resource.author}</td>
+                          <td><a href="#{resource.url}">#{resource.link}</a></td>
+                          <td>#{resource.description}</td>
+                          <td>#{resource.created_at}</td>
+                          <td>#{resource.updated_at}</td>
+                          <td></td>
+                        </tr>
+                <tr>
+                    <form action="/author/resources/create" method="POST">
+                        <td><input type="text" name="title" placeholder="Title" /></td>
+                        <td>#{login_username}</td>
+                        <td><input type="text" name="hyperlink" placeholder="http://example.com" /></td>
+                        <td><input type="text" name="description" placeholder="Description" /></td>
+                        <td></td>
+                        <td></td>
+                        <td><input type="submit" name="operation" value="Create" /><br></td>
+                    </form>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
