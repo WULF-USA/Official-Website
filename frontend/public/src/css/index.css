@@ -22,7 +22,10 @@
 }
 
 body {
-    background-color: #000000;
+    background-image: url("/src/img/PanthersFistsCheer.jpg");
+    /*background-repeat: no-repeat;*/
+    background-position: left top;
+    background-attachment: fixed;
 }
 
 p {
