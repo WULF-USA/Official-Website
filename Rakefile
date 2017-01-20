@@ -1,7 +1,2 @@
-require_relative 'frontend/main'
+require_relative './wulf_app'
 require 'sinatra/activerecord/rake'
-
-task :test do
-    #system 'ruby ./backend/main.rb &'
-    ruby "test/test.rb"
-end

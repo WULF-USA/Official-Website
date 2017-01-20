@@ -54,3 +54,9 @@ build-iPhoneSimulator/
 
 # Coverage
 /coverage/*
+
+# Node.js garbage
+/node_modules/*
+
+# Compiled stuff
+*.css

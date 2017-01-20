@@ -1,1 +1,1 @@
-web: ruby ./frontend/main.rb
+web: rackup
