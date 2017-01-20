@@ -12,12 +12,12 @@ require_relative './models/feeds'
 require_relative './models/articles'
 require_relative './models/resources'
 
+  set :port, ENV['PORT'] || 8080
+  set :bind, ENV['IP'] || '0.0.0.0'
+
 class WulfApp < Sinatra::Base
 
   include ActionView::Helpers::SanitizeHelper
-  
-  set :port, ENV['PORT'] || 8080
-  set :bind, ENV['IP'] || '0.0.0.0'
   
   enable :sessions
   

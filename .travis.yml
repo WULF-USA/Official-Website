@@ -21,7 +21,7 @@ install:
 - sass --update public/src/css:public/src/css
 - ./scripts/setupdb.sh
 script:
-- rspec
+- rspec --format doc
 after_success:
 - bundle exec codeclimate-test-reporter
 deploy:
