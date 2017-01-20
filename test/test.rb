@@ -1,7 +1,7 @@
 require_relative "test_helper"
 require "test/unit"
 require 'rack/test'
-require_relative '../frontend/main'
+require_relative '../wulf_app.rb'
 
 class TestVersion < Test::Unit::TestCase
     include Rack::Test::Methods

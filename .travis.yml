@@ -1,29 +1,38 @@
 language: ruby
 cache: bundler
 rvm:
-  - 2.3.0
+- 2.3.0
 git:
   submodules: false
 addons:
   code_climate:
     repo_token: 3a37b06b904d7cd224d38b486334dd1c77c6eedf5efc96173531a470e9b8c8ea
+  apt:
+    sources:
+    - heroku
+    packages:
+    - heroku-toolbelt
 env:
   global:
-    - RACK_ENV=test
-    - APP_SUPER_UNAME=testuser
-    - APP_SUPER_PASSWD=testpassword
+  - RACK_ENV=test
+  - PORT=8080
+  - APP_SUPER_UNAME=testuser
+  - APP_SUPER_PASSWD=testpassword
 branches:
   only:
-    - master
+  - master
 install:
-  - bundle install
+- bundle install --jobs=3 --retry=3
+- ./scripts/gen_static.sh
+- ./scripts/setupdb.sh
 script:
-  - ./scripts/setupdb.sh
-  - rake test --trace
+- rspec
 after_success:
-  - bundle exec codeclimate-test-reporter
+- bundle exec codeclimate-test-reporter
 deploy:
   provider: heroku
-  api_key: "9951e24c-b489-48fe-8a60-b325e8d850dd"
+  api_key:
+    secure: BDj873QYM0PlyW9xIkeWddTNGs7oO/uKh6w12IjkHBDFybX9TDFPgyhvccodrD93n7dK9kX2PgYszJCOwKebByX5D3tQpGjMr9kpospZgX0d0wkEZZdZLs3ZJsZIhgTCofEGMSz8qUfxZoIKOSftB0ZayqeH0CCeqOrJQ5FODkyq9SjmO7M+Mt+9jFfYGbRp5878MszboTnEAdP1bpL84d51L/osSv8JnQmA6PzesMz5aJZiCogpYFDx0h2f8glr2JPxSVoUnFObXpUkSpxY9uAmSmWBjGyuJrAYIAx+yH2K6+iFjR/1T5UcQwjdsIJT+R7Rv34hUCWXt+NDp4yvgQYMnAAna/9HNBsv1WDxlbj15oZUFZqNTwRO/tUMwq/K1kzJBK7JylURoPpEtRqnJ3xVP1xhRhAv6wAsBC0aP8HUvVHJcUdrYSYebJcUHPApH03vgmp1emWWmcxxD+8tpfnlIABcrPpSf890w0BTgLhzrOXFK4bGWXgdorX8Ci2TZF5DkWxYEeDSSPWpN8RWlnbLzb22qL9pSfmjWFLYWAKgXNRn9fRL5Sm38Pvm1SDVzankPebNIlOB3ofWNuKJmNOZaFzBPHhmSjXxAD6v76SBqsAAyXX3Kd2LmUq4CAmxmrT3aN0Nj2wsyW8vUlAp7lEXy0ek0/IT8kMPX3z2rrs=
   app: wulf-usa
-  run: "rake db:migrate --trace"
+  skip_cleanup: true
+  run: rake db:migrate
