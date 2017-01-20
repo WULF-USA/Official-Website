@@ -1,1 +1,1 @@
-web: rackup
+web: rackup -o $IP -p $PORT
