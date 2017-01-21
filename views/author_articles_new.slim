@@ -8,10 +8,11 @@
           == slim :_partial_author_sidbar
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1>Editing "#{@item.title}"</h1>
-          <form action="/author/articles/edit/#{@item.id}" method="POST">
-            <p>Title: </p><input type="text" name="title" value="#{@item.title}"><br>
-            <input type="textarea" name="content" rows="10" cols="50" value="#{@item.content}">
+          <form action="/author/articles/create" method="POST">
+            <label for="title" class="sr-only">Title</label><br>
+            <input type="text" id="title" name="title"><br>
+            <label for="content" class="sr-only">Post</label><br>
+            <input type="textarea" id="content" name="content" rows="10" cols="50"/>
             <input type="submit" name="operation" value="Post">
           </form>
           <p>The following HTML tags are allowed: a h1 h2 h3 h4 b i p ul ol li strong strike span hr br img</p>

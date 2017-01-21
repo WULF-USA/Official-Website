@@ -17,6 +17,10 @@ gem 'json'
 gem 'bcrypt'
 gem 'rack-test'
 gem 'actionview'
+gem 'sass'
+gem 'rspec'
+gem 'capybara'
+gem 'poltergeist'
 group :test do
     gem "simplecov"
     gem "codeclimate-test-reporter", "~> 1.0.0"
