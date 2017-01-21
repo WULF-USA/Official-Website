@@ -28,10 +28,10 @@
                     - if login_username == resource.author || login_admin? || login_super?
                         <tr>
                           <form action="/author/resources/edit/#{resource.id}" method="POST">
-                              <td><input type="text" name="title" value="#{resource.title}" /></td>
+                              <td><input type="text" name="title" id="edit-title" value="#{resource.title}" /></td>
                               <td>#{resource.author}</td>
-                              <td><input type="text" name="hyperlink" value="#{resource.url}" /></td>
-                              <td><input type="text" name="description" value="#{resource.description}" /></td>
+                              <td><input type="text" name="hyperlink" id="edit-hyperlink" value="#{resource.url}" /></td>
+                              <td><input type="text" name="description" id="edit-description" value="#{resource.description}" /></td>
                               <td>#{resource.created_at}</td>
                               <td>#{resource.updated_at}</td>
                               <td>
@@ -52,10 +52,10 @@
                         </tr>
                 <tr>
                     <form action="/author/resources/create" method="POST">
-                        <td><input type="text" name="title" placeholder="Title" /></td>
+                        <td><input type="text" name="title" id="create-title" placeholder="Title" /></td>
                         <td>#{login_username}</td>
-                        <td><input type="text" name="hyperlink" placeholder="http://example.com" /></td>
-                        <td><input type="text" name="description" placeholder="Description" /></td>
+                        <td><input type="text" name="hyperlink" id="create-hyperlink" placeholder="http://example.com" /></td>
+                        <td><input type="text" name="description" id="create-description" placeholder="Description" /></td>
                         <td></td>
                         <td></td>
                         <td><input type="submit" name="operation" value="Create" /><br></td>
