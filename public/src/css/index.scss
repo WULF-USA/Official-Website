@@ -1,3 +1,7 @@
+$bgPrimary   : rgba(255,0,0,0.75);
+$bgColor        : rgba(255,255,255,1);
+$fgColor        : rgba(0,0,0,1);
+
 .jumbotron {
     margin-top: 0px;
     background-image: url(/src/img/WULFblackandred.png);
@@ -18,16 +22,16 @@
     border-radius: 25px;
     margin-left: 10px;
     margin-right: 10px;
-    box-shadow: 0 0 3px 3px rgba(255,0,0,0.75);
-    background-color: rgba(255,0,0,0.75);
+    box-shadow: 0 0 3px 3px $bgPrimary;
+    background-color: $bgPrimary;
 }
 
 body {
-    background-color: rgba(0,0,0,1);
+    background-color: $fgColor;
 }
 
 p {
-    color: #ffffff;
+    color: $bgColor;
 }
 
 .de-trans {
