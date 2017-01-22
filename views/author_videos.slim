@@ -1,0 +1,88 @@
+    == slim :_partial_navbar
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          == slim :_partial_author_sidbar
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Videos</h1>
+
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Type</th>
+                  <th>URI</th>
+                  <th>Description</th>
+                  <th>Date Uploaded</th>
+                  <th>Date Modified</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                - @videos.each do |video|
+                    - if login_username == video.author || login_admin? || login_super?
+                        <tr>
+                          <form action="/author/videos/edit/#{video.id}" method="POST">
+                              <td><input type="text" name="title" id="edit-title" value="#{video.title}" /></td>
+                              <td>#{video.author}</td>
+                              <td>
+                                  <select name="host">
+                                      - if video.host == 'youtube'
+                                        <option value="youtube" selected>YouTube</option>
+                                        <option value="vimeo">Vimeo</option>
+                                      - else
+                                        <option value="youtube">YouTube</option>
+                                        <option value="vimeo"selected>Vimeo</option>
+                                  </select>
+                              </td>
+                              <td><input type="text" name="uri" id="edit-uri" value="#{video.uri}" /></td>
+                              <td><input type="text" name="description" id="edit-description" value="#{video.description}" /></td>
+                              <td>#{video.created_at}</td>
+                              <td>#{video.updated_at}</td>
+                              <td>
+                                  <input type="submit" name="operation" value="Edit" /><br>
+                                  <a href="/author/videos/delete/#{video.id}">Delete</a>
+                              </td>
+                          </form>
+                        </tr>
+                    - else
+                        <tr>
+                          <td>#{video.title}</td>
+                          <td>#{video.author}</td>
+                          <td>#{video.host}</td>
+                          <td>#{video.link}</td>
+                          <td>#{video.description}</td>
+                          <td>#{video.created_at}</td>
+                          <td>#{video.updated_at}</td>
+                          <td></td>
+                        </tr>
+                <tr>
+                    <form action="/author/videos/create" method="POST">
+                        <td><input type="text" name="title" id="create-title" placeholder="Title" /></td>
+                        <td>#{login_username}</td>
+                        <td>
+                            <select id="create-host" name="host">
+                                <option value="youtube">YouTube</option>
+                                <option value="vimeo">Vimeo</option>
+                            </select>
+                        </td>
+                        <td><input type="text" name="uri" id="create-uri" placeholder="XXXXXX" /></td>
+                        <td><input type="text" name="description" id="create-description" placeholder="Description" /></td>
+                        <td></td>
+                        <td></td>
+                        <td><input type="submit" name="operation" value="Create" /><br></td>
+                    </form>
+                </tr>
+              </tbody>
+            </table>
+            <p>The URI of a video is the ID at the end of the video URL. For example, if you wanted to post https://www.youtube.com/watch?v=5kIe6UZHSXw the URI would be 5kIe6UZHSXw.</p>
+          </div>
+        </div>
+      </div>
+    </div>
