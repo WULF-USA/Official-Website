@@ -1,4 +1,6 @@
 <link href="/src/css/index.css" rel="stylesheet">
+<link href="https://cdn.plyr.io/2.0.11/plyr.css" rel="stylesheet">
+
 == slim :_partial_navbar
 <div class="jumbotron">
   <div class="container">
@@ -17,21 +19,18 @@
         <h6 class="de-trans">#{feed.author} | #{feed.updated_at}</h6>
         <p class="de-trans">#{feed.content}</p>
         <hr>
-      <p class="de-trans"><a class="btn btn-default" href="#" role="button">Read more &raquo;</a></p>
+      <!--<p class="de-trans"><a class="btn btn-default" href="#" role="button">Read more &raquo;</a></p>-->
     </div>
     <div class="col-md-3 content-box">
       <h2 class="de-trans">Videos</h2>
       <hr>
-      <h4 class="de-trans">Title 1</h4>
-      <p class="de-trans">Content 1.</p>
-      <hr>
-      <h4 class="de-trans">Title 2</h4>
-      <p class="de-trans">Content 2.</p>
-      <hr>
-      <h4 class="de-trans">Title 3</h4>
-      <p class="de-trans">Content 3.</p>
-      <hr>
-      <p class="de-trans"><a class="btn btn-default" href="#" role="button">See more &raquo;</a></p>
+      - @videos.each do |video|
+        <h4 class="de-trans">#{video.title}</h4>
+        <h6 class="de-trans">#{video.author} | #{video.updated_at}</h6>
+        <div data-type="#{video.host}" data-video-id="#{video.uri}"></div>
+        <p class="de-trans">#{video.description}</p>
+        <hr>
+      <p class="de-trans"><a class="btn btn-default" href="/videos" role="button">See more &raquo;</a></p>
     </div>
     <div class="col-md-3 content-box">
       <h2 class="de-trans">Blog</h2>
@@ -40,7 +39,7 @@
         <h4 class="de-trans"><a href="/blog/#{post.id}">#{post.title}</a></h4>
         <h6 class="de-trans">#{post.author} | #{post.updated_at}</h6>
         <hr>
-      <p class="de-trans"><a class="btn btn-default" href="#" role="button">Read more &raquo;</a></p>
+      <p class="de-trans"><a class="btn btn-default" href="/blog" role="button">Visit blog &raquo;</a></p>
     </div>
   </div>
   <hr>
@@ -48,3 +47,5 @@
     <p>&copy; 2016 WULF-Southeast</p>
   </footer>
 </div>
+<script src="https://cdn.plyr.io/2.0.11/plyr.js"></script>
+<script>plyr.setup();</script>

@@ -1,0 +1,24 @@
+    <link href="https://cdn.plyr.io/2.0.11/plyr.css" rel="stylesheet">
+    == slim :_partial_navbar
+    <br>
+    <br>
+    <br>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Blog</h1>
+          <hr>
+          - @videos.each do |video|
+              <h2>#{video.title}</h2>
+              <h5>#{video.author} | #{video.updated_at}</h5>
+              <div data-type="#{video.host}" data-video-id="#{video.uri}"></div>
+              <p>#{video.description}</p>
+              <hr>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.plyr.io/2.0.11/plyr.js"></script>
+    <script>plyr.setup();</script>
