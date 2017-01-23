@@ -12,6 +12,8 @@ module Routing
                 @posts = Article.all.order(created_at: :desc).limit(5)
                 # Retrieve all video link listings.
                 @videos = Video.all.order(created_at: :desc).limit(3)
+                # Request is about to go through, register the visit with the tracker.
+                tick_url(request.path_info)
                 # Display view.
                 slim :index
               end
