@@ -23,13 +23,16 @@ require_relative './routes/author_blog'
 require_relative './routes/author_home'
 require_relative './routes/author_news'
 require_relative './routes/author_resources'
+require_relative './routes/author_traffic'
 require_relative './routes/author_users'
 require_relative './routes/author_videos'
 require_relative './helpers/login'
+require_relative './lib/tracking.rb'
 
 class WulfApp < Sinatra::Base
 
   include ActionView::Helpers::SanitizeHelper
+  include Lib::Tracking
   
   enable :sessions
   
@@ -46,6 +49,7 @@ class WulfApp < Sinatra::Base
   register Routing::Author::Home
   register Routing::Author::News
   register Routing::Author::Resources
+  register Routing::Author::Traffic
   register Routing::Author::Users
   register Routing::Author::Videos
 end

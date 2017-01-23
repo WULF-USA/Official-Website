@@ -8,6 +8,8 @@ module Routing
               app.get '/resources' do
                 # Retrieve resource list.
                 @resources = Resource.all.order(title: :asc)
+                # Request is about to go through, register the visit with the tracker.
+                tick_url(request.path_info)
                 # Display view.
                 slim :resource_list
               end
