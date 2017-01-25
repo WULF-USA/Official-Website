@@ -12,6 +12,7 @@ require_relative './models/feeds'
 require_relative './models/articles'
 require_relative './models/resources'
 require_relative './models/videos'
+require_relative './routes/about'
 require_relative './routes/blog'
 require_relative './routes/errors'
 require_relative './routes/home'
@@ -38,6 +39,7 @@ class WulfApp < Sinatra::Base
   
   helpers Helpers::Login
   
+  register Routing::About
   register Routing::Blog
   register Routing::Errors
   register Routing::Home
