@@ -6,6 +6,8 @@ module Routing
               ##
               # About page of site.
               app.get '/about' do
+                # Request is about to go through, register the visit with the tracker.
+                tick_url(request.path_info)
                 # Display view.
                 slim :about
               end
