@@ -5,7 +5,7 @@ module Routing
         def self.registered(app)
               ##
               # About page of site.
-              app.get '/' do
+              app.get '/about' do
                 # Display view.
                 slim :about
               end
