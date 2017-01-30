@@ -26,5 +26,6 @@ group :test do
     gem "codeclimate-test-reporter", "~> 1.0.0"
 end
 group :test, :development do
-    gem 'brakeman', :require => false
+    gem 'brakeman', require: false
+    gem 'rubocop', require: false
 end

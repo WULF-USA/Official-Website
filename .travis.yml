@@ -23,6 +23,7 @@ install:
 script:
 - rspec --format doc
 - brakeman -z
+- rubocop -EDLR
 after_success:
 - bundle exec codeclimate-test-reporter
 deploy:
