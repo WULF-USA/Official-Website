@@ -22,6 +22,7 @@ install:
 - ./scripts/setupdb.sh
 script:
 - rspec --format doc
+- brakeman -z
 after_success:
 - bundle exec codeclimate-test-reporter
 deploy:
