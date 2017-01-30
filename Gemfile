@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.0'
+ruby '2.4.0'
 
 gem 'rack-protection'
 gem 'rack-flash3'
@@ -21,7 +21,18 @@ gem 'sass'
 gem 'rspec'
 gem 'capybara'
 gem 'poltergeist'
+group :development do
+    gem 'guard'
+    gem 'guard-migrate'
+    gem 'guard-sass'
+    gem 'guard-rubocop'
+end
 group :test do
     gem "simplecov"
     gem "codeclimate-test-reporter", "~> 1.0.0"
+end
+group :test, :development do
+    gem 'bundler-audit', require: false
+    gem 'dawnscanner', require: false
+    gem 'rubocop', require: false
 end
