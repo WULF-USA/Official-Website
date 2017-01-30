@@ -23,7 +23,7 @@ install:
 - ./scripts/setupdb.sh
 script:
 - rspec --format doc
-- dawn -z --sinatra ./ --disable-code-quality --disable-code-style
+- dawn --exit-on-warn --disable-code-quality --disable-code-style
 - rubocop -EDLR
 after_success:
 - bundle exec codeclimate-test-reporter
