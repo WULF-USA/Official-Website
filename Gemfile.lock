@@ -175,6 +175,7 @@ GEM
     ptools (1.3.3)
     public_suffix (2.0.5)
     puma (3.7.0)
+    r18n-core (2.1.4)
     rack (1.6.5)
     rack-flash3 (1.0.5)
       rack
@@ -234,6 +235,9 @@ GEM
     sinatra-activerecord (2.0.11)
       activerecord (>= 3.2)
       sinatra (~> 1.0)
+    sinatra-r18n (2.1.4)
+      r18n-core (= 2.1.4)
+      sinatra (>= 1.3)
     slim (3.0.7)
       temple (~> 0.7.6)
       tilt (>= 1.3.3, < 2.1)
@@ -277,6 +281,7 @@ DEPENDENCIES
   guard-migrate
   guard-rubocop
   guard-sass
+  i18n
   json
   pg
   poltergeist
@@ -292,6 +297,7 @@ DEPENDENCIES
   simplecov
   sinatra
   sinatra-activerecord
+  sinatra-r18n
   slim
 
 RUBY VERSION

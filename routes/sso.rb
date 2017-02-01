@@ -5,8 +5,13 @@ module Routing
     module SSO
         def self.registered(app)
               ##
-              # Login for author/admin/super users.
+              # Locale redirector
               app.get '/sso/author/login' do
+                  redirect "/#{R18::I18n.default}/sso/author/login"
+              end
+              ##
+              # Login for author/admin/super users.
+              app.get '/:locale/sso/author/login' do
                 # Check if user is already logged in.
                 redirect '/author/home' if is_logged_in?
                 # CVA-001: Protects from CSRF attack.

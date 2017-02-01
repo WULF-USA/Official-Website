@@ -4,8 +4,13 @@ module Routing
     module Resources
         def self.registered(app)
               ##
-              # Resources listing of site.
+              # Locale redirector
               app.get '/resources' do
+                  redirect "/#{R18::I18n.default}/resources"
+              end
+              ##
+              # Resources listing of site.
+              app.get '/:locale/resources' do
                 # Retrieve resource list.
                 @resources = Resource.all.order(title: :asc)
                 # Request is about to go through, register the visit with the tracker.

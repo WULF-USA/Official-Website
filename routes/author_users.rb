@@ -5,8 +5,13 @@ module Routing
         module Users
             def self.registered(app)
                   ##
-                  # Users page of dashboard for admin/super users.
+                  # Locale redirector
                   app.get '/author/users' do
+                      redirect "/#{R18::I18n.default}/author/users"
+                  end
+                  ##
+                  # Users page of dashboard for admin/super users.
+                  app.get '/:locale/author/users' do
                     # This page requires at least admin privileges.
                     redirect '/author/home' unless login_admin?
                     # Fetch all user accounts.
