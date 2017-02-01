@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'securerandom'
 
 module Routing
     module SSO
@@ -8,6 +9,9 @@ module Routing
               app.get '/sso/author/login' do
                 # Check if user is already logged in.
                 redirect '/author/home' if is_logged_in?
+                # CVA-001: Protects from CSRF attack.
+                session[:xs_key] = SecureRandom.urlsafe_base64(25)
+                @xs_key = session[:xs_key]
                 # Display view.
                 slim :author_login
               end
@@ -21,7 +25,11 @@ module Routing
                 uname = params['inputUser']
                 pass = params['inputPassword']
               
-                # TODO: Sanatize variables uname and pass.
+                # CVA-001: Protects from CSRF attack.
+                if(session[:xs_key] != params['xskey'])
+                  session[:xs_key] = nil
+                  redirect '/sso/author/login'
+                end
                 
                 # First check for super user
                 if uname == ENV['APP_SUPER_UNAME'] and pass == ENV['APP_SUPER_PASSWD']
