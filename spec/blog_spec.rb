@@ -2,23 +2,23 @@ require_relative './spec_helper'
 
 describe WulfApp do
     it "shows empty feeds" do
-        visit "/"
-        visit "/blog"
+        visit "/en/"
+        visit "/en/blog"
     end
     
     it "creates new blog post" do
         sso_super_login
         # Perform test
         click_on 'Articles'
-        expect(page).to have_current_path "/author/articles"
+        expect(page).to have_current_path "/en/author/articles"
         click_on 'New Blog Post'
-        expect(page).to have_current_path "/author/articles/create"
+        expect(page).to have_current_path "/en/author/articles/create"
         fill_in 'Title', with: 'Testing Title'
-        fill_in 'Post', with: 'Testing post content. <b>tag test.</b>'
-        click_on 'Post'
-        visit "/"
+        fill_in 'Content', with: 'Testing post content. <b>tag test.</b>'
+        click_on 'Submit'
+        visit "/en/"
         expect(page).to have_content 'Testing Title'
-        visit "/blog"
+        visit "/en/blog"
         expect(page).to have_content 'Testing Title'
         click_on 'Testing Title'
         expect(page).to have_content 'Testing Title'
@@ -31,14 +31,14 @@ describe WulfApp do
         sso_super_login
         # Perform test
         click_on 'Articles'
-        expect(page).to have_current_path "/author/articles"
+        expect(page).to have_current_path "/en/author/articles"
         click_on 'Edit', match: :first
         fill_in 'Title', with: 'Testing Title Edited'
-        fill_in 'Post', with: 'Testing post content edited. <i>tag test.</i>'
-        click_on 'Post'
-        visit "/"
+        fill_in 'Content', with: 'Testing post content edited. <i>tag test.</i>'
+        click_on 'Submit'
+        visit "/en/"
         expect(page).to have_content 'Testing Title Edited'
-        visit "/blog"
+        visit "/en/blog"
         expect(page).to have_content 'Testing Title Edited'
         click_on 'Testing Title Edited'
         expect(page).to have_content 'Testing Title Edited'
@@ -51,11 +51,11 @@ describe WulfApp do
         sso_super_login
         # Perform test
         click_on 'Articles'
-        expect(page).to have_current_path "/author/articles"
+        expect(page).to have_current_path "/en/author/articles"
         click_on 'Delete', match: :first
-        visit "/"
+        visit "/en/"
         expect(page).to have_no_content 'Testing Title Edited'
-        visit "/blog"
+        visit "/en/blog"
         expect(page).to have_no_content 'Testing Title Edited'
         sso_super_logout
     end

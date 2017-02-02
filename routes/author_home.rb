@@ -5,8 +5,15 @@ module Routing
         module Home
             def self.registered(app)
                   ##
-                  # Dashboard home page for author/admin/super users.
+                  # Locale redirector
                   app.get '/author/home' do
+                      redirect "/#{locale?}/author/home"
+                  end
+                  ##
+                  # Dashboard home page for author/admin/super users.
+                  app.get '/:locale/author/home' do
+                    # Set locale
+                    set_locale!
                     # This page requires at least user privileges.
                     redirect '/sso/author/login' unless login?
                     # Display view.

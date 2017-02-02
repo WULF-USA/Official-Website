@@ -9,14 +9,14 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <form action="/author/articles/create" method="POST">
-            <label for="title" class="sr-only">Title</label><br>
+            <label for="title" class="sr-only">#{t.author.blog.editing.title}</label><br>
             <input type="text" id="title" name="title"><br>
-            <label for="content" class="sr-only">Post</label><br>
+            <label for="content" class="sr-only">#{t.author.blog.editing.content}</label><br>
             <input type="textarea" id="content" name="content" rows="10" cols="50"/>
-            <input type="submit" name="operation" value="Post">
+            <input type="submit" name="operation" value="#{t.author.blog.editing.submit}">
           </form>
-          <p>The following HTML tags are allowed: a h1 h2 h3 h4 b i p ul ol li strong strike span hr br img</p>
-          <p>The following HTML attributes are allowed: href src</p>
+          <p>#{t.author.blog.editing.ruletag}: a h1 h2 h3 h4 b i p ul ol li strong strike span hr br img</p>
+          <p>#{t.author.blog.editing.ruleattr}: href src</p>
         </div>
       </div>
     </div>

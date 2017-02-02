@@ -4,8 +4,15 @@ module Routing
     module News
         def self.registered(app)
             ##
-            # News item page of site.
+            # Locale redirector
             app.get '/news/:id' do
+                redirect "/#{locale?}/news/#{params[:id]}"
+            end
+            ##
+            # News item page of site.
+            app.get '/:locale/news/:id' do
+                # Set locale
+                set_locale!
                 # Retrieve post object by ID from DB.
                 @item = Feed.find_by(id: params['id'])
                 # Request is about to go through, register the visit with the tracker.

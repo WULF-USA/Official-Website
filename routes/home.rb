@@ -4,8 +4,15 @@ module Routing
     module Home
         def self.registered(app)
               ##
-              # Index page of site.
+              # Locale redirector
               app.get '/' do
+                  redirect "/#{locale?}/"
+              end
+              ##
+              # Index page of site.
+              app.get '/:locale/' do
+                # Set locale
+                set_locale!
                 # Retrieve all news listings.
                 @feeds = Feed.all.order(created_at: :desc).limit(4)
                 # Retrieve all blog posts.

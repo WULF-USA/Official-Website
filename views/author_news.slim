@@ -8,35 +8,35 @@
           == slim :_partial_author_sidbar
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">News</h1>
+          <h1 class="page-header">#{t.author.news.header}</h1>
 
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>Date Uploaded</th>
-                  <th>Date Modified</th>
-                  <th>Actions</th>
+                  <th>#{t.author.news.table.title}</th>
+                  <th>#{t.author.news.table.author}</th>
+                  <th>#{t.author.news.table.uploaded}</th>
+                  <th>#{t.author.news.table.modified}</th>
+                  <th>#{t.author.news.table.actions}</th>
                 </tr>
               </thead>
               <tbody>
                 - @feeds.each do |feed|
                     <tr>
-                      <td><a href="/news/#{feed.id}">#{feed.title}</a></td>
+                      <td><a href="/#{locale?}/news/#{feed.id}">#{feed.title}</a></td>
                       <td>#{feed.author}</td>
                       <td>#{feed.created_at}</td>
                       <td>#{feed.updated_at}</td>
                       <td>
                         - if login_username == feed.author || login_admin? || login_super?
-                          <a href="/author/news/edit/#{feed.id}">Edit</a><br>
-                          <a href="/author/news/delete/#{feed.id}">Delete</a>
+                          <a href="/#{locale?}/author/news/edit/#{feed.id}">#{t.author.news.edit}</a><br>
+                          <a href="/author/news/delete/#{feed.id}">#{t.author.news.delete}</a>
                       </td>
                     </tr>
               </tbody>
             </table>
-            <a href="/author/news/create">New Feed Item</a>
+            <a href="/#{locale?}/author/news/create">#{t.author.news.new}</a>
           </div>
         </div>
       </div>

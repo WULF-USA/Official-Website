@@ -8,20 +8,20 @@
           == slim :_partial_author_sidbar
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Videos</h1>
+          <h1 class="page-header">#{t.author.videos.header}</h1>
 
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>Type</th>
-                  <th>URI</th>
-                  <th>Description</th>
-                  <th>Date Uploaded</th>
-                  <th>Date Modified</th>
-                  <th>Actions</th>
+                  <th>#{t.author.videos.table.title}</th>
+                  <th>#{t.author.videos.table.author}</th>
+                  <th>#{t.author.videos.table.type}</th>
+                  <th>#{t.author.videos.table.uri}</th>
+                  <th>#{t.author.videos.table.description}</th>
+                  <th>#{t.author.videos.table.uploaded}</th>
+                  <th>#{t.author.videos.table.modified}</th>
+                  <th>#{t.author.videos.table.actions}</th>
                 </tr>
               </thead>
               <tbody>
@@ -34,11 +34,11 @@
                               <td>
                                   <select name="host">
                                       - if video.host == 'youtube'
-                                        <option value="youtube" selected>YouTube</option>
-                                        <option value="vimeo">Vimeo</option>
+                                        <option value="youtube" selected>#{t.author.videos.table.selector.youtube}</option>
+                                        <option value="vimeo">#{t.author.videos.table.selector.vimeo}</option>
                                       - else
-                                        <option value="youtube">YouTube</option>
-                                        <option value="vimeo"selected>Vimeo</option>
+                                        <option value="youtube">#{t.author.videos.table.selctor.youtube}</option>
+                                        <option value="vimeo"selected>#{t.author.videos.table.selector.vimeo}</option>
                                   </select>
                               </td>
                               <td><input type="text" name="uri" id="edit-uri" value="#{video.uri}" /></td>
@@ -46,8 +46,8 @@
                               <td>#{video.created_at}</td>
                               <td>#{video.updated_at}</td>
                               <td>
-                                  <input type="submit" name="operation" value="Edit" /><br>
-                                  <a href="/author/videos/delete/#{video.id}">Delete</a>
+                                  <input type="submit" name="operation" value="#{t.author.videos.actions.edit}" /><br>
+                                  <a href="/author/videos/delete/#{video.id}">#{t.author.videos.actions.delete}</a>
                               </td>
                           </form>
                         </tr>
@@ -64,24 +64,24 @@
                         </tr>
                 <tr>
                     <form action="/author/videos/create" method="POST">
-                        <td><input type="text" name="title" id="create-title" placeholder="Title" /></td>
+                        <td><input type="text" name="title" id="create-title" placeholder="#{t.author.videos.table.title}" /></td>
                         <td>#{login_username}</td>
                         <td>
                             <select id="create-host" name="host">
-                                <option value="youtube">YouTube</option>
-                                <option value="vimeo">Vimeo</option>
+                                <option value="youtube">#{t.author.videos.table.selector.youtube}</option>
+                                <option value="vimeo">#{t.author.videos.table.selector.vimeo}</option>
                             </select>
                         </td>
                         <td><input type="text" name="uri" id="create-uri" placeholder="XXXXXX" /></td>
-                        <td><input type="text" name="description" id="create-description" placeholder="Description" /></td>
+                        <td><input type="text" name="description" id="create-description" placeholder="#{t.author.videos.table.description}" /></td>
                         <td></td>
                         <td></td>
-                        <td><input type="submit" name="operation" value="Create" /><br></td>
+                        <td><input type="submit" name="operation" value="#{t.author.videos.actions.create}" /><br></td>
                     </form>
                 </tr>
               </tbody>
             </table>
-            <p>The URI of a video is the ID at the end of the video URL. For example, if you wanted to post https://www.youtube.com/watch?v=5kIe6UZHSXw the URI would be 5kIe6UZHSXw.</p>
+            <p>#{t.author.videos.helpbeg} https://www.youtube.com/watch?v=5kIe6UZHSXw #{t.author.videos.helpend} 5kIe6UZHSXw.</p>
           </div>
         </div>
       </div>

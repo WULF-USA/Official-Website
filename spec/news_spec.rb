@@ -2,20 +2,20 @@ require_relative './spec_helper'
 
 describe WulfApp do
     it "shows empty news feeds" do
-        visit "/"
+        visit "/en/"
     end
     
     it "creates new news post" do
         sso_super_login
         # Perform test
         click_on 'News'
-        expect(page).to have_current_path "/author/news"
-        click_on 'New Feed Item'
-        expect(page).to have_current_path "/author/news/create"
+        expect(page).to have_current_path "/en/author/news"
+        click_on 'New News Feed Item'
+        expect(page).to have_current_path "/en/author/news/create"
         fill_in 'Title', with: 'Testing Title'
-        fill_in 'Post', with: 'Testing post content.'
-        click_on 'Post'
-        visit "/"
+        fill_in 'Content', with: 'Testing post content.'
+        click_on 'Submit'
+        visit "/en/"
         expect(page).to have_content 'Testing Title'
         click_on 'Testing Title'
         expect(page).to have_content 'Testing Title'
@@ -27,12 +27,12 @@ describe WulfApp do
         sso_super_login
         # Perform test
         click_on 'News'
-        expect(page).to have_current_path "/author/news"
+        expect(page).to have_current_path "/en/author/news"
         click_on 'Edit', match: :first
         fill_in 'Title', with: 'Testing Title Edited'
-        fill_in 'Post', with: 'Testing post content edited.'
-        click_on 'Post'
-        visit "/"
+        fill_in 'Content', with: 'Testing post content edited.'
+        click_on 'Submit'
+        visit "/en/"
         expect(page).to have_content 'Testing Title Edited'
         click_on 'Testing Title Edited'
         expect(page).to have_content 'Testing Title Edited'
@@ -44,9 +44,9 @@ describe WulfApp do
         sso_super_login
         # Perform test
         click_on 'News'
-        expect(page).to have_current_path "/author/news"
+        expect(page).to have_current_path "/en/author/news"
         click_on 'Delete', match: :first
-        visit "/"
+        visit "/en/"
         expect(page).to have_no_content 'Testing Title Edited'
         sso_super_logout
     end

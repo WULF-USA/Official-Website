@@ -5,8 +5,15 @@ module Routing
         module Resources
             def self.registered(app)
                   ##
-                  # Resources page of dashboard for author/admin/super users.
+                  # Locale redirector
                   app.get '/author/resources' do
+                      redirect "/#{locale?}/author/resources"
+                  end
+                  ##
+                  # Resources page of dashboard for author/admin/super users.
+                  app.get '/:locale/author/resources' do
+                    # Set locale
+                    set_locale!
                     # This page requires at least user privileges.
                     redirect '/author/home' unless login?
                     # Fetch all articles.

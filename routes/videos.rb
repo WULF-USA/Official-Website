@@ -4,8 +4,13 @@ module Routing
     module Videos
         def self.registered(app)
               ##
-              # Blog listing of site.
+              # Locale redirector
               app.get '/videos' do
+                  redirect "/#{R18n::I18n.default}/videos"
+              end
+              ##
+              # Blog listing of site.
+              app.get '/:locale/videos' do
                 # Retrieve all video link posts.
                 @videos = Video.all.order(created_at: :desc)
                 # Request is about to go through, register the visit with the tracker.

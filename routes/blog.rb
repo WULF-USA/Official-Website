@@ -4,8 +4,15 @@ module Routing
     module Blog
         def self.registered(app)
             ##
-            # Blog listing of site.
+            # Locale redirector
             app.get '/blog' do
+                redirect "/#{locale?}/blog"
+            end
+            ##
+            # Blog listing of site.
+            app.get '/:locale/blog' do
+                # Set locale
+                set_locale!
                 # Retrieve all blog posts.
                 @posts = Article.all.order(created_at: :desc)
                 # Request is about to go through, register the visit with the tracker.
@@ -13,10 +20,16 @@ module Routing
                 # Display View
                 slim :blog_list
             end
-            
+            ##
+            # Locale redirector
+            app.get '/blog/:id' do
+                redirect "/#{locale?}/blog/#{params[:id]}"
+            end
             ##
             # Article view page of site.
-            app.get '/blog/:id' do
+            app.get '/:locale/blog/:id' do
+                # Set locale
+                set_locale!
                 # Retrieve post content.
                 @post = Article.find_by(id: params[:id])
                 # Request is about to go through, register the visit with the tracker.

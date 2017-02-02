@@ -5,8 +5,15 @@ module Routing
         module News
             def self.registered(app)
                   ##
-                  # News page of dashboard for author/admin/super users.
+                  # Locale redirector
                   app.get '/author/news' do
+                      redirect "/#{locale?}/author/news"
+                  end
+                  ##
+                  # News page of dashboard for author/admin/super users.
+                  app.get '/:locale/author/news' do
+                    # Set locale
+                    set_locale!
                     # This page requires at least user privileges.
                     redirect '/author/home' unless login?
                     # Fetch all user accounts.
@@ -14,10 +21,16 @@ module Routing
                     # Display view.
                     slim :author_news
                   end
-                  
+                  ##
+                  # Locale redirector
+                  app.get '/author/news/create' do
+                      redirect "/#{locale?}/author/news/create"
+                  end
                   ##
                   # Create news item page of dashboard for author/admin/super users.
-                  app.get '/author/news/create' do
+                  app.get '/:locale/author/news/create' do
+                    # Set locale
+                    set_locale!
                     # This page requires at least user privileges.
                     redirect '/author/news' unless login?
                     # Display view.
@@ -36,10 +49,16 @@ module Routing
                     # Redirect user back to dashbaord.
                     redirect '/author/news'
                   end
-                  
+                  ##
+                  # Locale redirector
+                  app.get '/author/news/edit/:id' do
+                      redirect "/#{locale?}/author/news/edit/#{params[:id]}"
+                  end
                   ##
                   # Edit news item page of dashboard for author/admin/super users.
-                  app.get '/author/news/edit/:id' do
+                  app.get '/:locale/author/news/edit/:id' do
+                    # Set locale
+                    set_locale!
                     # This page requires at least user privileges.
                     redirect '/author/home' unless login?
                     # Retrieve post object by ID from DB.

@@ -8,10 +8,10 @@
             
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Blog</h1>
+          <h1 class="page-header">#{t.blog.header}</h1>
           <hr>
           - @posts.each do |post|
-              <h2><a href="/blog/#{post.id}">#{post.title}</a></h2>
+              <h2><a href="/#{locale?}/blog/#{post.id}">#{post.title}</a></h2>
               <h5>#{post.author} | #{post.updated_at}</h5>
               <hr>
         </div>

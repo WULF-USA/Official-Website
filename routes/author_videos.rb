@@ -5,8 +5,15 @@ module Routing
         module Videos
             def self.registered(app)
                   ##
-                  # Videos page of dashboard for author/admin/super users.
+                  # Locale redirector
                   app.get '/author/videos' do
+                      redirect "/#{locale?}/author/videos"
+                  end
+                  ##
+                  # Videos page of dashboard for author/admin/super users.
+                  app.get '/:locale/author/videos' do
+                    # Set locale
+                    set_locale!
                     # This page requires at least user privileges.
                     redirect '/author/home' unless login?
                     # Fetch all videos.

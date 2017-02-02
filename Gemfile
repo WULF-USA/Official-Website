@@ -10,6 +10,7 @@ gem 'slim'
 gem 'rest-client'
 gem 'activerecord'
 gem 'sinatra-activerecord'
+gem 'sinatra-r18n'
 gem 'pg'
 gem 'rake'
 gem 'activemodel'
@@ -18,6 +19,7 @@ gem 'bcrypt'
 gem 'rack-test'
 gem 'actionview'
 gem 'sass'
+gem 'i18n'
 gem 'rspec'
 gem 'capybara'
 gem 'poltergeist'
@@ -35,4 +37,5 @@ group :test, :development do
     gem 'bundler-audit', require: false
     gem 'dawnscanner', require: false
     gem 'rubocop', require: false
+    gem 'i18n-spec'
 end

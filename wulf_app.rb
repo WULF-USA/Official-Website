@@ -6,6 +6,7 @@ require 'rest-client'
 require 'sinatra/activerecord'
 require 'rack-flash'
 require 'action_view'
+require 'sinatra/r18n'
 require_relative './config/environments'
 require_relative './models/accounts'
 require_relative './models/feeds'
@@ -28,7 +29,8 @@ require_relative './routes/author_traffic'
 require_relative './routes/author_users'
 require_relative './routes/author_videos'
 require_relative './helpers/login'
-require_relative './lib/tracking.rb'
+require_relative './helpers/lang'
+require_relative './lib/tracking'
 
 class WulfApp < Sinatra::Base
 
@@ -38,6 +40,10 @@ class WulfApp < Sinatra::Base
   enable :sessions
   
   helpers Helpers::Login
+  helpers Helpers::Internationalization
+  
+  register Sinatra::R18n
+  set :root, File.dirname(__FILE__)
   
   register Routing::About
   register Routing::Blog
