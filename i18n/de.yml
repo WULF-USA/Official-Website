@@ -1,0 +1,143 @@
+navbar:
+    menu: Toggle navigation
+    home: Home
+    blog: Blog
+    videos: Videos
+    resources: Resources
+    donate: Donate
+    about: About
+    logout: Log Out
+author:
+    sidebar:
+        dashboard: Dashboard
+        articles: Articles
+        news: News
+        resources: Resources
+        traffic: Traffic
+        videos: Videos
+        users: Users
+    blog:
+        title: Blog Posts
+        table:
+            title: Title
+            author: Author
+            uploaded: Date Uploaded
+            modified: Date Modified
+            actions: Actions
+        edit: Edit
+        delete: Delete
+        new: New Blog Post
+        editing:
+            header: Editing
+            title: Title
+            content: Content
+            ruletag: The following HTML tags are allowed
+            ruleattr: The following HTML attributes are allowed
+            submit: Submit
+    home:
+        header: Dashboard
+    login:
+        header: SSO Author Sign-in
+        username: Username
+        password: Password
+        submit: Sign in
+    news:
+        header: News
+        table:
+            title: Title
+            author: Author
+            uploaded: Date Uploaded
+            modified: Date Modified
+            actions: Actions
+        edit: Edit
+        delete: Delete
+        new: New News Feed Item
+        editing:
+            header: Editing
+            title: Title
+            content: Content
+            submit: Submit
+    resources:
+        header: Resources
+        table:
+            title: Title
+            author: Author
+            link: Hyperlink
+            description: Description
+            uploaded: Date Uploaded
+            modified: Date Modified
+            actions: Actions
+        actions:
+            edit: Edit
+            delete: Delete
+            create: Create
+        other:
+            exampleurl: http://example.com
+    traffic:
+        header: Traffic
+        table:
+            url: URL
+            visits: Visitors
+    users:
+        header: Users
+        table:
+            username: Username
+            password: Password
+            actions: Actions
+        actions:
+            update: Update
+            delete: Delete
+        form:
+            new: New User
+            username: Username
+            password: Password
+            admin: Administrator
+            user: Standard User
+            create: Create
+    videos:
+        header: Videos
+        table:
+            title: Title
+            author: Author
+            type: Type
+            uri: URI
+            description: Description
+            uploaded: Date Uploaded
+            modified: Date Modified
+            actions: Actions
+            selector:
+                youtube: YouTube
+                vimeo: Vimeo
+        actions:
+            edit: Edit
+            delete: Delete
+            create: Create
+        helpbeg: The URI of a video is the ID at the end of the video URL. For example, if you wanted to post
+        helpend: the URI would be
+blog:
+    header: Blog
+home:
+    title: Welcome to WULF
+    learnmore: Learn more
+    news: News
+    readmore: Read more
+    videos: Videos
+    seemore: See more
+    blog: Blog
+    visitblog: Visit blog
+header:
+    description: Official website of the Workers United Leftist Front.
+    author: WULF
+    title: WULF
+not-found:
+    header: 404 Not Found
+    content: The page you are looking for is not here. Try visiting the links above to find what you are looking for.
+resource:
+    header: Resources
+    meta: Submitted by %1 at %2
+    visit: Visit resource
+videos:
+    header: Videos
+about:
+    header: About
+    content: The workers United Leftist Front is an organization whose main goal is to make the people aware that they are being taken advantage of, every day of their lives, by the rich and powerful. We want to make people question the actions of the government, and hold politicians accountable. We want you to realize that these politicians are not going to save the working class, or liberate us from the tyranny of the other party. We've all seen the blatant lack of change between administrations to prove them wrong. This is because they constantly lie to us about caring for you in order to get your vote. It's a constant cycle in politics. We proclaim that the decisions within society should be based on needs instead of what creates a profit, or what saves money. We proclaim that all decisions should be in the hands of the people through direct democracy and should be decentralized to deal with all problems more effectively. This will bring about the true liberation of all people from oppression, not a false promise from some higher authority whose main interest is in themselves and making donors happy. Power to the people.
