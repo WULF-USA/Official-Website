@@ -8,13 +8,13 @@
           == slim :_partial_author_sidbar
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1>Editing "#{@item.title}"</h1>
+          <h1>#{t.author.news.editing.header} "#{@item.title}"</h1>
           <form action="/author/news/edit/#{@item.id}" method="POST">
-            <label for="title" class="sr-only">Title</label><br>
+            <label for="title" class="sr-only">#{t.author.news.title}</label><br>
             <input type="text" id="title" name="title" value="#{@item.title}"><br>
-            <label for="content" class="sr-only">Post</label><br>
+            <label for="content" class="sr-only">#{t.author.news.content}</label><br>
             <input type="text" id="content" name="content" value="#{@item.content}"/>
-            <input type="submit" name="operation" value="Post">
+            <input type="submit" name="operation" value="#{t.author.news.submit}">
           </form>
         </div>
       </div>

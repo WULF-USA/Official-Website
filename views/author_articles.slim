@@ -8,17 +8,17 @@
           == slim :_partial_author_sidbar
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Blog Posts</h1>
+          <h1 class="page-header">#{t.author.blog.title}</h1>
 
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>Date Uploaded</th>
-                  <th>Date Modified</th>
-                  <th>Actions</th>
+                  <th>#{t.author.blog.table.title}</th>
+                  <th>#{t.author.blog.table.author}</th>
+                  <th>#{t.author.blog.table.uploaded}</th>
+                  <th>#{t.author.blog.table.modified}</th>
+                  <th>#{t.author.blog.table.actions}</th>
                 </tr>
               </thead>
               <tbody>
@@ -30,13 +30,13 @@
                       <td>#{article.updated_at}</td>
                       <td>
                         - if login_username == article.author || login_admin? || login_super?
-                          <a href="/author/articles/edit/#{article.id}">Edit</a><br>
-                          <a href="/author/articles/delete/#{article.id}">Delete</a>
+                          <a href="/author/articles/edit/#{article.id}">#{t.author.blog.edit}</a><br>
+                          <a href="/author/articles/delete/#{article.id}">#{t.author.blog.delete}</a>
                       </td>
                     </tr>
               </tbody>
             </table>
-            <a href="/author/articles/create">New Blog Post</a>
+            <a href="/author/articles/create">#{t.author.blog.new}</a>
           </div>
         </div>
       </div>

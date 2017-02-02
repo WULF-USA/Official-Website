@@ -8,15 +8,15 @@
           == slim :_partial_author_sidbar
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Users</h1>
+          <h1 class="page-header">#{t.author.users.header}</h1>
 
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Username</th>
-                  <th>Password</th>
-                  <th>Actions</th>
+                  <th>#{t.author.users.table.username}</th>
+                  <th>#{t.author.users.table.password}</th>
+                  <th>#{t.author.users.table.actions}</th>
                 </tr>
               </thead>
               <tbody>
@@ -28,24 +28,24 @@
                       <td>
                           <form action="/sso/author/pass/#{user.username}" method="POST">
                               <input type="password" name="newpassword">
-                              <input type="submit" name="operation" value="Update">
+                              <input type="submit" name="operation" value="#{t.author.users.actions.update}">
                           </form>
                       </td>
                       <td>
                           <form action="/sso/author/remove/#{user.username}" method="POST">
-                              <input type="submit" name="operation" value="Delete">
+                              <input type="submit" name="operation" value="#{t.author.users.actions.delete}">
                           </form>
                       </td>
                     </tr>
               </tbody>
             </table>
-            <h2>New user</h2>
+            <h2>#{t.author.users.form.new}</h2>
             <form action="/sso/author/new" method="POST">
-              <input type="text" name="username" placeholder="Username"><br>
-              <input type="password" name="password" placeholder="Password"><br>
-              <input type="radio" name="type" value="admin"> Admin<br>
-              <input type="radio" name="type" value="user" checked> User<br>
-              <input type="submit" name="operation" value="Create">
+              <input type="text" name="username" placeholder="#{t.author.users.form.username}"><br>
+              <input type="password" name="password" placeholder="#{t.author.users.form.password}"><br>
+              <input type="radio" name="type" value="admin"> #{t.author.users.form.admin}<br>
+              <input type="radio" name="type" value="user" checked> #{t.author.users.form.user}<br>
+              <input type="submit" name="operation" value="#{t.author.users.form.create}">
             </form>
           </div>
         </div>

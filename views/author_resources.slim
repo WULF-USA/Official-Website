@@ -8,19 +8,19 @@
           == slim :_partial_author_sidbar
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Resources</h1>
+          <h1 class="page-header">#{t.author.resources.header}</h1>
 
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Title</th>
-                  <th>Author</th>
-                  <th>Link</th>
-                  <th>Description</th>
-                  <th>Date Uploaded</th>
-                  <th>Date Modified</th>
-                  <th>Actions</th>
+                  <th>#{t.author.resources.table.title}</th>
+                  <th>#{t.author.resources.table.author}</th>
+                  <th>#{t.author.resources.table.link}</th>
+                  <th>#{t.author.resources.table.description}</th>
+                  <th>#{t.author.resources.table.uploaded}</th>
+                  <th>#{t.author.resources.table.modified}</th>
+                  <th>#{t.author.resources.table.actions}</th>
                 </tr>
               </thead>
               <tbody>
@@ -35,8 +35,8 @@
                               <td>#{resource.created_at}</td>
                               <td>#{resource.updated_at}</td>
                               <td>
-                                  <input type="submit" name="operation" value="Edit" /><br>
-                                  <a href="/author/resources/delete/#{resource.id}">Delete</a>
+                                  <input type="submit" name="operation" value="#{t.author.resources.actions.edit}" /><br>
+                                  <a href="/author/resources/delete/#{resource.id}">#{t.author.resources.actions.delete}</a>
                               </td>
                           </form>
                         </tr>
@@ -52,13 +52,13 @@
                         </tr>
                 <tr>
                     <form action="/author/resources/create" method="POST">
-                        <td><input type="text" name="title" id="create-title" placeholder="Title" /></td>
+                        <td><input type="text" name="title" id="create-title" placeholder="#{t.author.resources.table.title}" /></td>
                         <td>#{login_username}</td>
-                        <td><input type="text" name="hyperlink" id="create-hyperlink" placeholder="http://example.com" /></td>
-                        <td><input type="text" name="description" id="create-description" placeholder="Description" /></td>
+                        <td><input type="text" name="hyperlink" id="create-hyperlink" placeholder="#{t.author.resources.other.example-url}" /></td>
+                        <td><input type="text" name="description" id="create-description" placeholder="#{t.author.resources.table.description}" /></td>
                         <td></td>
                         <td></td>
-                        <td><input type="submit" name="operation" value="Create" /><br></td>
+                        <td><input type="submit" name="operation" value="#{t.author.resources.actions.create}" /><br></td>
                     </form>
                 </tr>
               </tbody>
