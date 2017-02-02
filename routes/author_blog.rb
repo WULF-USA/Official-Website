@@ -7,11 +7,13 @@ module Routing
                   ##
                   # Locale redirector
                   app.get '/author/articles' do
-                      redirect "/#{R18::I18n.default}/author/articles"
+                      redirect "/#{locale?}/author/articles"
                   end
                   ##
                   # Articles page of dashboard for author/admin/super users.
                   app.get '/:locale/author/articles' do
+                    # Set locale
+                    set_locale!
                     # This page requires at least user privileges.
                     redirect '/author/home' unless login?
                     # Fetch all articles.
@@ -22,11 +24,13 @@ module Routing
                   ##
                   # Locale redirector
                   app.get '/author/articles/create' do
-                      redirect "/#{R18::I18n.default}/author/articles/create"
+                      redirect "/#{locale?}/author/articles/create"
                   end
                   ##
                   # Create article page of dashboard for author/admin/super users.
                   app.get '/:locale/author/articles/create' do
+                    # Set locale
+                    set_locale!
                     # This page requires at least user privileges.
                     redirect '/author/articles' unless login?
                     # Display view.
@@ -48,11 +52,13 @@ module Routing
                   ##
                   # Locale redirector
                   app.get '/author/articles/edit/:id' do
-                      redirect "/#{R18::I18n.default}/author/articles/#{params[:id]}"
+                      redirect "/#{locale?}/author/articles/#{params[:id]}"
                   end
                   ##
                   # Edit article page of dashboard for author/admin/super users.
                   app.get '/:locale/author/articles/edit/:id' do
+                    # Set locale
+                    set_locale!
                     # This page requires at least user privileges.
                     redirect '/author/home' unless login?
                     # Retrieve post object by ID from DB.

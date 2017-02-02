@@ -37,4 +37,5 @@ group :test, :development do
     gem 'bundler-audit', require: false
     gem 'dawnscanner', require: false
     gem 'rubocop', require: false
+    gem 'i18n-spec'
 end

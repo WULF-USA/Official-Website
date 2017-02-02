@@ -24,19 +24,19 @@
               <tbody>
                 - @articles.each do |article|
                     <tr>
-                      <td><a href="/blog/#{article.id}">#{article.title}</a></td>
+                      <td><a href="/#{locale?}/blog/#{article.id}">#{article.title}</a></td>
                       <td>#{article.author}</td>
                       <td>#{article.created_at}</td>
                       <td>#{article.updated_at}</td>
                       <td>
                         - if login_username == article.author || login_admin? || login_super?
-                          <a href="/author/articles/edit/#{article.id}">#{t.author.blog.edit}</a><br>
+                          <a href="/#{locale?}/author/articles/edit/#{article.id}">#{t.author.blog.edit}</a><br>
                           <a href="/author/articles/delete/#{article.id}">#{t.author.blog.delete}</a>
                       </td>
                     </tr>
               </tbody>
             </table>
-            <a href="/author/articles/create">#{t.author.blog.new}</a>
+            <a href="/#{locale?}/author/articles/create">#{t.author.blog.new}</a>
           </div>
         </div>
       </div>

@@ -24,19 +24,19 @@
               <tbody>
                 - @feeds.each do |feed|
                     <tr>
-                      <td><a href="/news/#{feed.id}">#{feed.title}</a></td>
+                      <td><a href="/#{locale?}/news/#{feed.id}">#{feed.title}</a></td>
                       <td>#{feed.author}</td>
                       <td>#{feed.created_at}</td>
                       <td>#{feed.updated_at}</td>
                       <td>
                         - if login_username == feed.author || login_admin? || login_super?
-                          <a href="/author/news/edit/#{feed.id}">#{t.author.news.edit}</a><br>
+                          <a href="/#{locale?}/author/news/edit/#{feed.id}">#{t.author.news.edit}</a><br>
                           <a href="/author/news/delete/#{feed.id}">#{t.author.news.delete}</a>
                       </td>
                     </tr>
               </tbody>
             </table>
-            <a href="/author/news/create">#{t.author.news.new}</a>
+            <a href="/#{locale?}/author/news/create">#{t.author.news.new}</a>
           </div>
         </div>
       </div>

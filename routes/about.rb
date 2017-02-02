@@ -6,11 +6,13 @@ module Routing
               ##
               # Locale redirector
               app.get '/about' do
-                  redirect "/#{R18::I18n.default}/about"
+                  redirect "/#{locale?}/about"
               end
               ##
               # About page of site.
               app.get '/:locale/about' do
+                # Set locale
+                set_locale!
                 # Request is about to go through, register the visit with the tracker.
                 tick_url(request.path_info)
                 # Display view.

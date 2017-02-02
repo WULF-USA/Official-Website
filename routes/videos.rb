@@ -6,7 +6,7 @@ module Routing
               ##
               # Locale redirector
               app.get '/videos' do
-                  redirect "/#{R18::I18n.default}/videos"
+                  redirect "/#{R18n::I18n.default}/videos"
               end
               ##
               # Blog listing of site.

@@ -6,11 +6,13 @@ module Routing
               ##
               # Locale redirector
               app.get '/' do
-                  redirect "/#{R18n::I18n.default}/"
+                  redirect "/#{locale?}/"
               end
               ##
               # Index page of site.
               app.get '/:locale/' do
+                # Set locale
+                set_locale!
                 # Retrieve all news listings.
                 @feeds = Feed.all.order(created_at: :desc).limit(4)
                 # Retrieve all blog posts.

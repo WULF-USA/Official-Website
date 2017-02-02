@@ -14,17 +14,17 @@ end
 
 def sso_super_login
     # Log in
-    visit "/sso/author/login"
+    visit "/en/sso/author/login"
     fill_in 'Username', with: 'testuser'
     fill_in 'Password', with: 'testpassword'
     click_on 'Sign in'
-    expect(page).to have_current_path "/author/home"
+    expect(page).to have_current_path "/en/author/home"
 end
 
 def sso_super_logout
     # Log out
     click_on "Log Out"
     expect(page).to have_no_content 'Log Out'
-    visit "/author/home"
-    expect(page).to have_current_path "/sso/author/login"
+    visit "/en/author/home"
+    expect(page).to have_current_path "/en/sso/author/login"
 end

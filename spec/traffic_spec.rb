@@ -7,7 +7,7 @@ describe WulfApp do
         within(".nav-sidebar") do
             click_on 'Traffic'
         end
-        expect(page).to have_current_path "/author/traffic"
+        expect(page).to have_current_path "/en/author/traffic"
         sso_super_logout
     end
 end

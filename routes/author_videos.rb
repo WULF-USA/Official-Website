@@ -7,11 +7,13 @@ module Routing
                   ##
                   # Locale redirector
                   app.get '/author/videos' do
-                      redirect "/#{R18::I18n.default}/author/videos"
+                      redirect "/#{locale?}/author/videos"
                   end
                   ##
                   # Videos page of dashboard for author/admin/super users.
                   app.get '/:locale/author/videos' do
+                    # Set locale
+                    set_locale!
                     # This page requires at least user privileges.
                     redirect '/author/home' unless login?
                     # Fetch all videos.
