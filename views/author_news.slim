@@ -31,7 +31,9 @@
                       <td>
                         - if login_username == feed.author || login_admin? || login_super?
                           <a href="/#{locale?}/author/news/edit/#{feed.id}">#{t.author.news.edit}</a><br>
-                          <a href="/author/news/delete/#{feed.id}">#{t.author.news.delete}</a>
+                          <form action="/author/news/delete/#{feed.id}" method="POST">
+                              <input type="submit" name="operation" value="#{t.author.news.delete}">
+                          </form>
                       </td>
                     </tr>
               </tbody>

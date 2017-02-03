@@ -31,7 +31,9 @@
                       <td>
                         - if login_username == article.author || login_admin? || login_super?
                           <a href="/#{locale?}/author/articles/edit/#{article.id}">#{t.author.blog.edit}</a><br>
-                          <a href="/author/articles/delete/#{article.id}">#{t.author.blog.delete}</a>
+                          <form action="/author/articles/delete/#{article.id}" method="POST">
+                              <input type="submit" name="operation" value="#{t.author.blog.delete}">
+                          </form>
                       </td>
                     </tr>
               </tbody>

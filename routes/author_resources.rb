@@ -56,7 +56,7 @@ module Routing
                   
                   ##
                   # Delete resource sequence for author/admin/super users.
-                  app.get '/author/resources/delete/:id' do
+                  app.post '/author/resources/delete/:id' do
                     # This page requires at least user privileges.
                     redirect '/author/home' unless login?
                     # Retrieve post object by ID from DB.

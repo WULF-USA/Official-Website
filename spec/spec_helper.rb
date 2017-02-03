@@ -10,6 +10,10 @@ Capybara.app = proc { |env| WulfApp.new.call(env) }
 
 RSpec.configure do |config|
   config.include Capybara::DSL
+  
+  config.after(:each) do
+    page.driver.clear_cookies
+  end
 end
 
 def sso_super_login
