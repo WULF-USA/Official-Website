@@ -7,6 +7,7 @@ module Routing
                   ##
                   # Locale redirector
                   app.get '/author/videos' do
+                      forward_notifications!
                       redirect "/#{locale?}/author/videos"
                   end
                   ##
@@ -15,7 +16,7 @@ module Routing
                     # Set locale
                     set_locale!
                     # This page requires at least user privileges.
-                    redirect '/author/home' unless login?
+                    author_login!
                     # Fetch all videos.
                     @videos = Video.all.order(:id)
                     # Display view.
@@ -26,11 +27,13 @@ module Routing
                   # Create video link sequence of dashboard for author/admin/super users.
                   app.post '/author/videos/create' do
                     # This page requires at least user privileges.
-                    redirect '/author/videos' unless login?
-                    # Create new video link object.
-                    @video = Video.create(title: params['title'], author: login_username, uri: params['uri'], host: params['host'], description: params['description'])
-                    # Save the new video link object.
-                    @video.save!
+                    author_login!
+                    begin
+                      @video = Video.create!(title: params['title'], author: login_username, uri: params['uri'], host: params['host'], description: params['description'])
+                      flash[:info] = t.notifications.savesucc(t.types.video(1))
+                    rescue ActiveRecord::RecordInvalid
+                      flash[:error] = t.notifications.saveerror(t.types.video(1))
+                    end
                     # Redirect user back to dashbaord.
                     redirect '/author/videos'
                   end
@@ -39,18 +42,31 @@ module Routing
                   # Create video link sequence of dashboard for author/admin/super users.
                   app.post '/author/videos/edit/:id' do
                     # This page requires at least user privileges.
-                    redirect '/author/videos' unless login?
-                    # Retrieve resource object by ID from DB.
-                    @video = Video.find_by(id: params[:id])
+                    author_login!
+                    begin
+                      # Retrieve resource object by ID from DB.
+                      @video = Video.find_by(id: params[:id])
+                    rescue
+                      flash[:error] = t.notifications.recmiss
+                      redirect '/author/videos'
+                    end
                     # Check if user owns the video link or has admin powers.
-                    redirect '/author/videos' unless @video.author == login_username or login_admin? or login_super?
-                    # Edit the selected video link object.
-                    @video.title = params['title']
-                    @video.uri = params['uri']
-                    @video.host = params['host']
-                    @video.description = params['description']
-                    # Save the selected video link object.
-                    @video.save!
+                    if check_ownership?(@video.author)
+                      # Edit the selected video link object.
+                      @video.title = params['title']
+                      @video.uri = params['uri']
+                      @video.host = params['host']
+                      @video.description = params['description']
+                      begin
+                        # Save the selected video link object.
+                        @video.save!
+                        flash[:info] = t.notifications.savesucc(t.types.video(1))
+                      rescue ActiveRecord::RecordInvalid
+                        flash[:error] = t.notifications.saveerror(t.types.video(1))
+                      end
+                    else
+                      flash[:error] = t.notifications.permissions
+                    end
                     # Redirect user back to dashbaord.
                     redirect '/author/videos'
                   end
@@ -59,13 +75,22 @@ module Routing
                   # Delete video link sequence for author/admin/super users.
                   app.get '/author/videos/delete/:id' do
                     # This page requires at least user privileges.
-                    redirect '/author/home' unless login?
-                    # Retrieve video link object by ID from DB.
-                    @video = Video.find_by(id: params['id'])
+                    author_login!
+                    begin
+                      # Retrieve video link object by ID from DB.
+                      @video = Video.find_by(id: params['id'])
+                    rescue
+                      flash[:error] = t.notifications.recmiss
+                      redirect '/author/videos'
+                    end
                     # Check if user owns the video link or has admin powers.
-                    redirect '/author/videos' unless @video.author == login_username or login_admin? or login_super?
-                    # Delete the video link object.
-                    @video.destroy
+                    if check_ownership?(@video.author)
+                      # Delete the video link object.
+                      @video.destroy
+                      flash[:info] = t.notifications.deletesucc(t.types.video(1))
+                    else
+                      flash[:error] = t.notifications.permissions
+                    end
                     # Redirect back to news page of dashboard.
                     redirect '/author/videos'
                   end

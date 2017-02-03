@@ -239,6 +239,8 @@ GEM
     sinatra-activerecord (2.0.11)
       activerecord (>= 3.2)
       sinatra (~> 1.0)
+    sinatra-flash (0.3.0)
+      sinatra (>= 1.0.0)
     sinatra-r18n (2.1.4)
       r18n-core (= 2.1.4)
       sinatra (>= 1.3)
@@ -302,6 +304,7 @@ DEPENDENCIES
   simplecov
   sinatra
   sinatra-activerecord
+  sinatra-flash
   sinatra-r18n
   slim
 

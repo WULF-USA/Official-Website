@@ -7,6 +7,7 @@ module Routing
                   ##
                   # Locale redirector
                   app.get '/author/home' do
+                      forward_notifications!
                       redirect "/#{locale?}/author/home"
                   end
                   ##
@@ -14,8 +15,7 @@ module Routing
                   app.get '/:locale/author/home' do
                     # Set locale
                     set_locale!
-                    # This page requires at least user privileges.
-                    redirect '/sso/author/login' unless login?
+                    author_login!
                     # Display view.
                     slim :author_home
                   end

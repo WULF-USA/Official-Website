@@ -6,10 +6,24 @@ module Helpers
           #return true if is_ci?
           return (!session[:auth].nil? and (session[:auth] == true))
         end
+        
+        def author_login!
+          if !login?
+            flash[:error] = t.notifications.noauth
+            redirect '/sso/author/login'
+          end
+        end
       
         def login_admin?
           #return true if is_ci?
           return (!session[:auth_admin].nil? and (session[:auth_admin] == true))
+        end
+        
+        def admin_login!
+          if !login_admin?
+            flash[:error] = t.notifications.permissions
+            redirect '/author/home'
+          end
         end
       
         def login_super?
@@ -30,6 +44,17 @@ module Helpers
           return Nil unless is_logged_in?
           return session[:auth_uname] unless login_super?
           return 'super'
+        end
+        
+        def check_ownership?(owner)
+          return (owner == login_username or login_admin? or login_super?)
+        end
+        
+        def check_ownership!(owner)
+          if !check_ownership?(owner)
+            flash[:error] = t.notifications.permissions
+            redirect '/author/home'
+          end
         end
     end
 end

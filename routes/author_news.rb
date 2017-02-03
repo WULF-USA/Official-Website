@@ -7,15 +7,15 @@ module Routing
                   ##
                   # Locale redirector
                   app.get '/author/news' do
-                      redirect "/#{locale?}/author/news"
+                    forward_notifications!
+                    redirect "/#{locale?}/author/news"
                   end
                   ##
                   # News page of dashboard for author/admin/super users.
                   app.get '/:locale/author/news' do
                     # Set locale
                     set_locale!
-                    # This page requires at least user privileges.
-                    redirect '/author/home' unless login?
+                    author_login!
                     # Fetch all user accounts.
                     @feeds = Feed.all.order(:id)
                     # Display view.
@@ -24,15 +24,15 @@ module Routing
                   ##
                   # Locale redirector
                   app.get '/author/news/create' do
-                      redirect "/#{locale?}/author/news/create"
+                    forward_notifications!
+                    redirect "/#{locale?}/author/news/create"
                   end
                   ##
                   # Create news item page of dashboard for author/admin/super users.
                   app.get '/:locale/author/news/create' do
                     # Set locale
                     set_locale!
-                    # This page requires at least user privileges.
-                    redirect '/author/news' unless login?
+                    author_login!
                     # Display view.
                     slim :author_news_new
                   end
@@ -40,18 +40,20 @@ module Routing
                   ##
                   # Create news item sequence of dashboard for author/admin/super users.
                   app.post '/author/news/create' do
-                    # This page requires at least user privileges.
-                    redirect '/author/news' unless login?
-                    # Create new feed model object.
-                    @feed = Feed.new(title: params['title'], author: login_username, content: params['content'])
-                    # Save the new feed model object.
-                    @feed.save!
+                    author_login!
+                    begin
+                      @feed = Feed.create!(title: params['title'], author: login_username, content: params['content'])
+                      flash[:info] = t.notifications.savesucc(t.types.news(1))
+                    rescue ActiveRecord::RecordInvalid
+                      flash[:error] = t.notifications.saveerror(t.types.news(1))
+                    end
                     # Redirect user back to dashbaord.
                     redirect '/author/news'
                   end
                   ##
                   # Locale redirector
                   app.get '/author/news/edit/:id' do
+                      forward_notifications!
                       redirect "/#{locale?}/author/news/edit/#{params[:id]}"
                   end
                   ##
@@ -59,12 +61,16 @@ module Routing
                   app.get '/:locale/author/news/edit/:id' do
                     # Set locale
                     set_locale!
-                    # This page requires at least user privileges.
-                    redirect '/author/home' unless login?
-                    # Retrieve post object by ID from DB.
-                    @item = Feed.find_by(id: params['id'])
+                    author_login!
+                    begin
+                      # Retrieve post object by ID from DB.
+                      @item = Feed.find_by(id: params['id'])
+                    rescue ActiveRecord::ResourceNotFound
+                      flash[:error] = t.notifications.recmiss
+                      redirect '/author/news'
+                    end
                     # Check if user owns the post or has admin powers.
-                    redirect '/author/news' unless @item.author == login_username or login_admin? or login_super?
+                    check_ownership!(@item.author)
                     # Display view.
                     slim :author_news_edit
                   end
@@ -72,17 +78,29 @@ module Routing
                   ##
                   # Create news item sequence of dashboard for author/admin/super users.
                   app.post '/author/news/edit/:id' do
-                    # This page requires at least user privileges.
-                    redirect '/author/news' unless login?
-                    # Retrieve post object by ID from DB.
-                    @feed = Feed.find_by(id: params[:id])
+                    author_login!
+                    begin
+                      # Retrieve post object by ID from DB.
+                      @feed = Feed.find_by(id: params[:id])
+                    rescue ActiveRecord::ResourceNotFound
+                      flash[:error] = t.notifications.recmiss
+                      redirect '/author/news'
+                    end
                     # Check if user owns the post or has admin powers.
-                    redirect '/author/news' unless @feed.author == login_username or login_admin? or login_super?
-                    # Edit the selected feed model object.
-                    @feed.title = params['title']
-                    @feed.content = params['content']
-                    # Save the selected feed model object.
-                    @feed.save!
+                    if check_ownership?(@feed.author)
+                      # Edit the selected feed model object.
+                      @feed.title = params['title']
+                      @feed.content = params['content']
+                      begin
+                        # Save the selected feed model object.
+                        @feed.save!
+                        flash[:info] = t.notifications.savesucc(t.types.news(1))
+                      rescue ActiveRecord::RecordInvalid
+                        flash[:error] = t.notifications.saveerror(t.types.news(1))
+                      end
+                    else
+                      flash[:error] = t.notifications.permissions
+                    end
                     # Redirect user back to dashbaord.
                     redirect '/author/news'
                   end
@@ -90,14 +108,21 @@ module Routing
                   ##
                   # Delete news item sequence for author/admin/super users.
                   app.get '/author/news/delete/:id' do
-                    # This page requires at least user privileges.
-                    redirect '/author/home' unless login?
-                    # Retrieve post object by ID from DB.
-                    @item = Feed.find_by(id: params['id'])
+                    author_login!
+                    begin
+                      # Retrieve post object by ID from DB.
+                      @item = Feed.find_by(id: params['id'])
+                    rescue
+                      flash[:error] = t.notifications.recmiss
+                      redirect '/author/news'
+                    end
                     # Check if user owns the post or has admin powers.
-                    redirect '/author/news' unless @item.author == login_username or login_admin? or login_super?
-                    # Delete the feed object.
-                    @item.destroy
+                    if check_ownership?(@item.author)
+                      flash[:info] = t.notifications.deletesucc(t.types.news(1))
+                      @item.destroy
+                    else
+                      flash[:error] = t.notifications.permissions
+                    end
                     # Redirect back to news page of dashboard.
                     redirect '/author/news'
                   end

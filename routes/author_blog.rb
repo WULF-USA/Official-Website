@@ -7,6 +7,7 @@ module Routing
                   ##
                   # Locale redirector
                   app.get '/author/articles' do
+                      forward_notifications!
                       redirect "/#{locale?}/author/articles"
                   end
                   ##
@@ -14,8 +15,7 @@ module Routing
                   app.get '/:locale/author/articles' do
                     # Set locale
                     set_locale!
-                    # This page requires at least user privileges.
-                    redirect '/author/home' unless login?
+                    author_login!
                     # Fetch all articles.
                     @articles = Article.all.order(:id)
                     # Display view.
@@ -24,6 +24,7 @@ module Routing
                   ##
                   # Locale redirector
                   app.get '/author/articles/create' do
+                      forward_notifications!
                       redirect "/#{locale?}/author/articles/create"
                   end
                   ##
@@ -31,8 +32,7 @@ module Routing
                   app.get '/:locale/author/articles/create' do
                     # Set locale
                     set_locale!
-                    # This page requires at least user privileges.
-                    redirect '/author/articles' unless login?
+                    author_login!
                     # Display view.
                     slim :author_articles_new
                   end
@@ -41,17 +41,21 @@ module Routing
                   # Create article sequence of dashboard for author/admin/super users.
                   app.post '/author/articles/create' do
                     # This page requires at least user privileges.
-                    redirect '/:locale/author/articles' unless login?
-                    # Create new feed model object.
-                    @article = Article.create(title: params['title'], author: login_username, content: params['content'])
-                    # Save the new feed model object.
-                    @article.save!
+                    author_login!
+                    begin
+                      # Save the new feed model object.
+                      @article = Article.create!(title: params['title'], author: login_username, content: params['content'])
+                      flash[:info] = t.notifications.savesucc(t.types.article(1))
+                    rescue ActiveRecord::RecordInvalid
+                      flash[:error] = t.notifications.saveerror(t.types.article(1))
+                    end
                     # Redirect user back to dashbaord.
                     redirect '/author/articles'
                   end
                   ##
                   # Locale redirector
                   app.get '/author/articles/edit/:id' do
+                      forward_notifications!
                       redirect "/#{locale?}/author/articles/#{params[:id]}"
                   end
                   ##
@@ -59,12 +63,16 @@ module Routing
                   app.get '/:locale/author/articles/edit/:id' do
                     # Set locale
                     set_locale!
-                    # This page requires at least user privileges.
-                    redirect '/author/home' unless login?
-                    # Retrieve post object by ID from DB.
-                    @item = Article.find_by(id: params['id'])
+                    author_login!
+                    begin
+                      # Retrieve post object by ID from DB.
+                      @item = Article.find_by(id: params['id'])
+                    rescue ActiveRecord::RecordNotFound
+                      flash[:error] = t.notifications.recmiss
+                      redirect '/author/articles'
+                    end
                     # Check if user owns the post or has admin powers.
-                    redirect '/author/articles' unless @item.author == login_username or login_admin? or login_super?
+                    check_ownership!(@item.author)
                     # Display view.
                     slim :author_articles_edit
                   end
@@ -73,16 +81,29 @@ module Routing
                   # Create article sequence of dashboard for author/admin/super users.
                   app.post '/author/articles/edit/:id' do
                     # This page requires at least user privileges.
-                    redirect '/author/articles' unless login?
-                    # Retrieve post object by ID from DB.
-                    @article = Article.find_by(id: params[:id])
+                    author_login!
+                    begin
+                      # Retrieve post object by ID from DB.
+                      @article = Article.find_by(id: params[:id])
+                    rescue ActiveRecord::RecordNotFound
+                      flash[:error] = t.notifications.recmiss
+                      redirect '/author/articles'
+                    end
                     # Check if user owns the post or has admin powers.
-                    redirect '/author/articles' unless @article.author == login_username or login_admin? or login_super?
-                    # Edit the selected feed model object.
-                    @article.title = params['title']
-                    @article.content = params['content']
-                    # Save the selected feed model object.
-                      @article.save!
+                    if check_ownership?(@article.author)
+                      # Edit the selected feed model object.
+                      @article.title = params['title']
+                      @article.content = params['content']
+                      # Save the selected feed model object.
+                      begin
+                        @article.save!
+                        flash[:info] = t.notifications.savesucc(t.types.article(1))
+                      rescue ActiveRecord::RecordInvalid
+                        flash[:error] = t.notifications.saveerror(t.types.article(1))
+                      end
+                    else
+                      flash[:error] = t.notifications.permissions
+                    end
                     # Redirect user back to dashbaord.
                     redirect '/author/articles'
                   end
@@ -91,13 +112,21 @@ module Routing
                   # Delete article sequence for author/admin/super users.
                   app.get '/author/articles/delete/:id' do
                     # This page requires at least user privileges.
-                    redirect '/author/home' unless login?
-                    # Retrieve post object by ID from DB.
-                    @item = Article.find_by(id: params['id'])
+                    author_login!
+                    begin
+                      # Retrieve post object by ID from DB.
+                      @item = Article.find_by(id: params['id'])
+                    rescue ActiveRecord::RecordNotFound
+                      flash[:error] = t.notifications.recmiss
+                      redirect '/author/articles'
+                    end
                     # Check if user owns the post or has admin powers.
-                    redirect '/author/articles' unless @item.author == login_username or login_admin? or login_super?
-                    # Delete the feed object.
-                    @item.destroy
+                    if check_ownership?(@item.author)
+                      flash[:info] = t.notifications.deletesucc(t.types.article(1))
+                      @item.destroy
+                    else
+                      flash[:error] = t.notifications.permissions
+                    end
                     # Redirect back to news page of dashboard.
                     redirect '/author/articles'
                   end

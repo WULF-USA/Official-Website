@@ -138,6 +138,31 @@ resource:
     visit: Visit resource
 videos:
     header: Videos
+types:
+    video: !!pl
+        1: video
+        n: videos
+    resource: !!pl
+        1: resource
+        n: resources
+    news: !!pl
+        1: news
+        n: news
+    article:
+        1: article
+        n: articles
 about:
     header: About
     content: The workers United Leftist Front is an organization whose main goal is to make the people aware that they are being taken advantage of, every day of their lives, by the rich and powerful. We want to make people question the actions of the government, and hold politicians accountable. We want you to realize that these politicians are not going to save the working class, or liberate us from the tyranny of the other party. We've all seen the blatant lack of change between administrations to prove them wrong. This is because they constantly lie to us about caring for you in order to get your vote. It's a constant cycle in politics. We proclaim that the decisions within society should be based on needs instead of what creates a profit, or what saves money. We proclaim that all decisions should be in the hands of the people through direct democracy and should be decentralized to deal with all problems more effectively. This will bring about the true liberation of all people from oppression, not a false promise from some higher authority whose main interest is in themselves and making donors happy. Power to the people.
+notifications:
+    permissions: You don't have permission to perform this action!
+    noauth: You must be logged in to perform this action!
+    invalidauth: Incorrect username/password combination!
+    loginsucc: Welcome back %1!
+    loggedout: Successfully logged out.
+    recmiss: Resource not found!
+    savesucc: Item %1 successfully saved to the database.
+    saveerror: An error occured while saving the %1, please try again later.
+    deletesucc: Item %1 successfully deleted from the database.
+    deleteerror: An error occured while deleting the %1, please try again later.
+    xsrf: You have been subjected to XSRF attack. Contact the site administrators immediately.
