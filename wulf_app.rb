@@ -38,6 +38,9 @@ class WulfApp < Sinatra::Base
 
   include ActionView::Helpers::SanitizeHelper
   include Lib::Tracking
+  include R18n::Helpers
+  
+  R18n.default_places = './i18n/'
   
   enable :sessions
   

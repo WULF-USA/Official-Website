@@ -43,9 +43,9 @@ module Routing
                     author_login!
                     begin
                       @feed = Feed.create!(title: params['title'], author: login_username, content: params['content'])
-                      flash[:info] = t.notifications.savesucc(t.types.news(1))
+                      flash[:info] = t.notifications.savesucc(t.types.news)
                     rescue ActiveRecord::RecordInvalid
-                      flash[:error] = t.notifications.saveerror(t.types.news(1))
+                      flash[:error] = t.notifications.saveerror(t.types.news)
                     end
                     # Redirect user back to dashbaord.
                     redirect '/author/news'
@@ -94,9 +94,9 @@ module Routing
                       begin
                         # Save the selected feed model object.
                         @feed.save!
-                        flash[:info] = t.notifications.savesucc(t.types.news(1))
+                        flash[:info] = t.notifications.savesucc(t.types.news)
                       rescue ActiveRecord::RecordInvalid
-                        flash[:error] = t.notifications.saveerror(t.types.news(1))
+                        flash[:error] = t.notifications.saveerror(t.types.news)
                       end
                     else
                       flash[:error] = t.notifications.permissions
@@ -107,7 +107,7 @@ module Routing
                   
                   ##
                   # Delete news item sequence for author/admin/super users.
-                  app.get '/author/news/delete/:id' do
+                  app.post '/author/news/delete/:id' do
                     author_login!
                     begin
                       # Retrieve post object by ID from DB.
@@ -118,7 +118,7 @@ module Routing
                     end
                     # Check if user owns the post or has admin powers.
                     if check_ownership?(@item.author)
-                      flash[:info] = t.notifications.deletesucc(t.types.news(1))
+                      flash[:info] = t.notifications.deletesucc(t.types.news)
                       @item.destroy
                     else
                       flash[:error] = t.notifications.permissions

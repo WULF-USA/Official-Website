@@ -45,9 +45,9 @@ module Routing
                     begin
                       # Save the new feed model object.
                       @article = Article.create!(title: params['title'], author: login_username, content: params['content'])
-                      flash[:info] = t.notifications.savesucc(t.types.article(1))
+                      flash[:info] = t.notifications.savesucc(t.types.article)
                     rescue ActiveRecord::RecordInvalid
-                      flash[:error] = t.notifications.saveerror(t.types.article(1))
+                      flash[:error] = t.notifications.saveerror(t.types.article)
                     end
                     # Redirect user back to dashbaord.
                     redirect '/author/articles'
@@ -97,9 +97,9 @@ module Routing
                       # Save the selected feed model object.
                       begin
                         @article.save!
-                        flash[:info] = t.notifications.savesucc(t.types.article(1))
+                        flash[:info] = t.notifications.savesucc(t.types.article)
                       rescue ActiveRecord::RecordInvalid
-                        flash[:error] = t.notifications.saveerror(t.types.article(1))
+                        flash[:error] = t.notifications.saveerror(t.types.article)
                       end
                     else
                       flash[:error] = t.notifications.permissions
@@ -122,7 +122,7 @@ module Routing
                     end
                     # Check if user owns the post or has admin powers.
                     if check_ownership?(@item.author)
-                      flash[:info] = t.notifications.deletesucc(t.types.article(1))
+                      flash[:info] = t.notifications.deletesucc(t.types.article)
                       @item.destroy
                     else
                       flash[:error] = t.notifications.permissions

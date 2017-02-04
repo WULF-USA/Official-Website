@@ -28,9 +28,9 @@ module Routing
                     author_login!
                     begin
                       @resource = Resource.create!(title: params['title'], author: login_username, url: params['hyperlink'], description: params['description'])
-                      flash[:info] = t.notifications.savesucc(t.types.resource(1))
+                      flash[:info] = t.notifications.savesucc(t.types.resource)
                     rescue ActiveRecord::RecordInvalid
-                      flash[:error] = t.notifications.saveerror(t.types.resource(1))
+                      flash[:error] = t.notifications.saveerror(t.types.resource)
                     end
                     # Redirect user back to dashbaord.
                     redirect '/author/resources'
@@ -56,9 +56,9 @@ module Routing
                       begin
                         # Save the selected resource object.
                         @resource.save!
-                        flash[:info] = t.notifications.savesucc(t.types.resource(1))
+                        flash[:info] = t.notifications.savesucc(t.types.resource)
                       rescue ActiveRecord::RecordInvalid
-                        flash[:error] = t.notifications.saveerror(t.types.resource(1))
+                        flash[:error] = t.notifications.saveerror(t.types.resource)
                       end
                     else
                       flash[:error] = t.notifications.permissions
@@ -69,7 +69,7 @@ module Routing
                   
                   ##
                   # Delete resource sequence for author/admin/super users.
-                  app.get '/author/resources/delete/:id' do
+                  app.post '/author/resources/delete/:id' do
                     author_login!
                     begin
                       # Retrieve post object by ID from DB.
@@ -82,7 +82,7 @@ module Routing
                     if check_ownership?(@item.author)
                       # Delete the resource object.
                       @item.destroy
-                      flash[:info] = t.notifications.deletesucc(t.types.resource(1))
+                      flash[:info] = t.notifications.deletesucc(t.types.resource)
                     else
                       flash[:error] = t.notifications.permissions
                     end

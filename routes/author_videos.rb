@@ -30,9 +30,9 @@ module Routing
                     author_login!
                     begin
                       @video = Video.create!(title: params['title'], author: login_username, uri: params['uri'], host: params['host'], description: params['description'])
-                      flash[:info] = t.notifications.savesucc(t.types.video(1))
+                      flash[:info] = t.notifications.savesucc(t.types.video)
                     rescue ActiveRecord::RecordInvalid
-                      flash[:error] = t.notifications.saveerror(t.types.video(1))
+                      flash[:error] = t.notifications.saveerror(t.types.video)
                     end
                     # Redirect user back to dashbaord.
                     redirect '/author/videos'
@@ -60,9 +60,9 @@ module Routing
                       begin
                         # Save the selected video link object.
                         @video.save!
-                        flash[:info] = t.notifications.savesucc(t.types.video(1))
+                        flash[:info] = t.notifications.savesucc(t.types.video)
                       rescue ActiveRecord::RecordInvalid
-                        flash[:error] = t.notifications.saveerror(t.types.video(1))
+                        flash[:error] = t.notifications.saveerror(t.types.video)
                       end
                     else
                       flash[:error] = t.notifications.permissions
@@ -87,7 +87,7 @@ module Routing
                     if check_ownership?(@video.author)
                       # Delete the video link object.
                       @video.destroy
-                      flash[:info] = t.notifications.deletesucc(t.types.video(1))
+                      flash[:info] = t.notifications.deletesucc(t.types.video)
                     else
                       flash[:error] = t.notifications.permissions
                     end

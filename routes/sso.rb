@@ -70,6 +70,8 @@ module Routing
                   end
                 rescue ActiveRecord::RecordNotFound
                   flash[:error] = t.notifications.invalidauth
+                rescue NoMethodError
+                  flash[:error] = t.notifications.invalidauth
                 end
                 
                 # Invalid login credentials. Redirect to log in page.
