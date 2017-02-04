@@ -110,7 +110,7 @@ module Routing
                   
                   ##
                   # Delete article sequence for author/admin/super users.
-                  app.get '/author/articles/delete/:id' do
+                  app.post '/author/articles/delete/:id' do
                     # This page requires at least user privileges.
                     author_login!
                     begin
