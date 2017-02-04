@@ -27,18 +27,18 @@
                 - @resources.each do |resource|
                     - if login_username == resource.author || login_admin? || login_super?
                         <tr>
-                          <form action="/author/resources/edit/#{resource.id}" method="POST">
-                              <td><input type="text" name="title" id="edit-title" value="#{resource.title}" /></td>
-                              <td>#{resource.author}</td>
-                              <td><input type="text" name="hyperlink" id="edit-hyperlink" value="#{resource.url}" /></td>
-                              <td><input type="text" name="description" id="edit-description" value="#{resource.description}" /></td>
-                              <td>#{resource.created_at}</td>
-                              <td>#{resource.updated_at}</td>
-                              <td>
-                                  <input type="submit" name="operation" value="#{t.author.resources.actions.edit}" /><br>
-                                  <a href="/author/resources/delete/#{resource.id}">#{t.author.resources.actions.delete}</a>
-                              </td>
-                          </form>
+                          <form id="deleteForm#{resource.id}" action="/author/resources/delete/#{resource.id}" method="POST"></form>
+                          <form id="editForm#{resource.id}" action="/author/resources/edit/#{resource.id}" method="POST"></form>
+                          <td><input type="text" name="title" id="edit-title" value="#{resource.title}" form="editForm#{resource.id}" /></td>
+                          <td>#{resource.author}</td>
+                          <td><input type="text" name="hyperlink" id="edit-hyperlink" value="#{resource.url}" form="editForm#{resource.id}" /></td>
+                          <td><input type="text" name="description" id="edit-description" value="#{resource.description}" form="editForm#{resource.id}" /></td>
+                          <td>#{resource.created_at}</td>
+                          <td>#{resource.updated_at}</td>
+                          <td>
+                              <input type="submit" name="operation" value="#{t.author.resources.actions.edit}" form="editForm#{resource.id}" /><br>
+                              <input type="submit" name="operation" value="#{t.author.resources.actions.delete}" form="deleteForm#{resource.id}" />
+                          </td>
                         </tr>
                     - else
                         <tr>

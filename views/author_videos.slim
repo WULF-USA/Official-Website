@@ -28,28 +28,28 @@
                 - @videos.each do |video|
                     - if login_username == video.author || login_admin? || login_super?
                         <tr>
-                          <form action="/author/videos/edit/#{video.id}" method="POST">
-                              <td><input type="text" name="title" id="edit-title" value="#{video.title}" /></td>
-                              <td>#{video.author}</td>
-                              <td>
-                                  <select name="host">
-                                      - if video.host == 'youtube'
-                                        <option value="youtube" selected>#{t.author.videos.table.selector.youtube}</option>
-                                        <option value="vimeo">#{t.author.videos.table.selector.vimeo}</option>
-                                      - else
-                                        <option value="youtube">#{t.author.videos.table.selctor.youtube}</option>
-                                        <option value="vimeo"selected>#{t.author.videos.table.selector.vimeo}</option>
-                                  </select>
-                              </td>
-                              <td><input type="text" name="uri" id="edit-uri" value="#{video.uri}" /></td>
-                              <td><input type="text" name="description" id="edit-description" value="#{video.description}" /></td>
-                              <td>#{video.created_at}</td>
-                              <td>#{video.updated_at}</td>
-                              <td>
-                                  <input type="submit" name="operation" value="#{t.author.videos.actions.edit}" /><br>
-                                  <a href="/author/videos/delete/#{video.id}">#{t.author.videos.actions.delete}</a>
-                              </td>
-                          </form>
+                          <form id="deleteForm#{video.id}" action="/author/videos/delete/#{video.id}" method="POST"></form>
+                          <form id="editForm#{video.id}" action="/author/videos/edit/#{video.id}" method="POST"></form>
+                          <td><input type="text" name="title" id="edit-title" value="#{video.title}" form="editForm#{video.id}" /></td>
+                          <td>#{video.author}</td>
+                          <td>
+                              <select name="host" form="editForm#{video.id}">
+                                  - if video.host == 'youtube'
+                                    <option value="youtube" selected form="editForm#{video.id}">#{t.author.videos.table.selector.youtube}</option>
+                                    <option value="vimeo" form="editForm#{video.id}">#{t.author.videos.table.selector.vimeo}</option>
+                                  - else
+                                    <option value="youtube" form="editForm#{video.id}">#{t.author.videos.table.selctor.youtube}</option>
+                                    <option value="vimeo"selected form="editForm#{video.id}">#{t.author.videos.table.selector.vimeo}</option>
+                              </select>
+                          </td>
+                          <td><input type="text" name="uri" id="edit-uri" value="#{video.uri}" form="editForm#{video.id}" /></td>
+                          <td><input type="text" name="description" id="edit-description" value="#{video.description}" form="editForm#{video.id}" /></td>
+                          <td>#{video.created_at}</td>
+                          <td>#{video.updated_at}</td>
+                          <td>
+                              <input type="submit" name="operation" value="#{t.author.videos.actions.edit}" form="editForm#{video.id}"/><br>
+                              <input type="submit" name="operation" value="#{t.author.videos.actions.delete}" form="deleteForm#{video.id}">
+                          </td>
                         </tr>
                     - else
                         <tr>

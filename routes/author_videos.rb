@@ -57,7 +57,7 @@ module Routing
                   
                   ##
                   # Delete video link sequence for author/admin/super users.
-                  app.get '/author/videos/delete/:id' do
+                  app.post '/author/videos/delete/:id' do
                     # This page requires at least user privileges.
                     redirect '/author/home' unless login?
                     # Retrieve video link object by ID from DB.
