@@ -7,6 +7,7 @@ module Routing
                   ##
                   # Locale redirector
                   app.get '/author/traffic' do
+                      forward_notifications!
                       redirect "/#{locale?}/author/traffic"
                   end
                   ##
@@ -15,7 +16,7 @@ module Routing
                     # Set locale
                     set_locale!
                     # This page requires at least admin privileges.
-                    redirect '/author/home' unless login_admin?
+                    author_login!
                     # Fetch all trackers from DB.
                     @trackers = Tracker.all.order(:visits)
                     # Display view.

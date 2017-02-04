@@ -6,6 +6,7 @@ module Routing
             ##
             # Locale redirector
             app.get '/blog' do
+                forward_notifications!
                 redirect "/#{locale?}/blog"
             end
             ##
@@ -23,6 +24,7 @@ module Routing
             ##
             # Locale redirector
             app.get '/blog/:id' do
+                forward_notifications!
                 redirect "/#{locale?}/blog/#{params[:id]}"
             end
             ##

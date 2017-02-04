@@ -15,7 +15,7 @@ module Routing
                     # Set locale
                     set_locale!
                     # This page requires at least admin privileges.
-                    redirect '/author/home' unless login_admin?
+                    author_login!
                     # Fetch all user accounts.
                     @users = Account.all.order(:id)
                     # Display view.

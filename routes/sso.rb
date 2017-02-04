@@ -7,6 +7,7 @@ module Routing
               ##
               # Locale redirector
               app.get '/sso/author/login' do
+                  forward_notifications!
                   redirect "/#{locale?}/sso/author/login"
               end
               ##
@@ -35,6 +36,7 @@ module Routing
                 # CVA-001: Protects from CSRF attack.
                 if(session[:xs_key] != params['xskey'])
                   session[:xs_key] = nil
+                  flash[:error] = t.notifications.xsrf
                   redirect '/sso/author/login'
                 end
                 
@@ -46,6 +48,7 @@ module Routing
                   session[:auth_super] = true
                   session[:auth_uname] = 'super'
                   # Redirect to dashboard.
+                  flash[:info] = t.notifications.loginsucc(uname)
                   redirect '/author/home'
                   return
                 end
@@ -60,12 +63,15 @@ module Routing
                     session[:auth] = true
                     session[:auth_admin] = acc.is_super
                     session[:auth_uname] = uname
+                    flash[:info] = t.notifications.loginsucc(uname)
                     # Redirect to dashboard.
                     redirect '/author/home'
                     return
                   end
-                rescue
-                  # Do nothing, account not found.
+                rescue ActiveRecord::RecordNotFound
+                  flash[:error] = t.notifications.invalidauth
+                rescue NoMethodError
+                  flash[:error] = t.notifications.invalidauth
                 end
                 
                 # Invalid login credentials. Redirect to log in page.
@@ -80,6 +86,7 @@ module Routing
                 session[:auth_admin] = false
                 session[:auth_super] = false
                 session[:auth_uname] = nil
+                flash[:info] = t.notifications.loggedout
                 # Redirect to home page.
                 redirect '/'
               end
@@ -88,14 +95,15 @@ module Routing
               # SSO Account modifier for deleting accounts.
               app.post '/sso/author/remove/:uname' do
                 # This page requires at least administrator privileges.
-                redirect '/author/home' unless login_admin?
+                admin_login!
                 begin
                   # Find user account by username.
                   acc = Account.find_by(username: params['uname'])
                   # Destroy the account.
                   acc.destroy
-                rescue
-                  # User does not exist.
+                  flash[:info] = t.notifications.deletesucc('user')
+                rescue ActiveRecord::RecordNotFound
+                  flash[:error] = t.notifications.deleteerror('user')
                 end
                 # Redirect to users dashboard page.
                 redirect '/author/users'
@@ -105,7 +113,7 @@ module Routing
               # SSO Account modifier for updating passwords.
               app.post '/sso/author/pass/:uname' do
                 # This page requires at least adminstrator privileges.
-                redirect '/author/home' unless login_admin?
+                admin_login!
                 begin
                   # Find user account by username.
                   acc = Account.find_by(username: params['uname'])
@@ -113,8 +121,11 @@ module Routing
                   acc.password = params['newpassword']
                   # Save new model object state to DB.
                   acc.save!
-                rescue
-                  # User does not exist or some kind of save error occured.
+                  flash[:info] = t.notifications.savesucc('user')
+                rescue ActiveRecord::RecordNotFound
+                  flash[:error] = t.notifications.saveerror('user')
+                rescue ActiveRecord::RecordInvalid
+                  flash[:error] = t.notifications.saveerror('user')
                 end
                 # Redirect to users dashboard page.
                 redirect '/author/users'
@@ -124,22 +135,13 @@ module Routing
               # SSO Account modifier for creating new accounts.
               app.post '/sso/author/new' do
                 # This page requires at least administrator privileges.
-                redirect '/author/home' unless login_admin?
+                admin_login!
                 begin
                   # Create new Account model object.
-                  acc = Account.new()
-                  # Fill in all needed values.
-                  acc.username = params['username']
-                  acc.password = params['password']
-                  if params['type'] == 'admin'
-                    acc.is_super = true
-                  else
-                    acc.is_super = false
-                  end
-                  # Save new model object to DB.
-                  acc.save!
-                rescue
-                  # User does not exist or some kind of save error occured.
+                  acc = Account.create!(username: params['username'], password: params['password'], is_super: (params['type'] == 'admin'))
+                  flash[:info] = t.notifications.savesucc('user')
+                rescue ActiveRecord::RecordInvalid
+                  flash[:error] = t.notifications.saveerror('user')
                 end
                 # Redirect to users dashboard page.
                 redirect '/author/users'

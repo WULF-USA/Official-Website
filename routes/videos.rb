@@ -6,6 +6,7 @@ module Routing
               ##
               # Locale redirector
               app.get '/videos' do
+                  forward_notifications!
                   redirect "/#{R18n::I18n.default}/videos"
               end
               ##

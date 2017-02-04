@@ -7,6 +7,7 @@ require 'sinatra/activerecord'
 require 'rack-flash'
 require 'action_view'
 require 'sinatra/r18n'
+require 'sinatra/flash'
 require_relative './config/environments'
 require_relative './models/accounts'
 require_relative './models/feeds'
@@ -30,19 +31,25 @@ require_relative './routes/author_users'
 require_relative './routes/author_videos'
 require_relative './helpers/login'
 require_relative './helpers/lang'
+require_relative './helpers/notifications'
 require_relative './lib/tracking'
 
 class WulfApp < Sinatra::Base
 
   include ActionView::Helpers::SanitizeHelper
   include Lib::Tracking
+  include R18n::Helpers
+  
+  R18n.default_places = './i18n/'
   
   enable :sessions
   
   helpers Helpers::Login
   helpers Helpers::Internationalization
+  helpers Helpers::Notifications
   
   register Sinatra::R18n
+  register Sinatra::Flash
   set :root, File.dirname(__FILE__)
   
   register Routing::About

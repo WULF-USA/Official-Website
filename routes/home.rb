@@ -6,6 +6,7 @@ module Routing
               ##
               # Locale redirector
               app.get '/' do
+                  forward_notifications!
                   redirect "/#{locale?}/"
               end
               ##
