@@ -1,12 +1,16 @@
 require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'simplecov'
-require_relative '../wulf_app.rb'
-
 SimpleCov.start
+require_relative '../wulf_app.rb'
 
 Capybara.default_driver = :poltergeist
 Capybara.app = proc { |env| WulfApp.new.call(env) }
+
+options = {js_errors: false}
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, options)
+end
 
 RSpec.configure do |config|
   config.include Capybara::DSL
