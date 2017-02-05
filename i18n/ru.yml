@@ -1,158 +1,158 @@
 navbar:
-    menu: Toggle navigation
-    home: Home
-    blog: Blog
-    videos: Videos
-    resources: Resources
-    donate: Donate
-    about: About
-    logout: Log Out
+    menu: Переключатель навигации
+    home: Главный 
+    blog: Влог 
+    videos: Видео
+    resources: Ресурсы 
+    donate: Пожертвовать 
+    about: О Нам 
+    logout: Выйти 
 author:
     sidebar:
-        dashboard: Dashboard
-        articles: Articles
-        news: News
-        resources: Resources
-        traffic: Traffic
-        videos: Videos
-        users: Users
+        dashboard: Приборная панель 
+        articles: Статьи 
+        news: Новости 
+        resources: Ресурсы 
+        traffic: Трафик 
+        videos: Видео 
+        users: Пользователи 
     blog:
-        title: Blog Posts
+        title: Посты в влоге 
         table:
-            title: Title
-            author: Author
-            uploaded: Date Uploaded
-            modified: Date Modified
-            actions: Actions
-        edit: Edit
-        delete: Delete
-        new: New Blog Post
+            title: Название 
+            author: Автор 
+            uploaded: Дата Публикации 
+            modified: Дата Коррекция 
+            actions: Действия 
+        edit: Редактировать 
+        delete: Удалить 
+        new: Новый Пост в Блоге 
         editing:
-            header: Editing
-            title: Title
-            content: Content
-            ruletag: The following HTML tags are allowed
-            ruleattr: The following HTML attributes are allowed
-            submit: Submit
+            header: Редактирование 
+            title: Название 
+            content: Содержание 
+            ruletag: Следующие HTML-теги разрешены 
+            ruleattr: Следующие HTML-теги разрешены
+            submit: Представлять 
     home:
-        header: Dashboard
+        header: Приборная панель 
     login:
-        header: SSO Author Sign-in
-        username: Username
-        password: Password
-        submit: Sign in
+        header: SSO Авторизоваться 
+        username: Имя пользователя 
+        password: Пароль 
+        submit: Авторизоваться 
     news:
-        header: News
+        header: Новости 
         table:
-            title: Title
-            author: Author
-            uploaded: Date Uploaded
-            modified: Date Modified
-            actions: Actions
-        edit: Edit
-        delete: Delete
-        new: New News Feed Item
+            title: Название 
+            author: Автор
+            uploaded: Дата Публикации 
+            modified: Дата Коррекция
+            actions: Действия 
+        edit: Редактировать 
+        delete: Удалить 
+        new: Новый Элемент Ленты Новостей
         editing:
-            header: Editing
-            title: Title
-            content: Content
-            submit: Submit
+            header: Редактирование 
+            title: Название 
+            content: Содержание 
+            submit: Представлять 
     resources:
-        header: Resources
+        header: Ресрусы 
         table:
-            title: Title
-            author: Author
-            link: Hyperlink
-            description: Description
-            uploaded: Date Uploaded
-            modified: Date Modified
-            actions: Actions
+            title: Название 
+            author: Автор 
+            link: Гиперссылка
+            description: Описание 
+            uploaded: Дата Публикации 
+            modified: Дата Коррекция
+            actions: Действия 
         actions:
-            edit: Edit
-            delete: Delete
-            create: Create
+            edit: Редактировать 
+            delete: Удалить 
+            create: Создать 
         other:
             exampleurl: http://example.com
     traffic:
-        header: Traffic
+        header: Трафик 
         table:
             url: URL
-            visits: Visitors
+            visits: Посетители 
     users:
-        header: Users
+        header: Пользователи
         table:
-            username: Username
-            password: Password
-            actions: Actions
+            username: Имя пользователя 
+            password: Пароль 
+            actions: Действия 
         actions:
-            update: Update
-            delete: Delete
+            update: Обновление
+            delete: Удалить
         form:
-            new: New User
-            username: Username
-            password: Password
-            admin: Administrator
-            user: Standard User
-            create: Create
+            new: Новый Пользователь 
+            username: Имя пользователя 
+            password: Пароль 
+            admin: Администратор 
+            user: Стандартный пользователь 
+            create: Создать 
     videos:
-        header: Videos
+        header: Видео
         table:
-            title: Title
-            author: Author
-            type: Type
+            title: Название 
+            author: Автор
+            type: Тип
             uri: URI
-            description: Description
-            uploaded: Date Uploaded
-            modified: Date Modified
-            actions: Actions
+            description: Описание
+            uploaded: Дата Публикации
+            modified: Дата Коррекция 
+            actions: Действия 
             selector:
                 youtube: YouTube
                 vimeo: Vimeo
         actions:
-            edit: Edit
-            delete: Delete
-            create: Create
-        helpbeg: The URI of a video is the ID at the end of the video URL. For example, if you wanted to post
-        helpend: the URI would be
+            edit: Редактировать 
+            delete: Удалить 
+            create: Создать 
+        helpbeg: URI видео - Идентификатор в конце URL видео. Например, если вы хотели разместить,
+        helpend: то URI бы было
 blog:
-    header: Blog
+    header: Блог
 home:
-    title: Welcome to WULF
-    learnmore: Learn more
-    news: News
-    readmore: Read more
-    videos: Videos
-    seemore: See more
-    blog: Blog
-    visitblog: Visit blog
+    title: Добро пожаловать в WULF
+    learnmore: Узнать больше 
+    news: Новости
+    readmore: Прочитать больше 
+    videos: Видео 
+    seemore: Смотреть больше 
+    blog: Блог
+    visitblog: Идти в блог
 header:
-    description: Official website of the Workers United Leftist Front.
+    description: Официальный сайт Рабочего Единого Лебого Фронта 
     author: WULF
     title: WULF
 notfound:
     header: 404 Not Found
-    content: The page you are looking for is not here. Try visiting the links above to find what you are looking for.
+    content: Страница не получилась. Смотрите ссылки на верх, чтобы найти то, что вы ищете. 
 resource:
-    header: Resources
-    meta: Submitted by %1 at %2
-    visit: Visit resource
+    header: Ресурсы 
+    meta: Представлен %1 в %2
+    visit: Смотреть ресурс
 videos:
-    header: Videos
+    header: Видео
 types:
-    video: video
-    resource: resource
-    news: news
-    article: article
+    video: видео
+    resource: ресурс
+    news: новости 
+    article: статья
 about:
     header: О Нам
     content:Рабочий Единый Левый Фронт - Организация, главная цель которой то, что люди знают, что они угнетены и  были подозрительными деятельностей правительства, и чтобы политики были ответственными за них. Мы хотим, чтобы вы знали, что эти политики не сохраняют рабочий класс, ни освободят нас от власти другой стороны. Мы все видили недостаток изменении от администрации к администрации в качестве доказательства. Это недостаток из-за того, что политики врут постоянно вам о своём сострадании за вас, чтобы они обеспечили ваш голос. Цикл повторяется постоянно. Мы провозглашаем, что все решения в обществе должны быть в основе потребностей народы, вместо того, что генерирует прибыль. Мы провозглашаем, что все решения должны быть в руках народы и путем прямой демократии, и должны быть также децентрализованной, чтобы устранить все проблемы эффективнее. Этот процесс создаёт истинное освобождение всех народов от угнетения, и ни от такой-то власти, которая заботится только собой. Вся власть народу.    
 notifications:
-    permissions: You don't have permission to perform this action!
-    noauth: You must be logged in to perform this action!
-    invalidauth: Incorrect username/password combination!
-    loginsucc: Welcome back %1!
-    loggedout: Successfully logged out.
-    recmiss: Resource not found!
+    permissions: Вы не имеете правы делать это действие!
+    noauth: Нужно войти в систему, чтобы делать это!
+    invalidauth: Неправильный имя пользователя/пароль!
+    loginsucc: Добро пожаловать %1!
+    loggedout: Вы успешно вышли из системы.
+    recmiss: Поиск ресурса не получился!
     savesucc: Item %1 successfully saved to the database.
     saveerror: An error occured while saving the %1, please try again later.
     deletesucc: Item %1 successfully deleted from the database.
