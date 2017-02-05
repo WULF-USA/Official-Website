@@ -265,6 +265,9 @@ GEM
     unf_ext (0.0.7.2)
     unicode-display_width (1.1.3)
     uuidtools (2.1.5)
+    validate_url (1.0.2)
+      activemodel (>= 3.0.0)
+      addressable
     websocket-driver (0.6.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -307,6 +310,7 @@ DEPENDENCIES
   sinatra-flash
   sinatra-r18n
   slim
+  validate_url
 
 RUBY VERSION
    ruby 2.4.0p0
