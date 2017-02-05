@@ -1,0 +1,160 @@
+navbar:
+    menu: Toggle navigation
+    home: Home
+    blog: Blog
+    videos: Videos
+    resources: Resources
+    donate: Donate
+    about: About
+    logout: Log Out
+author:
+    sidebar:
+        dashboard: Dashboard
+        articles: Articles
+        news: News
+        resources: Resources
+        traffic: Traffic
+        videos: Videos
+        users: Users
+    blog:
+        title: Blog Posts
+        table:
+            title: Title
+            author: Author
+            uploaded: Date Uploaded
+            modified: Date Modified
+            actions: Actions
+        edit: Edit
+        delete: Delete
+        new: New Blog Post
+        editing:
+            header: Editing
+            title: Title
+            content: Content
+            ruletag: The following HTML tags are allowed
+            ruleattr: The following HTML attributes are allowed
+            submit: Submit
+    home:
+        header: Dashboard
+    login:
+        header: SSO Author Sign-in
+        username: Username
+        password: Password
+        submit: Sign in
+    news:
+        header: News
+        table:
+            title: Title
+            author: Author
+            uploaded: Date Uploaded
+            modified: Date Modified
+            actions: Actions
+        edit: Edit
+        delete: Delete
+        new: New News Feed Item
+        editing:
+            header: Editing
+            title: Title
+            content: Content
+            submit: Submit
+    resources:
+        header: Resources
+        table:
+            title: Title
+            author: Author
+            link: Hyperlink
+            description: Description
+            uploaded: Date Uploaded
+            modified: Date Modified
+            actions: Actions
+        actions:
+            edit: Edit
+            delete: Delete
+            create: Create
+        other:
+            exampleurl: http://example.com
+    traffic:
+        header: Traffic
+        table:
+            url: URL
+            visits: Visitors
+    users:
+        header: Users
+        table:
+            username: Username
+            password: Password
+            actions: Actions
+        actions:
+            update: Update
+            delete: Delete
+        form:
+            new: New User
+            username: Username
+            password: Password
+            admin: Administrator
+            user: Standard User
+            create: Create
+    videos:
+        header: Videos
+        table:
+            title: Title
+            author: Author
+            type: Type
+            uri: URI
+            description: Description
+            uploaded: Date Uploaded
+            modified: Date Modified
+            actions: Actions
+            selector:
+                youtube: YouTube
+                vimeo: Vimeo
+        actions:
+            edit: Edit
+            delete: Delete
+            create: Create
+        helpbeg: The URI of a video is the ID at the end of the video URL. For example, if you wanted to post
+        helpend: the URI would be
+blog:
+    header: Blog
+home:
+    title: Welcome to WULF
+    learnmore: Learn more
+    news: News
+    readmore: Read more
+    videos: Videos
+    seemore: See more
+    blog: Blog
+    visitblog: Visit blog
+header:
+    description: Official website of the Workers United Leftist Front.
+    author: WULF
+    title: WULF
+notfound:
+    header: 404 Not Found
+    content: The page you are looking for is not here. Try visiting the links above to find what you are looking for.
+resource:
+    header: Resources
+    meta: Submitted by %1 at %2
+    visit: Visit resource
+videos:
+    header: Videos
+types:
+    video: video
+    resource: resource
+    news: news
+    article: article
+about:
+    header: О Нам
+    content:Рабочий Единый Левый Фронт - Организация, главная цель которой то, что люди знают, что они угнетены и подозрительными деятельностей   
+notifications:
+    permissions: You don't have permission to perform this action!
+    noauth: You must be logged in to perform this action!
+    invalidauth: Incorrect username/password combination!
+    loginsucc: Welcome back %1!
+    loggedout: Successfully logged out.
+    recmiss: Resource not found!
+    savesucc: Item %1 successfully saved to the database.
+    saveerror: An error occured while saving the %1, please try again later.
+    deletesucc: Item %1 successfully deleted from the database.
+    deleteerror: An error occured while deleting the %1, please try again later.
+    xsrf: You have been subjected to XSRF attack. Contact the site administrators immediately.
