@@ -10,7 +10,7 @@ describe "i18n/es.yml" do
 end
 
 describe "i18n/ru.yml" do
-  xit { is_expected.to be_a_complete_translation_of 'i18n/en.yml' }
+  it { is_expected.to be_a_complete_translation_of 'i18n/en.yml' }
 end
 
 describe "i18n/fr.yml" do
