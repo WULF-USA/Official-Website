@@ -1,32 +1,32 @@
 navbar:
-    menu: Toggle navigation
-    home: Home
-    blog: Blog
-    videos: Videos
-    resources: Resources
-    donate: Donate
-    about: About
-    logout: Log Out
+    menu: Переключатель навигации
+    home: Главный 
+    blog: Влог 
+    videos: Видео
+    resources: Ресурсы 
+    donate: Пожертвовать 
+    about: О Нам 
+    logout: Выйти 
 author:
     sidebar:
-        dashboard: Dashboard
-        articles: Articles
-        news: News
-        resources: Resources
-        traffic: Traffic
-        videos: Videos
-        users: Users
+        dashboard: Приборная панель 
+        articles: Статьи 
+        news: Новости 
+        resources: Ресурсы 
+        traffic: Трафик 
+        videos: Видео 
+        users: Пользователи 
     blog:
-        title: Blog Posts
+        title: Посты в влоге 
         table:
-            title: Title
-            author: Author
-            uploaded: Date Uploaded
-            modified: Date Modified
-            actions: Actions
-        edit: Edit
-        delete: Delete
-        new: New Blog Post
+            title: Название 
+            author: Автор 
+            uploaded: Дата Публикации 
+            modified: Дата Коррекция 
+            actions: Действия 
+        edit: Редактировать 
+        delete: Удалить 
+        new: Новый Пост в Блоге 
         editing:
             header: Editing
             title: Title
