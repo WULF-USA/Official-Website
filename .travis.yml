@@ -13,7 +13,6 @@ env:
   - PORT=8080
   - APP_SUPER_UNAME=testuser
   - APP_SUPER_PASSWD=testpassword
-  - RUBYOPT=-W0
 branches:
   only:
   - master
