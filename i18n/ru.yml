@@ -1,7 +1,7 @@
 navbar:
     menu: Переключатель навигации
     home: Главный 
-    blog: Влог 
+    blog: Блог 
     videos: Видео
     resources: Ресурсы 
     donate: Пожертвовать 
@@ -17,7 +17,7 @@ author:
         videos: Видео 
         users: Пользователи 
     blog:
-        title: Посты в влоге 
+        title: Посты в блоге 
         table:
             title: Название 
             author: Автор 
@@ -153,8 +153,8 @@ notifications:
     loginsucc: Добро пожаловать %1!
     loggedout: Вы успешно вышли из системы.
     recmiss: Поиск ресурса не получился!
-    savesucc: Item %1 successfully saved to the database.
-    saveerror: An error occured while saving the %1, please try again later.
-    deletesucc: Item %1 successfully deleted from the database.
-    deleteerror: An error occured while deleting the %1, please try again later.
-    xsrf: You have been subjected to XSRF attack. Contact the site administrators immediately.
+    savesucc: Элемент %1  успешно сохранен в базе данных.
+    saveerror: Произошла ошибка при сохранении %1, попробуйте позже.
+    deletesucc: Элемент %1 успешно удален из базы данных.
+    deleteerror: Произошла ошибка при удалении %1, попробуйте позже.
+    xsrf: Вы получились XSRF-атак. Обратитесь к администраторам сразу.
