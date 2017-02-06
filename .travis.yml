@@ -13,6 +13,7 @@ env:
   - PORT=8080
   - APP_SUPER_UNAME=testuser
   - APP_SUPER_PASSWD=testpassword
+  - RUBYOPT=-W0
 branches:
   only:
   - master
@@ -23,7 +24,7 @@ install:
 - sass --update public/src/css:public/src/css
 - ./scripts/setupdb.sh
 script:
-- ruby -W0 rspec --format doc
+- rspec --format doc
 - dawn --exit-on-warn --sinatra $TRAVIS_BUILD_DIR
 - bundle-audit check --update
 - rubocop -EDLR
