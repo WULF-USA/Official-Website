@@ -23,7 +23,7 @@ install:
 - sass --update public/src/css:public/src/css
 - ./scripts/setupdb.sh
 script:
-- rspec --format doc
+- ruby -W0 rspec --format doc
 - dawn --exit-on-warn --sinatra $TRAVIS_BUILD_DIR
 - bundle-audit check --update
 - rubocop -EDLR
