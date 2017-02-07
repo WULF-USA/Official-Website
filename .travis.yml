@@ -9,30 +9,30 @@ addons:
     repo_token: 3a37b06b904d7cd224d38b486334dd1c77c6eedf5efc96173531a470e9b8c8ea
 env:
   global:
-  - RACK_ENV=test
-  - PORT=8080
-  - APP_SUPER_UNAME=testuser
-  - APP_SUPER_PASSWD=testpassword
+    - RACK_ENV=test
+    - PORT=8080
+    - APP_SUPER_UNAME=testuser
+    - APP_SUPER_PASSWD=testpassword
   matrix:
-  - TEST_TYPE=unit
-  - TEST_TYPE=integration
-  - TEST_TYPE=performance
+    - TEST_TYPE=unit
+    - TEST_TYPE=integration
+    - TEST_TYPE=performance
 branches:
   only:
   - master
 install:
-- gem update --system
-- gem cert --add <(curl -Ls https://raw.githubusercontent.com/thesp0nge/dawnscanner/master/certs/paolo_at_dawnscanner_dot_org.pem)
-- bundle install --jobs=3 --retry=3 --path ./vendor/bundle --deployment
-- sass --update public/src/css:public/src/css
-- ./scripts/setupdb.sh
+  - gem update --system
+  - gem cert --add <(curl -Ls https://raw.githubusercontent.com/thesp0nge/dawnscanner/master/certs/paolo_at_dawnscanner_dot_org.pem)
+  - bundle install --jobs=3 --retry=3 --path ./vendor/bundle --deployment
+  - sass --update public/src/css:public/src/css
+  - ./scripts/setupdb.sh
 script:
-- rspec --tag $TEST_TYPE --format doc --color
-- dawn --exit-on-warn --sinatra $TRAVIS_BUILD_DIR
-- bundle-audit check --update
-- rubocop -EDLR
+  - rspec --tag $TEST_TYPE --format doc --color
+  - dawn --exit-on-warn --sinatra $TRAVIS_BUILD_DIR
+  - bundle-audit check --update
+  - rubocop -EDLR
 after_success:
-- ./scripts/submitcoverage.sh
+  - ./scripts/submitcoverage.sh
 deploy:
   provider: heroku
   buildpack: ruby
