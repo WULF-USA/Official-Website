@@ -13,9 +13,10 @@ env:
   - PORT=8080
   - APP_SUPER_UNAME=testuser
   - APP_SUPER_PASSWD=testpassword
-- TEST_TYPE=unit
-- TEST_TYPE=integration
-- TEST_TYPE=performance
+  matrix:
+  - TEST_TYPE=unit
+  - TEST_TYPE=integration
+  - TEST_TYPE=performance
 branches:
   only:
   - master
