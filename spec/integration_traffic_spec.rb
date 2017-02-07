@@ -1,6 +1,6 @@
 require_relative './spec_helper'
 
-describe WulfApp do
+describe WulfApp, :integration do
     it "displays traffic data" do
         sso_super_login
         # Perform test

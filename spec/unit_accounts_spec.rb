@@ -1,7 +1,7 @@
 require_relative './spec_helper'
 require_relative '../models/accounts'
 
-describe Account do
+describe Account, :unit do
     describe "#validation" do
         it "should not allow empty model" do
             account = Account.new()

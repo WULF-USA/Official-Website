@@ -1,6 +1,6 @@
 require_relative './spec_helper'
 
-describe WulfApp do
+describe WulfApp, :integration do
     it "shows empty resources list" do
         visit "/en/resources"
     end
