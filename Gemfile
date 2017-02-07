@@ -25,16 +25,20 @@ gem 'sinatra-flash'
 gem 'rspec'
 gem 'capybara'
 gem 'poltergeist'
+gem 'rspec-benchmark'
+
 group :development do
     gem 'guard'
     gem 'guard-migrate'
     gem 'guard-sass'
     gem 'guard-rubocop'
 end
+
 group :test do
     gem "simplecov"
     gem "codeclimate-test-reporter", "~> 1.0.0"
 end
+
 group :test, :development do
     gem 'bundler-audit', require: false
     gem 'dawnscanner', require: false
