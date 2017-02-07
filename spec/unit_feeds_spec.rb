@@ -1,7 +1,7 @@
 require_relative './spec_helper'
 require_relative '../models/feeds'
 
-describe Feed do
+describe Feed, :unit do
     describe "#validation" do
         it "should not allow empty model" do
             feed = Feed.new()

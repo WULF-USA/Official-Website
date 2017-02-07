@@ -1,7 +1,7 @@
 require_relative './spec_helper'
 require_relative '../models/trackers'
 
-describe Tracker do
+describe Tracker, :unit do
     describe "#validation" do
         it "should not allow empty model" do
             tracker = Tracker.new()
