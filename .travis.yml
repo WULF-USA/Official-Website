@@ -24,6 +24,7 @@ install:
   - gem update --system
   - gem cert --add <(curl -Ls https://raw.githubusercontent.com/thesp0nge/dawnscanner/master/certs/paolo_at_dawnscanner_dot_org.pem)
   - bundle install --jobs=3 --retry=3 --path ./vendor/bundle --deployment
+  - gem install sass -system
   - sass --update public/src/css:public/src/css
   - ./scripts/setupdb.sh
 script:
