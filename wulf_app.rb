@@ -40,6 +40,8 @@ class WulfApp < Sinatra::Base
   include Lib::Tracking
   include R18n::Helpers
   
+  use ActiveRecord::QueryCache
+  
   R18n.default_places = './i18n/'
   
   enable :sessions

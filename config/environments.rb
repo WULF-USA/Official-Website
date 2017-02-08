@@ -33,3 +33,5 @@ configure :development do
 			:pool => 5
 	)
 end
+
+ActiveRecord::Base.logger = Logger.new(STDOUT)
