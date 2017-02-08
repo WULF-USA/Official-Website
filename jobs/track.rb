@@ -8,7 +8,6 @@ class Track
     @queue = :tracking
     
     def self.perform(url)
-        Resque.logger.fatal "RRRREEEEEEEE IM TRIGGERED!!!!!"
         # Try to look for the tracker by URL.
         tracker_obj = Tracker.find_by(url: url)
         if(tracker_obj == nil)
