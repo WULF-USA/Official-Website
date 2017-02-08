@@ -6,6 +6,8 @@ require 'rest-client'
 require 'sinatra/activerecord'
 require 'rack-flash'
 require 'action_view'
+require 'resque'
+require 'redis'
 require 'sinatra/r18n'
 require 'sinatra/flash'
 require_relative './config/environments'
@@ -40,7 +42,7 @@ class WulfApp < Sinatra::Base
   include Lib::Tracking
   include R18n::Helpers
   
-  use ActiveRecord::QueryCache
+  #use ActiveRecord::QueryCache
   
   R18n.default_places = './i18n/'
   
@@ -69,4 +71,12 @@ class WulfApp < Sinatra::Base
   register Routing::Author::Traffic
   register Routing::Author::Users
   register Routing::Author::Videos
+  
+  configure do
+    #redis_url = ENV["REDIS_URL"] || "redis://127.0.0.1:6379/0"
+    #uri = URI.parse(redis_url)
+    #Resque.redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+    #set :redis, redis_url
+    #Resque.inline = true
+  end
 end

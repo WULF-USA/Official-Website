@@ -1,3 +1,3 @@
 require_relative './wulf_app'
 
-run WulfApp
+run WulfApp.new
