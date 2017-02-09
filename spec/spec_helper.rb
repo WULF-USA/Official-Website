@@ -6,7 +6,8 @@ SimpleCov.start
 require_relative '../wulf_app.rb'
 
 Capybara.default_driver = :poltergeist
-Capybara.app = proc { |env| WulfApp.new.call(env) }
+Capybara.app_host = 'http://localhost:8080'
+Capybara.run_server = false
 
 options = {js_errors: false}
 Capybara.register_driver :poltergeist do |app|
