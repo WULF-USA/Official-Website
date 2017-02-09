@@ -32,10 +32,11 @@ install:
 - sass --update public/src/css:public/src/css
 - "./scripts/setupdb.sh"
 script:
-- $cmd=foreman start --formation web=1,worker=2 &
+- foreman start --formation web=1,worker=2 &
+- WEB_PID=$!
 - sleep 15
 - rspec --tag $TEST_TYPE --format doc --color
-- kill $cmd
+- kill $WEB_PID
 - wait
 - dawn --exit-on-warn --sinatra $TRAVIS_BUILD_DIR
 - bundle-audit check --update
