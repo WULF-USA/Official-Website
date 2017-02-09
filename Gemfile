@@ -14,6 +14,7 @@ gem 'sinatra-r18n'
 gem 'pg'
 gem 'rake'
 gem 'activemodel'
+gem 'rspec-benchmark'
 gem 'json'
 gem 'bcrypt'
 gem 'rack-test'
@@ -21,20 +22,26 @@ gem 'actionview'
 gem 'sass'
 gem 'i18n'
 gem 'validate_url'
+gem 'resque'
 gem 'sinatra-flash'
+gem 'dalli'
 gem 'rspec'
 gem 'capybara'
 gem 'poltergeist'
+
 group :development do
     gem 'guard'
     gem 'guard-migrate'
     gem 'guard-sass'
     gem 'guard-rubocop'
+    gem 'foreman'
 end
+
 group :test do
     gem "simplecov"
     gem "codeclimate-test-reporter", "~> 1.0.0"
 end
+
 group :test, :development do
     gem 'bundler-audit', require: false
     gem 'dawnscanner', require: false

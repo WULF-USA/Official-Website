@@ -6,6 +6,9 @@ require 'rest-client'
 require 'sinatra/activerecord'
 require 'rack-flash'
 require 'action_view'
+require 'resque'
+require 'redis'
+require 'dalli'
 require 'sinatra/r18n'
 require 'sinatra/flash'
 require_relative './config/environments'
@@ -40,6 +43,8 @@ class WulfApp < Sinatra::Base
   include Lib::Tracking
   include R18n::Helpers
   
+  #use ActiveRecord::QueryCache
+  
   R18n.default_places = './i18n/'
   
   enable :sessions
@@ -67,4 +72,8 @@ class WulfApp < Sinatra::Base
   register Routing::Author::Traffic
   register Routing::Author::Users
   register Routing::Author::Videos
+  
+  configure :development do
+    enable :logging
+  end
 end

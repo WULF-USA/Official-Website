@@ -11,4 +11,14 @@ class Video < ActiveRecord::Base
         presence: true
     validates :description,
         presence: true
+    def generate_metadata
+        data = Hash.new
+        data['id'] = self.id
+        data['title'] = self.title
+        data['author'] = self.author
+        data['updated_at'] = self.updated_at
+        data['host'] = self.content
+        data['uri'] = self.uri
+        return data
+    end
 end

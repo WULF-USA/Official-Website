@@ -1,7 +1,7 @@
 require_relative './spec_helper'
 require_relative '../models/videos'
 
-describe Video do
+describe Video, :unit do
     describe "#validation" do
         it "should not allow empty model" do
             video = Video.new()

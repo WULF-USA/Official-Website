@@ -1,4 +1,5 @@
 require 'sinatra'
+require_relative '../lib/home'
 
 module Routing
     module Author
@@ -31,6 +32,7 @@ module Routing
                     begin
                       @video = Video.create!(title: params['title'], author: login_username, uri: params['uri'], host: params['host'], description: params['description'])
                       flash[:info] = t.notifications.savesucc(t.types.video)
+                      Lib::Cache::Home.invalidate!
                     rescue ActiveRecord::RecordInvalid
                       flash[:error] = t.notifications.saveerror(t.types.video)
                     end
@@ -61,6 +63,7 @@ module Routing
                         # Save the selected video link object.
                         @video.save!
                         flash[:info] = t.notifications.savesucc(t.types.video)
+                        Lib::Cache::Home.invalidate!
                       rescue ActiveRecord::RecordInvalid
                         flash[:error] = t.notifications.saveerror(t.types.video)
                       end
@@ -88,6 +91,7 @@ module Routing
                       # Delete the video link object.
                       @video.destroy
                       flash[:info] = t.notifications.deletesucc(t.types.video)
+                      Lib::Cache::Home.invalidate!
                     else
                       flash[:error] = t.notifications.permissions
                     end
