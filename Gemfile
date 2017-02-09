@@ -24,6 +24,7 @@ gem 'i18n'
 gem 'validate_url'
 gem 'resque'
 gem 'sinatra-flash'
+gem 'dalli'
 gem 'rspec'
 gem 'capybara'
 gem 'poltergeist'
@@ -33,6 +34,7 @@ group :development do
     gem 'guard-migrate'
     gem 'guard-sass'
     gem 'guard-rubocop'
+    gem 'foreman'
 end
 
 group :test do
