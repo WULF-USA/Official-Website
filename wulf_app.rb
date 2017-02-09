@@ -73,7 +73,8 @@ class WulfApp < Sinatra::Base
   register Routing::Author::Users
   register Routing::Author::Videos
   
-  configure :development do
-    enable :logging
+  configure do
+    #enable :logging
+    Resque.redis = ENV['REDIS_URL']
   end
 end

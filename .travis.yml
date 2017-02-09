@@ -36,7 +36,7 @@ script:
 - foreman start --formation web=1,worker=2 &
 - sleep 15
 - rspec --tag $TEST_TYPE --format doc --color
-- pkill -P $$
+- kill $!
 - dawn --exit-on-warn --sinatra $TRAVIS_BUILD_DIR
 - bundle-audit check --update
 - rubocop -EDLR
