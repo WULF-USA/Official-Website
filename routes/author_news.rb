@@ -1,4 +1,5 @@
 require 'sinatra'
+require_relative '../lib/home'
 
 module Routing
     module Author
@@ -44,6 +45,7 @@ module Routing
                     begin
                       @feed = Feed.create!(title: params['title'], author: login_username, content: params['content'])
                       flash[:info] = t.notifications.savesucc(t.types.news)
+                      Lib::Cache::Home.invalidate!
                     rescue ActiveRecord::RecordInvalid
                       flash[:error] = t.notifications.saveerror(t.types.news)
                     end
@@ -95,6 +97,7 @@ module Routing
                         # Save the selected feed model object.
                         @feed.save!
                         flash[:info] = t.notifications.savesucc(t.types.news)
+                        Lib::Cache::Home.invalidate!
                       rescue ActiveRecord::RecordInvalid
                         flash[:error] = t.notifications.saveerror(t.types.news)
                       end
@@ -120,6 +123,7 @@ module Routing
                     if check_ownership?(@item.author)
                       flash[:info] = t.notifications.deletesucc(t.types.news)
                       @item.destroy
+                      Lib::Cache::Home.invalidate!
                     else
                       flash[:error] = t.notifications.permissions
                     end

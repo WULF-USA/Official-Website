@@ -72,4 +72,8 @@ class WulfApp < Sinatra::Base
   register Routing::Author::Traffic
   register Routing::Author::Users
   register Routing::Author::Videos
+  
+  configure :development do
+    enable :logging
+  end
 end
