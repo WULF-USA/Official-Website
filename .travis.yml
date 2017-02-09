@@ -6,8 +6,8 @@ git:
 addons:
   code_climate:
     repo_token: 3a37b06b904d7cd224d38b486334dd1c77c6eedf5efc96173531a470e9b8c8ea
-  postgresql: '9.6'
 services:
+- postgresql
 - redis-server
 - memcached
 env:
@@ -33,6 +33,7 @@ install:
 - "./scripts/setupdb.sh"
 script:
 - foreman start --formation web=1, worker=2 &
+- sleep 15
 - rspec --tag $TEST_TYPE --format doc --color
 - dawn --exit-on-warn --sinatra $TRAVIS_BUILD_DIR
 - bundle-audit check --update
