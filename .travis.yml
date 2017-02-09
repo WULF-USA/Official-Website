@@ -13,6 +13,7 @@ services:
 env:
   global:
   - RACK_ENV=test
+  - IP=0.0.0.0
   - PORT=8080
   - APP_SUPER_UNAME=testuser
   - APP_SUPER_PASSWD=testpassword
@@ -33,11 +34,9 @@ install:
 - "./scripts/setupdb.sh"
 script:
 - foreman start --formation web=1,worker=2 &
-- WEB_PID=$!
 - sleep 15
 - rspec --tag $TEST_TYPE --format doc --color
-- kill $WEB_PID
-- wait
+- pkill -P $$
 - dawn --exit-on-warn --sinatra $TRAVIS_BUILD_DIR
 - bundle-audit check --update
 - rubocop -EDLR
