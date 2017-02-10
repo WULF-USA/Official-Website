@@ -6,6 +6,10 @@ git:
 addons:
   code_climate:
     repo_token: 3a37b06b904d7cd224d38b486334dd1c77c6eedf5efc96173531a470e9b8c8ea
+  hosts:
+    - psql.local
+    - redis.local
+    - memcached.local
 services:
 - postgresql
 - redis-server
@@ -17,18 +21,22 @@ env:
   - PORT=8080
   - APP_SUPER_UNAME=testuser
   - APP_SUPER_PASSWD=testpassword
-  - REDIS_URL=redis://localhost:6379
-  - MEMCACHIER_SERVERS=localhost:11211
+  - REDIS_URL=redis://redis.local:6379
+  - MEMCACHIER_SERVERS=memcached.local:11211
+  - DATABASE_URL=postgresql://postgres@psql.local/travis_ci_test
   matrix:
   - TEST_TYPE=unit
   - TEST_TYPE=integration
   - TEST_TYPE=performance
+matrix:
+  allowed_failures:
+    - env: TEST_TYPE=performance
 branches:
   only:
   - master
 install:
-- gem update --system
-- gem cert --add <(curl -Ls https://raw.githubusercontent.com/thesp0nge/dawnscanner/master/certs/paolo_at_dawnscanner_dot_org.pem)
+- travis_retry gem update --system
+- travis_retry gem cert --add <(curl -Ls https://raw.githubusercontent.com/thesp0nge/dawnscanner/master/certs/paolo_at_dawnscanner_dot_org.pem)
 - bundle install --jobs=3 --retry=3
 - sass --update public/src/css:public/src/css
 - "./scripts/setupdb.sh"

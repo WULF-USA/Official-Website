@@ -16,6 +16,7 @@ describe WulfApp, :integration do
         fill_in 'create-hyperlink', with: 'http://example.com'
         fill_in 'create-description', with: 'Testing description.'
         click_on 'Create'
+        sleep 15
         visit "/en/resources"
         expect(page).to have_content 'Testing Title'
         expect(page).to have_css 'a', text: 'Visit resource >>'
@@ -34,6 +35,7 @@ describe WulfApp, :integration do
         fill_in 'edit-hyperlink', with: 'http://example.org'
         fill_in 'edit-description', with: 'Testing description extended.'
         click_on 'Edit', match: :first
+        sleep 15
         visit "/en/resources"
         expect(page).to have_content 'Testing Title Edited'
         expect(page).to have_css 'a', text: 'Visit resource >>'
@@ -49,6 +51,7 @@ describe WulfApp, :integration do
         end
         expect(page).to have_current_path "/en/author/resources"
         click_on 'Delete', match: :first
+        sleep 15
         visit "/en/resources"
         expect(page).to have_no_content 'Testing Title Edited'
         sso_super_logout

@@ -10,7 +10,7 @@ require_relative '../models/resources'
 
 module Jobs
     module Models
-        class Delete
+        class Create
             include Resque::Plugins::Status
             
             #@queue = :models
@@ -19,7 +19,9 @@ module Jobs
                 # Find object in database.
                 begin
                     @type = options['model_type'].split('::').reduce(Module, :const_get)
-                    @obj = @type.find(options['model_id'])
+                    at(1, 3)
+                    @type.create!(options['args'])
+                    at(2, 3)
                 rescue ActiveRecord::RecordNotFound
                     # Invalid ID.
                     failed(msg: 'Model not found')
@@ -32,28 +34,19 @@ module Jobs
                     # Invalid model type.
                     failed(msg: 'Internal error')
                     return
-                end
-                # Update progress.
-                at(1, 4)
-                # Verify permissions.
-                if options['user_id'] == @obj.author || options['user_id'] == 'super' || options['is_super']
-                    # Update progress.
-                    at(2,4)
-                    # Destroy the object.
-                    @obj.destroy
-                    # Update progress.
-                    at(3,4)
-                    # Invalidate the cache.
-                    Resque.enqueue(Jobs::Cache::ReloadCache)
-                    # Update progess.
-                    at(4,4)
-                    # Terminate the job.
-                    completed
-                else
-                    # Invalid permissions.
-                    failed(msg: 'Incorrect permissions')
+                rescue ActiveRecord::RecordInvalid
+                    failed(msg: 'Invalid parameters')
+                    return
+                rescue
+                    failed(msg: 'Invalid parameter names')
                     return
                 end
+                # Invalidate the cache.
+                Resque.enqueue(Jobs::Cache::ReloadCache)
+                # Update progess.
+                at(3, 3)
+                # Terminate the job.
+                completed
             end
         end
     end

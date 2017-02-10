@@ -1,5 +1,8 @@
 require 'sinatra'
 require_relative '../lib/home'
+require_relative '../jobs/model_delete'
+require_relative '../jobs/model_edit'
+require_relative '../jobs/model_create'
 
 module Routing
     module Author
@@ -43,14 +46,14 @@ module Routing
                   app.post '/author/articles/create' do
                     # This page requires at least user privileges.
                     author_login!
-                    begin
-                      # Save the new feed model object.
-                      @article = Article.create!(title: params['title'], author: login_username, content: params['content'])
-                      flash[:info] = t.notifications.savesucc(t.types.article)
-                      Lib::Cache::Home.invalidate!
-                    rescue ActiveRecord::RecordInvalid
-                      flash[:error] = t.notifications.saveerror(t.types.article)
-                    end
+                    # Push to background job.
+                    flash[:pid] = Jobs::Models::Create.create(
+                      model_type: 'Article',
+                      args: {
+                        'title' => params['title'],
+                        'author' => login_username,
+                        'content' => params['content']
+                      })
                     # Redirect user back to dashbaord.
                     redirect '/author/articles'
                   end
@@ -84,29 +87,16 @@ module Routing
                   app.post '/author/articles/edit/:id' do
                     # This page requires at least user privileges.
                     author_login!
-                    begin
-                      # Retrieve post object by ID from DB.
-                      @article = Article.find_by(id: params[:id])
-                    rescue ActiveRecord::RecordNotFound
-                      flash[:error] = t.notifications.recmiss
-                      redirect '/author/articles'
-                    end
-                    # Check if user owns the post or has admin powers.
-                    if check_ownership?(@article.author)
-                      # Edit the selected feed model object.
-                      @article.title = params['title']
-                      @article.content = params['content']
-                      # Save the selected feed model object.
-                      begin
-                        @article.save!
-                        flash[:info] = t.notifications.savesucc(t.types.article)
-                        Lib::Cache::Home.invalidate!
-                      rescue ActiveRecord::RecordInvalid
-                        flash[:error] = t.notifications.saveerror(t.types.article)
-                      end
-                    else
-                      flash[:error] = t.notifications.permissions
-                    end
+                    # Push to background job.
+                    flash[:pid] = Jobs::Models::Edit.create(
+                      model_type: 'Article',
+                      model_id: params['id'],
+                      args: {
+                        'title' => params['title'],
+                        'content' => params['content']
+                      },
+                      user_id: login_username,
+                      is_super: login_admin?)
                     # Redirect user back to dashbaord.
                     redirect '/author/articles'
                   end
@@ -116,21 +106,12 @@ module Routing
                   app.post '/author/articles/delete/:id' do
                     # This page requires at least user privileges.
                     author_login!
-                    begin
-                      # Retrieve post object by ID from DB.
-                      @item = Article.find_by(id: params['id'])
-                    rescue ActiveRecord::RecordNotFound
-                      flash[:error] = t.notifications.recmiss
-                      redirect '/author/articles'
-                    end
-                    # Check if user owns the post or has admin powers.
-                    if check_ownership?(@item.author)
-                      flash[:info] = t.notifications.deletesucc(t.types.article)
-                      @item.destroy
-                      Lib::Cache::Home.invalidate!
-                    else
-                      flash[:error] = t.notifications.permissions
-                    end
+                    # Push to background job.
+                    flash[:pid] = Jobs::Models::Delete.create(
+                      model_type: 'Article',
+                      model_id: params['id'],
+                      user_id: login_username,
+                      is_super: login_admin?)
                     # Redirect back to news page of dashboard.
                     redirect '/author/articles'
                   end

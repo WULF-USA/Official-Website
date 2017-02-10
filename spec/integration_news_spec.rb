@@ -16,7 +16,7 @@ describe WulfApp, :integration do
         fill_in 'Content', with: 'Testing post content.'
         click_on 'Submit'
         # Wait for cache to reload
-        sleep 5
+        sleep 15
         visit "/en/"
         expect(page).to have_content 'Testing Title'
         click_on 'Testing Title'
@@ -35,7 +35,7 @@ describe WulfApp, :integration do
         fill_in 'Content', with: 'Testing post content edited.'
         click_on 'Submit'
         # Wait for cache to reload
-        sleep 5
+        sleep 15
         visit "/en/"
         expect(page).to have_content 'Testing Title Edited'
         click_on 'Testing Title Edited'
@@ -51,7 +51,7 @@ describe WulfApp, :integration do
         expect(page).to have_current_path "/en/author/news"
         click_on 'Delete', match: :first
         # Wait for cache to reload
-        sleep 5
+        sleep 15
         visit "/en/"
         expect(page).to have_no_content 'Testing Title Edited'
         sso_super_logout

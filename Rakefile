@@ -5,3 +5,9 @@ require_relative './jobs/track'
 require_relative './jobs/reload_cache'
 require_relative './jobs/reload_cache_home'
 require_relative './jobs/model_delete'
+require_relative './jobs/model_edit'
+require_relative './jobs/model_create'
+
+task :jobdump do
+    puts Resque::Plugins::Status::Hash.statuses
+end

@@ -17,7 +17,7 @@ class Video < ActiveRecord::Base
         data['title'] = self.title
         data['author'] = self.author
         data['updated_at'] = self.updated_at
-        data['host'] = self.content
+        data['host'] = self.host
         data['uri'] = self.uri
         return data
     end

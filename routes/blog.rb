@@ -21,7 +21,6 @@ module Routing
                 tick_url(request.path_info)
                 # Display View
                 slim :blog_list
-                puts Resque::Plugins::Status::Hash.statuses
             end
             ##
             # Locale redirector

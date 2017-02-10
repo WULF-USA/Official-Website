@@ -10,7 +10,7 @@ require_relative '../models/resources'
 
 module Jobs
     module Models
-        class Delete
+        class Edit
             include Resque::Plugins::Status
             
             #@queue = :models
@@ -39,8 +39,16 @@ module Jobs
                 if options['user_id'] == @obj.author || options['user_id'] == 'super' || options['is_super']
                     # Update progress.
                     at(2,4)
-                    # Destroy the object.
-                    @obj.destroy
+                    # Update the object.
+                    begin
+                        @obj.update!(options['args'])
+                    rescue ActiveRecord::RecordInvalid
+                        failed(msg: 'Invalid parameters')
+                        return
+                    rescue
+                        failed(msg: 'Invalid parameter names')
+                        return
+                    end
                     # Update progress.
                     at(3,4)
                     # Invalidate the cache.
