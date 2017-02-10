@@ -38,12 +38,14 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link rel="stylesheet" href="/src/css/site.css">
+    <script src="/src/js/jobtracking.js"></script>
   </head>
 
   <body>
     ==yield
     - flash.each do |key, value|
       <script type="text/javascript">$.notify("#{value}", "#{key}");</script>
+    
     </script>
   </body>
 </html>

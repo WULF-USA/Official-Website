@@ -1,2 +1,2 @@
 web: rackup -o $IP -p $PORT
-worker: rake resque:work QUEUE=* COUNT=4
+worker: rake resque:work QUEUE=* COUNT=4 INTERVAL=1

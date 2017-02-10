@@ -3,6 +3,7 @@ require 'sinatra/activerecord'
 require 'redis'
 require 'time'
 require_relative '../lib/cache'
+require_relative './reload_cache_home'
 
 module Jobs
     module Cache

@@ -12,14 +12,14 @@ module Lib
                 if(data == nil || !data.valid?)
                     data = HomeData.new
                     data.load_all
-                    Resque.enqueue(ReloadCacheHome)
+                    Resque.enqueue(Jobs::Cache::ReloadCacheHome)
                     return data
                 else
                     return data
                 end
             end
             def Home.invalidate!
-                Resque.enqueue(ReloadCacheHome)
+                Resque.enqueue(Jobs::Cache::ReloadCacheHome)
             end
         end
     end

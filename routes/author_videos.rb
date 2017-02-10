@@ -1,5 +1,6 @@
 require 'sinatra'
 require_relative '../lib/home'
+require_relative '../jobs/model_delete'
 
 module Routing
     module Author
@@ -77,24 +78,11 @@ module Routing
                   ##
                   # Delete video link sequence for author/admin/super users.
                   app.post '/author/videos/delete/:id' do
-                    # This page requires at least user privileges.
-                    author_login!
-                    begin
-                      # Retrieve video link object by ID from DB.
-                      @video = Video.find_by(id: params['id'])
-                    rescue
-                      flash[:error] = t.notifications.recmiss
-                      redirect '/author/videos'
-                    end
-                    # Check if user owns the video link or has admin powers.
-                    if check_ownership?(@video.author)
-                      # Delete the video link object.
-                      @video.destroy
-                      flash[:info] = t.notifications.deletesucc(t.types.video)
-                      Lib::Cache::Home.invalidate!
-                    else
-                      flash[:error] = t.notifications.permissions
-                    end
+                    # Push to background job.
+                    flash[:pid] = Jobs::Models::Videos::Delete.create(
+                      model_id: params['id'],
+                      user_id: login_username,
+                      is_super: login_admin?)
                     # Redirect back to news page of dashboard.
                     redirect '/author/videos'
                   end

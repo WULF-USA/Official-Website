@@ -7,6 +7,7 @@ require 'sinatra/activerecord'
 require 'rack-flash'
 require 'action_view'
 require 'resque'
+require 'resque-status'
 require 'redis'
 require 'dalli'
 require 'sinatra/r18n'
@@ -76,5 +77,6 @@ class WulfApp < Sinatra::Base
   configure do
     #enable :logging
     Resque.redis = ENV['REDIS_URL']
+    Resque::Plugins::Status::Hash.expire_in = (60 * 5) # 24hrs in seconds
   end
 end
