@@ -19,6 +19,7 @@ require_relative './models/articles'
 require_relative './models/resources'
 require_relative './models/videos'
 require_relative './routes/about'
+require_relative './routes/api_jobs'
 require_relative './routes/blog'
 require_relative './routes/errors'
 require_relative './routes/home'
@@ -59,6 +60,7 @@ class WulfApp < Sinatra::Base
   set :root, File.dirname(__FILE__)
   
   register Routing::About
+  register Routing::API::Jobs
   register Routing::Blog
   register Routing::Errors
   register Routing::Home

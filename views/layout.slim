@@ -43,9 +43,10 @@
 
   <body>
     ==yield
+    <div id="msgHolder">
     - flash.each do |key, value|
-      <script type="text/javascript">$.notify("#{value}", "#{key}");</script>
-    
+      <div value="#{value}"></div>
+    </div>
     </script>
   </body>
 </html>
