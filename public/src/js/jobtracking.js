@@ -5,7 +5,7 @@ $(document).on('click', '.notifyjs-bootstrap-base', function() {
 var taskID = setInterval(function(){
     var div = document.getElementById('msgHolder'),
     divChildren = div.childNodes;
-    if(divChildren.length == 0) {
+    if(divChildren.length === 0) {
         clearInterval(taskID);
     }
     for (var i=0; i<divChildren.length; i++) {
@@ -14,14 +14,14 @@ var taskID = setInterval(function(){
             {},
             function(data) {
                 var obj = JSON.parse(data);
-                if(obj.status == "completed") {
+                if(obj.status === "completed") {
                     $.notify(obj.message + " Click to refresh.", {
                         className: "success",
                         autoHide: false
                     });
                     clearInterval(taskID);
                 }
-                if(obj.status == "failed") {
+                if(obj.status === "failed") {
                     $.notify(obj.msg, {
                         className: "error",
                         autoHide: true
