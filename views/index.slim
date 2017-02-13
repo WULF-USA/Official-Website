@@ -16,7 +16,7 @@
       <hr>
       - @data.get_news_cache.each do |feed|
         <h4 class="de-trans"><a href="/#{locale?}/news/#{feed['id']}">#{feed['title']}</a></h4>
-        <h6 class="de-trans">#{feed['author']} | #{feed['updated_at']}</h6>
+        <h6 class="de-trans">#{feed['author']} | #{l(feed['updated_at'], :human)}</h6>
         <p class="de-trans">#{feed['content']}</p>
         <hr>
       <!--<p class="de-trans"><a class="btn btn-default" href="#" role="button">#{t.home.readmore} &raquo;</a></p>-->
@@ -26,7 +26,7 @@
       <hr>
       - @data.get_video_cache.each do |video|
         <h4 class="de-trans">#{video['title']}</h4>
-        <h6 class="de-trans">#{video['author']} | #{video['updated_at']}</h6>
+        <h6 class="de-trans">#{video['author']} | #{l(video['updated_at'], :human)}</h6>
         <div data-type="#{video['host']}" data-video-id="#{video['uri']}"></div>
         <p class="de-trans">#{video['description']}</p>
         <hr>
@@ -37,7 +37,7 @@
       <hr>
       - @data.get_blog_cache.each do |post|
         <h4 class="de-trans"><a href="/#{locale?}/blog/#{post['id']}">#{post['title']}</a></h4>
-        <h6 class="de-trans">#{post['author']} | #{post['updated_at']}</h6>
+        <h6 class="de-trans">#{post['author']} | #{l(post['updated_at'], :human)}</h6>
         <hr>
       <p class="de-trans"><a class="btn btn-default" href="/#{locale?}/blog" role="button">#{t.home.visitblog} &raquo;</a></p>
     </div>
