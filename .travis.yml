@@ -24,7 +24,7 @@ env:
   - TEST_TYPE=integration
   - TEST_TYPE=performance
 matrix:
-  allowed_failures:
+  allow_failures:
   - env: TEST_TYPE=performance
 branches:
   only:
