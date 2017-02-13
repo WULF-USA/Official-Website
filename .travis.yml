@@ -25,7 +25,7 @@ env:
   - TEST_TYPE=performance
 matrix:
   allowed_failures:
-    - env: TEST_TYPE=performance
+  - env: TEST_TYPE=performance
 branches:
   only:
   - master
@@ -34,6 +34,8 @@ install:
 - travis_retry gem cert --add <(curl -Ls https://raw.githubusercontent.com/thesp0nge/dawnscanner/master/certs/paolo_at_dawnscanner_dot_org.pem)
 - bundle install --jobs=3 --retry=3
 - npm install uglify-js -g
+- npm install phantomjs-prebuilt -g
+- phantomjs --version
 - "./scripts/setupdb.sh"
 script:
 - uglifyjs --compress --mangle -o ./public/src/js/jobtracking.min.js -- ./public/src/js/jobtracking.js
