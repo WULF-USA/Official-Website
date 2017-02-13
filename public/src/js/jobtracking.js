@@ -8,7 +8,7 @@ var taskID = setInterval(function(){
     if(divChildren.length === 0) {
         clearInterval(taskID);
     }
-    for (var i=0; i<divChildren.length; i++) {
+    for (let i=0; i<divChildren.length; i++) {
         $.get(
             "/api/v1/job/" + divChildren[i].getAttribute('value'),
             {},
