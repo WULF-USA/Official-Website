@@ -50,7 +50,7 @@ module Routing
                   session[:auth_uname] = 'super'
                   # Redirect to dashboard.
                   flash[:info] = t.notifications.loginsucc(uname)
-                  redirect "/#{locale?}/author/users"
+                  redirect "/#{locale?}/author/home"
                   return
                 end
               
