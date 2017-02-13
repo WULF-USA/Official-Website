@@ -12,6 +12,7 @@ module Routing
               ##
               # Resources listing of site.
               app.get '/:locale/resources' do
+                if params[:locale] == "author" then redirect "/#{locale?}/author/videos" end
                 # Set locale
                 set_locale!
                 # Retrieve resource list.

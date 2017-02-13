@@ -54,7 +54,7 @@ module Routing
                         'content' => params['content']
                       })
                     # Redirect user back to dashbaord.
-                    redirect '/author/news'
+                    redirect "/#{locale?}/author/news"
                   end
                   ##
                   # Locale redirector
@@ -96,7 +96,7 @@ module Routing
                       user_id: login_username,
                       is_super: login_admin?)
                     # Redirect user back to dashbaord.
-                    redirect '/author/news'
+                    redirect "/#{locale?}/author/news"
                   end
                   
                   ##
@@ -110,7 +110,7 @@ module Routing
                       user_id: login_username,
                       is_super: login_admin?)
                     # Redirect back to news page of dashboard.
-                    redirect '/author/news'
+                    redirect "/#{locale?}/author/news"
                   end
             end
         end

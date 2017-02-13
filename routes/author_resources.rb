@@ -36,7 +36,7 @@ module Routing
                         'description' => params['description']
                       })
                     # Redirect user back to dashbaord.
-                    redirect '/author/resources'
+                    redirect "/#{locale?}/author/resources"
                   end
                   
                   ##
@@ -55,7 +55,7 @@ module Routing
                       user_id: login_username,
                       is_super: login_admin?)
                     # Redirect user back to dashbaord.
-                    redirect '/author/resources'
+                    redirect "/#{locale?}/author/resources"
                   end
                   
                   ##
@@ -69,7 +69,7 @@ module Routing
                       user_id: login_username,
                       is_super: login_admin?)
                     # Redirect back to news page of dashboard.
-                    redirect '/author/resources'
+                    redirect "/#{locale?}/author/resources"
                   end
             end
         end

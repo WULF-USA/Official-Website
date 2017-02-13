@@ -44,9 +44,12 @@
   <body>
     ==yield
     <div id="msgHolder">
-      - flash.each do |key, value|
-        <div value="#{value}"></div>
+      - if flash[:pid] != nil
+        <div value="#{flash[:pid]}"></div>
     </div>
-    </script>
+    - flash.each do |key, value|
+      - unless !['pid'].include?(key)
+        javascript:
+          $.notify("#{value}", "#{key}");
   </body>
 </html>

@@ -1,3 +1,7 @@
+$(document).on('click', '.notifyjs-bootstrap-base', function() {
+    location.reload(true);
+});
+
 var taskID = setInterval(function(){
     var div = document.getElementById('msgHolder'),
     divChildren = div.childNodes;
@@ -11,14 +15,19 @@ var taskID = setInterval(function(){
             function(data) {
                 var obj = JSON.parse(data);
                 if(obj.status == "completed") {
-                    $.notify(obj.message, "success");
+                    $.notify(obj.message + " Click to refresh.", {
+                        className: "success",
+                        autoHide: false
+                    });
                     clearInterval(taskID);
                 }
                 if(obj.status == "failed") {
-                    $.notify(obj.message, "error");
+                    $.notify(obj.msg, {
+                        className: "error",
+                        autoHide: true
+                    });
                     clearInterval(taskID);
                 }
-                //$.notify(data, "warn");
             }
         );
     }
