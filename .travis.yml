@@ -38,11 +38,6 @@ install:
 - travis_retry gem cert --add <(curl -Ls https://raw.githubusercontent.com/thesp0nge/dawnscanner/master/certs/paolo_at_dawnscanner_dot_org.pem)
 - bundle install --jobs=3 --retry=3
 - npm install uglify-js -g
-- export PATH=$PWD/travis_phantomjs/phantomjs-$PHANTOMJS_VERSION-linux-x86_64/bin:$PATH
-- if [ $(phantomjs --version) != $PHANTOMJS_VERSION ]; then rm -rf $PWD/travis_phantomjs; mkdir -p $PWD/travis_phantomjs; fi
-- if [ $(phantomjs --version) != $PHANTOMJS_VERSION ]; then wget https://github.com/Medium/phantomjs/archive/$PHANTOMJS_VERSION.tar.gz -O $PWD/travis_phantomjs/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.gz; fi
-- if [ $(phantomjs --version) != $PHANTOMJS_VERSION ]; then tar -xvf $PWD/travis_phantomjs/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.gz -C $PWD/travis_phantomjs; fi
-- phantomjs --version
 - ./scripts/setupdb.sh
 script:
 - uglifyjs --compress --mangle -o ./public/src/js/jobtracking.min.js -- ./public/src/js/jobtracking.js
