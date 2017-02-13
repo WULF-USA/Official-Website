@@ -6,6 +6,9 @@ git:
 addons:
   code_climate:
     repo_token: 3a37b06b904d7cd224d38b486334dd1c77c6eedf5efc96173531a470e9b8c8ea
+cache:
+  directories:
+    - travis_phantomjs
 services:
 - postgresql
 - redis-server
@@ -19,6 +22,7 @@ env:
   - APP_SUPER_PASSWD=testpassword
   - REDIS_URL=redis://localhost:6379
   - MEMCACHIER_SERVERS=localhost:11211
+  - PHANTOMJS_VERSION=2.1.14
   matrix:
   - TEST_TYPE=unit
   - TEST_TYPE=integration
@@ -34,9 +38,12 @@ install:
 - travis_retry gem cert --add <(curl -Ls https://raw.githubusercontent.com/thesp0nge/dawnscanner/master/certs/paolo_at_dawnscanner_dot_org.pem)
 - bundle install --jobs=3 --retry=3
 - npm install uglify-js -g
-- npm install phantomjs-prebuilt -g
+- export PATH=$PWD/travis_phantomjs/phantomjs-$PHANTOMJS_VERSION-linux-x86_64/bin:$PATH
+- if [ $(phantomjs --version) != $PHANTOMJS_VERSION ]; then rm -rf $PWD/travis_phantomjs; mkdir -p $PWD/travis_phantomjs; fi
+- if [ $(phantomjs --version) != $PHANTOMJS_VERSION ]; then wget https://github.com/Medium/phantomjs/releases/download/v$PHANTOMJS_VERSION/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2 -O $PWD/travis_phantomjs/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2; fi
+- if [ $(phantomjs --version) != $PHANTOMJS_VERSION ]; then tar -xvf $PWD/travis_phantomjs/phantomjs-$PHANTOMJS_VERSION-linux-x86_64.tar.bz2 -C $PWD/travis_phantomjs; fi
 - phantomjs --version
-- "./scripts/setupdb.sh"
+- ./scripts/setupdb.sh
 script:
 - uglifyjs --compress --mangle -o ./public/src/js/jobtracking.min.js -- ./public/src/js/jobtracking.js
 - sass --update public/src/css:public/src/css
@@ -48,7 +55,7 @@ script:
 - bundle-audit check --update
 - rubocop -EDLR
 after_success:
-- "./scripts/submitcoverage.sh"
+- ./scripts/submitcoverage.sh
 deploy:
   provider: heroku
   buildpack: ruby
