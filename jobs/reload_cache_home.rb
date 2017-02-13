@@ -10,8 +10,11 @@ module Jobs
             @queue = :cache
             
             def self.perform()
+                # Create HomeData object.
                 hd = HomeData.new
+                # Load values from DB.
                 hd.load_all
+                # Store object in cache.
                 Lib::Cache.set('cache_home', hd)
             end
         end

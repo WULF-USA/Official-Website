@@ -1,6 +1,9 @@
 var taskID = setInterval(function(){
     var div = document.getElementById('msgHolder'),
     divChildren = div.childNodes;
+    if(divChildren.length == 0) {
+        clearInterval(taskID);
+    }
     for (var i=0; i<divChildren.length; i++) {
         $.get(
             "/api/v1/job/" + divChildren[i].getAttribute('value'),

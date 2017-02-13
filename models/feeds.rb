@@ -7,6 +7,9 @@ class Feed < ActiveRecord::Base
         presence: true
     validates :content,
         presence: true
+    
+    ##
+    # Generates cache hash of object.
     def generate_metadata
         data = Hash.new
         data['id'] = self.id

@@ -11,6 +11,9 @@ class Video < ActiveRecord::Base
         presence: true
     validates :description,
         presence: true
+    
+    ##
+    # Generates cache hash of object.
     def generate_metadata
         data = Hash.new
         data['id'] = self.id

@@ -38,9 +38,11 @@ install:
 - travis_retry gem update --system
 - travis_retry gem cert --add <(curl -Ls https://raw.githubusercontent.com/thesp0nge/dawnscanner/master/certs/paolo_at_dawnscanner_dot_org.pem)
 - bundle install --jobs=3 --retry=3
-- sass --update public/src/css:public/src/css
+- npm install uglify-js -g
 - "./scripts/setupdb.sh"
 script:
+- uglifyjs --compress --mangle -o ./public/src/js/jobtracking.min.js -- ./public/src/js/jobtracking.js
+- sass --update public/src/css:public/src/css
 - foreman start --formation web=1,worker=2 &
 - sleep 15
 - rspec --tag $TEST_TYPE --format doc --color

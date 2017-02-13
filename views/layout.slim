@@ -38,14 +38,14 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link rel="stylesheet" href="/src/css/site.css">
-    <script src="/src/js/jobtracking.js"></script>
+    <script src="/src/js/jobtracking.min.js"></script>
   </head>
 
   <body>
     ==yield
     <div id="msgHolder">
-    - flash.each do |key, value|
-      <div value="#{value}"></div>
+      - flash.each do |key, value|
+        <div value="#{value}"></div>
     </div>
     </script>
   </body>

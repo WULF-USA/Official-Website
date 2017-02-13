@@ -17,8 +17,7 @@ describe WulfApp, :integration do
         fill_in 'create-uri', with: '5kIe6UZHSXw'
         fill_in 'create-description', with: 'Testing description.'
         click_on 'Create'
-        # Wait for cache to reload
-        sleep 15
+        expect(page).to have_content 'Completed at'
         visit "/en/"
         expect(page).to have_content 'Testing Title'
         visit "/en/videos"
@@ -37,8 +36,7 @@ describe WulfApp, :integration do
         fill_in 'edit-title', with: 'Testing Title Edited'
         fill_in 'edit-description', with: 'Testing description extended.'
         click_on 'Edit', match: :first
-        # Wait for cache to reload
-        sleep 15
+        expect(page).to have_content 'Completed at'
         visit "/en/"
         expect(page).to have_content 'Testing Title Edited'
         visit "/en/videos"
@@ -55,8 +53,7 @@ describe WulfApp, :integration do
         end
         expect(page).to have_current_path "/en/author/videos"
         click_on 'Delete', match: :first
-        # Wait for cache to reload
-        sleep 15
+        expect(page).to have_content 'Completed at'
         visit "/en/"
         expect(page).to have_no_content 'Testing Title Edited'
         visit "/en/videos"
