@@ -15,7 +15,7 @@ var taskID = setInterval(function(){
                     $.notify(obj.message, "error");
                     clearInterval(taskID);
                 }
-                $.notify(data, "warn");
+                //$.notify(data, "warn");
             }
         );
     }
