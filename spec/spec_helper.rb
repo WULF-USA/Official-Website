@@ -10,6 +10,7 @@ if ENV['TEST_TYPE'] == 'performance'
   Capybara.app_host = 'http://localhost:8080'
   Capybara.run_server = false
 else
+  Capybara.app = proc { |env| WulfApp.new.call(env) }
   Resque.inline = true
 end
 

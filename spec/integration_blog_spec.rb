@@ -16,7 +16,7 @@ describe WulfApp, :integration do
         fill_in 'Title', with: 'Testing Title'
         fill_in 'Content', with: 'Testing post content. <b>tag test.</b>'
         click_on 'Submit'
-        expect(page).to have_content 'Completed at'
+        expect(page).to have_content 'successfully saved to the database. Click to refresh.'
         visit "/en/"
         expect(page).to have_content 'Testing Title'
         visit "/en/blog"
@@ -37,7 +37,7 @@ describe WulfApp, :integration do
         fill_in 'Title', with: 'Testing Title Edited'
         fill_in 'Content', with: 'Testing post content edited. <i>tag test.</i>'
         click_on 'Submit'
-        expect(page).to have_content 'Completed at'
+        expect(page).to have_content 'successfully saved to the database. Click to refresh.'
         visit "/en/"
         expect(page).to have_content 'Testing Title Edited'
         visit "/en/blog"
@@ -55,7 +55,7 @@ describe WulfApp, :integration do
         click_on 'Articles'
         expect(page).to have_current_path "/en/author/articles"
         click_on 'Delete', match: :first
-        expect(page).to have_content 'Completed at'
+        expect(page).to have_content 'successfully deleted from the database. Click to refresh.'
         visit "/en/"
         expect(page).to have_no_content 'Testing Title Edited'
         visit "/en/blog"
