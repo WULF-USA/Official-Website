@@ -34,7 +34,8 @@ module Routing
                         'author' => login_username,
                         'url' => params['hyperlink'],
                         'description' => params['description']
-                      })
+                      },
+                      lang: locale?)
                     # Redirect user back to dashbaord.
                     redirect "/#{locale?}/author/resources"
                   end
@@ -52,6 +53,7 @@ module Routing
                         'url' => params['hyperlink'],
                         'description' => params['description']
                       },
+                      lang: locale?,
                       user_id: login_username,
                       is_super: login_admin?)
                     # Redirect user back to dashbaord.
@@ -66,6 +68,7 @@ module Routing
                     flash[:pid] = Jobs::Models::Delete.create(
                       model_type: 'Resource',
                       model_id: params['id'],
+                      lang: locale?,
                       user_id: login_username,
                       is_super: login_admin?)
                     # Redirect back to news page of dashboard.

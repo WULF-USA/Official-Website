@@ -21,6 +21,7 @@ gem 'rack-test'
 gem 'actionview'
 gem 'sass'
 gem 'i18n'
+gem 'r18n-desktop'
 gem 'validate_url'
 gem 'resque'
 gem 'resque-status'
@@ -35,7 +36,6 @@ group :development do
     gem 'guard-migrate'
     gem 'guard-sass'
     gem 'guard-rubocop'
-    gem 'foreman'
 end
 
 group :test do
@@ -44,6 +44,7 @@ group :test do
 end
 
 group :test, :development do
+    gem 'foreman'
     gem 'bundler-audit', require: false
     gem 'dawnscanner', require: false
     gem 'rubocop', require: false

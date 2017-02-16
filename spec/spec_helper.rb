@@ -6,8 +6,12 @@ SimpleCov.start
 require_relative '../wulf_app.rb'
 
 Capybara.default_driver = :poltergeist
-Capybara.app_host = 'http://localhost:8080'
-Capybara.run_server = false
+if ENV['TEST_TYPE'] == 'performance'
+  Capybara.app_host = 'http://localhost:8080'
+  Capybara.run_server = false
+else
+  Resque.inline = true
+end
 
 options = {js_errors: false}
 Capybara.register_driver :poltergeist do |app|

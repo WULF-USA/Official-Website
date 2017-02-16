@@ -53,7 +53,8 @@ module Routing
                         'title' => params['title'],
                         'author' => login_username,
                         'content' => params['content']
-                      })
+                      },
+                      lang: locale?)
                     # Redirect user back to dashbaord.
                     redirect "/#{locale?}/author/articles"
                   end
@@ -74,7 +75,7 @@ module Routing
                       @item = Article.find_by(id: params['id'])
                     rescue ActiveRecord::RecordNotFound
                       flash[:error] = t.notifications.recmiss
-                      redirect '/author/articles'
+                      redirect "/#{locale?}/author/articles"
                     end
                     # Check if user owns the post or has admin powers.
                     check_ownership!(@item.author)
@@ -96,7 +97,8 @@ module Routing
                         'content' => params['content']
                       },
                       user_id: login_username,
-                      is_super: login_admin?)
+                      is_super: login_admin?,
+                      lang: locale?)
                     # Redirect user back to dashbaord.
                     redirect "/#{locale?}/author/articles"
                   end
@@ -111,7 +113,8 @@ module Routing
                       model_type: 'Article',
                       model_id: params['id'],
                       user_id: login_username,
-                      is_super: login_admin?)
+                      is_super: login_admin?,
+                      lang: locale?)
                     # Redirect back to news page of dashboard.
                     redirect "/#{locale?}/author/articles"
                   end

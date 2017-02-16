@@ -40,9 +40,10 @@ module Routing
                         'uri' => params['uri'],
                         'host' => params['host'],
                         'description' => params['description']
-                      })
+                      },
+                      lang: locale?)
                     # Redirect user back to dashbaord.
-                    redirect '/author/videos'
+                    redirect "/#{locale?}/author/videos"
                   end
                   
                   ##
@@ -60,10 +61,11 @@ module Routing
                         'host' => params['host'],
                         'description' => params['description']
                       },
+                      lang: locale?,
                       user_id: login_username,
                       is_super: login_admin?)
                     # Redirect user back to dashbaord.
-                    redirect '/author/videos'
+                    redirect "/#{locale?}/author/videos"
                   end
                   
                   ##
@@ -76,9 +78,10 @@ module Routing
                       model_type: 'Video',
                       model_id: params['id'],
                       user_id: login_username,
+                      lang: locale?,
                       is_super: login_admin?)
                     # Redirect back to news page of dashboard.
-                    redirect '/author/videos'
+                    redirect "/#{locale?}/author/videos"
                   end
             end
         end

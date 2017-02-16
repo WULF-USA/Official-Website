@@ -52,7 +52,8 @@ module Routing
                         'title' => params['title'],
                         'author' => login_username,
                         'content' => params['content']
-                      })
+                      },
+                      lang: locale?)
                     # Redirect user back to dashbaord.
                     redirect "/#{locale?}/author/news"
                   end
@@ -73,7 +74,7 @@ module Routing
                       @item = Feed.find_by(id: params['id'])
                     rescue ActiveRecord::ResourceNotFound
                       flash[:error] = t.notifications.recmiss
-                      redirect '/author/news'
+                      redirect "/#{locale?}/author/news"
                     end
                     # Check if user owns the post or has admin powers.
                     check_ownership!(@item.author)
@@ -94,7 +95,8 @@ module Routing
                         'content' => params['content']
                       },
                       user_id: login_username,
-                      is_super: login_admin?)
+                      is_super: login_admin?,
+                      lang: locale?)
                     # Redirect user back to dashbaord.
                     redirect "/#{locale?}/author/news"
                   end
@@ -108,7 +110,8 @@ module Routing
                       model_type: 'Feed',
                       model_id: params['id'],
                       user_id: login_username,
-                      is_super: login_admin?)
+                      is_super: login_admin?,
+                      lang: locale?)
                     # Redirect back to news page of dashboard.
                     redirect "/#{locale?}/author/news"
                   end

@@ -185,6 +185,8 @@ GEM
     public_suffix (2.0.5)
     puma (3.7.0)
     r18n-core (2.1.5)
+    r18n-desktop (2.1.5)
+      r18n-core (= 2.1.5)
     rack (1.6.5)
     rack-flash3 (1.0.5)
       rack
@@ -319,6 +321,7 @@ DEPENDENCIES
   pg
   poltergeist
   puma
+  r18n-desktop
   rack-flash3
   rack-protection
   rack-test

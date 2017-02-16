@@ -2,6 +2,7 @@ require 'resque'
 require 'resque-status'
 require 'sinatra/activerecord'
 require 'redis'
+require 'r18n-desktop'
 require_relative './reload_cache.rb'
 require_relative '../models/videos'
 require_relative '../models/articles'
@@ -12,25 +13,38 @@ module Jobs
     module Models
         class Delete
             include Resque::Plugins::Status
+            include R18n::Helpers
             
-            #@queue = :models
+            @queue = :models
             
             def perform
+                # Tell the i18n library where to look for translation files and what locale to use.
+                R18n.from_env('./i18n/', options['lang'])
+                
+                # Since dynamic dispatch is being used, verify that the contents of the options=>model_type hash are clean.
+                if ['video', 'resource', 'article', 'feed'].include?(options['model_type'].downcase)
+                    # Values are clean.
+                else
+                    failed(t.notifications.xsrf.to_s)
+                    return
+                end
+                
                 # Find object in database.
                 begin
+                    # Convert string parameter 'type' into specified ActiveRecord Model class.
                     @type = options['model_type'].split('::').reduce(Module, :const_get)
                     @obj = @type.find(options['model_id'])
                 rescue ActiveRecord::RecordNotFound
                     # Invalid ID.
-                    failed(msg: 'Model not found')
+                    failed(msg: t.notifications.recmiss.to_s)
                     return
                 rescue NameError
                     # Invalid model type.
-                    failed(msg: 'Invalid model ref')
+                    failed(msg: t.notifications.deleteerror(t.types.public_send(options['model_type'].downcase)).to_s)
                     return
                 rescue NoMethodError
                     # Invalid model type.
-                    failed(msg: 'Internal error')
+                    failed(msg: t.notifications.deleteerror(t.types.public_send(options['model_type'].downcase)).to_s)
                     return
                 end
                 # Update progress.
@@ -48,10 +62,10 @@ module Jobs
                     # Update progess.
                     at(4,4)
                     # Terminate the job.
-                    completed
+                    completed(msg: t.notifications.deletesucc(t.types.public_send(options['model_type'].downcase)).to_s)
                 else
                     # Invalid permissions.
-                    failed(msg: 'Incorrect permissions')
+                    failed(msg: t.notifications.permissions.to_s)
                     return
                 end
             end

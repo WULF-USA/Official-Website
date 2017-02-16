@@ -5,13 +5,15 @@ module Helpers
         ##
         # Returns currently selected locale.
         def locale?
-          return params[:locale] || R18n::I18n.default
+          return session[:locale] || R18n::I18n.default
         end
         
         ##
         # Sets the locale based on params hash.
         def set_locale!
-            session[:locale] = params[:locale] || R18n::I18n.default
+            if params[:locale] != 'author'
+                session[:locale] = params[:locale] || R18n::I18n.default
+            end
             R18n.set(session[:locale])
         end
     end

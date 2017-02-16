@@ -15,7 +15,6 @@ module Jobs
                 # Enqueue all cache reload subjobs.
                 Resque.enqueue(ReloadCacheHome)
                 # Update the timestamp on the cache.
-                Lib::Cache.set("cache-all-updated", Time.now.getutc)
             end
         end
     end

@@ -14,16 +14,16 @@ var taskID = setInterval(function() {
             function(data) {
                 var obj = JSON.parse(data);
                 if (obj.status === "completed") {
-                    $.notify(obj.message + " Click to refresh.", {
+                    $.notify(obj.msg, {
                         className: "success",
                         autoHide: false
                     });
                     clearInterval(taskID);
                 }
                 if (obj.status === "failed") {
-                    $.notify(obj.msg, {
+                    $.notify(obj.msg || obj.message, {
                         className: "error",
-                        autoHide: true
+                        autoHide: false
                     });
                     clearInterval(taskID);
                 }

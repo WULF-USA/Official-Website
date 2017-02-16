@@ -130,7 +130,7 @@ header:
     author: WULF
     title: WULF
 notfound:
-    header: 404 Not Found
+    header: "404 Not Found"
     content: The page you are looking for is not here. Try visiting the links above to find what you are looking for.
 resource:
     header: Resources
@@ -153,8 +153,8 @@ notifications:
     loginsucc: Welcome back %1!
     loggedout: Successfully logged out.
     recmiss: Resource not found!
-    savesucc: Item %1 successfully saved to the database.
+    savesucc: "%1 successfully saved to the database. Click to refresh."
     saveerror: An error occured while saving the %1, please try again later.
-    deletesucc: Item %1 successfully deleted from the database.
+    deletesucc: "%1 successfully deleted from the database. Click to refresh."
     deleteerror: An error occured while deleting the %1, please try again later.
     xsrf: You have been subjected to XSRF attack. Contact the site administrators immediately.
