@@ -1,4 +1,8 @@
 require 'sinatra'
+require_relative '../lib/home'
+require_relative '../jobs/model_delete'
+require_relative '../jobs/model_edit'
+require_relative '../jobs/model_create'
 
 module Routing
     module Author
@@ -28,14 +32,18 @@ module Routing
                   app.post '/author/videos/create' do
                     # This page requires at least user privileges.
                     author_login!
-                    begin
-                      @video = Video.create!(title: params['title'], author: login_username, uri: params['uri'], host: params['host'], description: params['description'])
-                      flash[:info] = t.notifications.savesucc(t.types.video)
-                    rescue ActiveRecord::RecordInvalid
-                      flash[:error] = t.notifications.saveerror(t.types.video)
-                    end
+                    flash[:pid] = Jobs::Models::Create.create(
+                      model_type: 'Video',
+                      args: {
+                        'title' => params['title'],
+                        'author' => login_username,
+                        'uri' => params['uri'],
+                        'host' => params['host'],
+                        'description' => params['description']
+                      },
+                      lang: locale?)
                     # Redirect user back to dashbaord.
-                    redirect '/author/videos'
+                    redirect "/#{locale?}/author/videos"
                   end
                   
                   ##
@@ -43,32 +51,21 @@ module Routing
                   app.post '/author/videos/edit/:id' do
                     # This page requires at least user privileges.
                     author_login!
-                    begin
-                      # Retrieve resource object by ID from DB.
-                      @video = Video.find_by(id: params[:id])
-                    rescue
-                      flash[:error] = t.notifications.recmiss
-                      redirect '/author/videos'
-                    end
-                    # Check if user owns the video link or has admin powers.
-                    if check_ownership?(@video.author)
-                      # Edit the selected video link object.
-                      @video.title = params['title']
-                      @video.uri = params['uri']
-                      @video.host = params['host']
-                      @video.description = params['description']
-                      begin
-                        # Save the selected video link object.
-                        @video.save!
-                        flash[:info] = t.notifications.savesucc(t.types.video)
-                      rescue ActiveRecord::RecordInvalid
-                        flash[:error] = t.notifications.saveerror(t.types.video)
-                      end
-                    else
-                      flash[:error] = t.notifications.permissions
-                    end
+                    # Push to background job.
+                    flash[:pid] = Jobs::Models::Edit.create(
+                      model_type: 'Video',
+                      model_id: params['id'],
+                      args: {
+                        'title' => params['title'],
+                        'uri' => params['uri'],
+                        'host' => params['host'],
+                        'description' => params['description']
+                      },
+                      lang: locale?,
+                      user_id: login_username,
+                      is_super: login_admin?)
                     # Redirect user back to dashbaord.
-                    redirect '/author/videos'
+                    redirect "/#{locale?}/author/videos"
                   end
                   
                   ##
@@ -76,23 +73,15 @@ module Routing
                   app.post '/author/videos/delete/:id' do
                     # This page requires at least user privileges.
                     author_login!
-                    begin
-                      # Retrieve video link object by ID from DB.
-                      @video = Video.find_by(id: params['id'])
-                    rescue
-                      flash[:error] = t.notifications.recmiss
-                      redirect '/author/videos'
-                    end
-                    # Check if user owns the video link or has admin powers.
-                    if check_ownership?(@video.author)
-                      # Delete the video link object.
-                      @video.destroy
-                      flash[:info] = t.notifications.deletesucc(t.types.video)
-                    else
-                      flash[:error] = t.notifications.permissions
-                    end
+                    # Push to background job.
+                    flash[:pid] = Jobs::Models::Delete.create(
+                      model_type: 'Video',
+                      model_id: params['id'],
+                      user_id: login_username,
+                      lang: locale?,
+                      is_super: login_admin?)
                     # Redirect back to news page of dashboard.
-                    redirect '/author/videos'
+                    redirect "/#{locale?}/author/videos"
                   end
             end
         end

@@ -12,6 +12,10 @@ module Routing
               ##
               # Blog listing of site.
               app.get '/:locale/videos' do
+                if params[:locale] == "author"
+                    forward_notifications!
+                    redirect "/#{locale?}/author/videos"
+                end
                 # Retrieve all video link posts.
                 @videos = Video.all.order(created_at: :desc)
                 # Request is about to go through, register the visit with the tracker.

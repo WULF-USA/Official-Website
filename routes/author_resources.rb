@@ -26,68 +26,53 @@ module Routing
                   # Create resource sequence of dashboard for author/admin/super users.
                   app.post '/author/resources/create' do
                     author_login!
-                    begin
-                      @resource = Resource.create!(title: params['title'], author: login_username, url: params['hyperlink'], description: params['description'])
-                      flash[:info] = t.notifications.savesucc(t.types.resource)
-                    rescue ActiveRecord::RecordInvalid
-                      flash[:error] = t.notifications.saveerror(t.types.resource)
-                    end
+                    # Push to background job.
+                    flash[:pid] = Jobs::Models::Create.create(
+                      model_type: 'Resource',
+                      args: {
+                        'title' => params['title'],
+                        'author' => login_username,
+                        'url' => params['hyperlink'],
+                        'description' => params['description']
+                      },
+                      lang: locale?)
                     # Redirect user back to dashbaord.
-                    redirect '/author/resources'
+                    redirect "/#{locale?}/author/resources"
                   end
                   
                   ##
                   # Create resource sequence of dashboard for author/admin/super users.
                   app.post '/author/resources/edit/:id' do
                     author_login!
-                    begin
-                      # Retrieve resource object by ID from DB.
-                      @resource = Resource.find_by(id: params[:id])
-                    rescue
-                      flash[:error] = t.notifications.recmiss
-                      redirect '/author/resources'
-                    end
-                    # Check if user owns the resource or has admin powers.
-                    if check_ownership?(@resource.author)
-                      # Edit the selected resource object.
-                      @resource.title = params['title']
-                      @resource.url = params['hyperlink']
-                      @resource.description = params['description']
-                      begin
-                        # Save the selected resource object.
-                        @resource.save!
-                        flash[:info] = t.notifications.savesucc(t.types.resource)
-                      rescue ActiveRecord::RecordInvalid
-                        flash[:error] = t.notifications.saveerror(t.types.resource)
-                      end
-                    else
-                      flash[:error] = t.notifications.permissions
-                    end
+                    # Push to background job.
+                    flash[:pid] = Jobs::Models::Edit.create(
+                      model_type: 'Resource',
+                      model_id: params['id'],
+                      args: {
+                        'title' => params['title'],
+                        'url' => params['hyperlink'],
+                        'description' => params['description']
+                      },
+                      lang: locale?,
+                      user_id: login_username,
+                      is_super: login_admin?)
                     # Redirect user back to dashbaord.
-                    redirect '/author/resources'
+                    redirect "/#{locale?}/author/resources"
                   end
                   
                   ##
                   # Delete resource sequence for author/admin/super users.
                   app.post '/author/resources/delete/:id' do
                     author_login!
-                    begin
-                      # Retrieve post object by ID from DB.
-                      @item = Resource.find_by(id: params['id'])
-                    rescue
-                      flash[:error] = t.notifications.recmiss
-                      redirect '/author/resources'
-                    end
-                    # Check if user owns the resource or has admin powers.
-                    if check_ownership?(@item.author)
-                      # Delete the resource object.
-                      @item.destroy
-                      flash[:info] = t.notifications.deletesucc(t.types.resource)
-                    else
-                      flash[:error] = t.notifications.permissions
-                    end
+                    # Push to background job.
+                    flash[:pid] = Jobs::Models::Delete.create(
+                      model_type: 'Resource',
+                      model_id: params['id'],
+                      lang: locale?,
+                      user_id: login_username,
+                      is_super: login_admin?)
                     # Redirect back to news page of dashboard.
-                    redirect '/author/resources'
+                    redirect "/#{locale?}/author/resources"
                   end
             end
         end

@@ -13,7 +13,7 @@
           <hr>
           - @videos.each do |video|
               <h2>#{video.title}</h2>
-              <h5>#{video.author} | #{video.updated_at}</h5>
+              <h5>#{video.author} | #{l(video.updated_at, :human)}</h5>
               <div data-type="#{video.host}" data-video-id="#{video.uri}"></div>
               <p>#{video.description}</p>
               <hr>

@@ -26,8 +26,8 @@
                     <tr>
                       <td><a href="/#{locale?}/blog/#{article.id}">#{article.title}</a></td>
                       <td>#{article.author}</td>
-                      <td>#{article.created_at}</td>
-                      <td>#{article.updated_at}</td>
+                      <td>#{l(article.created_at)}</td>
+                      <td>#{l(article.updated_at)}</td>
                       <td>
                         - if login_username == article.author || login_admin? || login_super?
                           <a href="/#{locale?}/author/articles/edit/#{article.id}">#{t.author.blog.edit}</a><br>

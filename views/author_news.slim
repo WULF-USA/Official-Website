@@ -26,8 +26,8 @@
                     <tr>
                       <td><a href="/#{locale?}/news/#{feed.id}">#{feed.title}</a></td>
                       <td>#{feed.author}</td>
-                      <td>#{feed.created_at}</td>
-                      <td>#{feed.updated_at}</td>
+                      <td>#{l(feed.created_at)}</td>
+                      <td>#{l(feed.updated_at)}</td>
                       <td>
                         - if login_username == feed.author || login_admin? || login_super?
                           <a href="/#{locale?}/author/news/edit/#{feed.id}">#{t.author.news.edit}</a><br>

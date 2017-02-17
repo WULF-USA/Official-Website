@@ -12,7 +12,7 @@
           <hr>
           - @posts.each do |post|
               <h2><a href="/#{locale?}/blog/#{post.id}">#{post.title}</a></h2>
-              <h5>#{post.author} | #{post.updated_at}</h5>
+              <h5>#{post.author} | #{l(post.updated_at, :human)}</h5>
               <hr>
         </div>
       </div>

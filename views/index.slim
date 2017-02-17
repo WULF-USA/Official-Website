@@ -14,30 +14,30 @@
     <div class="col-md-3 content-box">
       <h2 class="de-trans">#{t.home.news}</h2>
       <hr>
-      - @feeds.each do |feed|
-        <h4 class="de-trans"><a href="/#{locale?}/news/#{feed.id}">#{feed.title}</a></h4>
-        <h6 class="de-trans">#{feed.author} | #{feed.updated_at}</h6>
-        <p class="de-trans">#{feed.content}</p>
+      - @data.get_news_cache.each do |feed|
+        <h4 class="de-trans"><a href="/#{locale?}/news/#{feed['id']}">#{feed['title']}</a></h4>
+        <h6 class="de-trans">#{feed['author']} | #{l(feed['updated_at'], :human)}</h6>
+        <p class="de-trans">#{feed['content']}</p>
         <hr>
       <!--<p class="de-trans"><a class="btn btn-default" href="#" role="button">#{t.home.readmore} &raquo;</a></p>-->
     </div>
     <div class="col-md-3 content-box">
       <h2 class="de-trans">#{t.home.videos}</h2>
       <hr>
-      - @videos.each do |video|
-        <h4 class="de-trans">#{video.title}</h4>
-        <h6 class="de-trans">#{video.author} | #{video.updated_at}</h6>
-        <div data-type="#{video.host}" data-video-id="#{video.uri}"></div>
-        <p class="de-trans">#{video.description}</p>
+      - @data.get_video_cache.each do |video|
+        <h4 class="de-trans">#{video['title']}</h4>
+        <h6 class="de-trans">#{video['author']} | #{l(video['updated_at'], :human)}</h6>
+        <div data-type="#{video['host']}" data-video-id="#{video['uri']}"></div>
+        <p class="de-trans">#{video['description']}</p>
         <hr>
       <p class="de-trans"><a class="btn btn-default" href="/#{locale?}/videos" role="button">#{t.home.seemore} &raquo;</a></p>
     </div>
     <div class="col-md-3 content-box">
       <h2 class="de-trans">#{t.home.blog}</h2>
       <hr>
-      - @posts.each do |post|
-        <h4 class="de-trans"><a href="/#{locale?}/blog/#{post.id}">#{post.title}</a></h4>
-        <h6 class="de-trans">#{post.author} | #{post.updated_at}</h6>
+      - @data.get_blog_cache.each do |post|
+        <h4 class="de-trans"><a href="/#{locale?}/blog/#{post['id']}">#{post['title']}</a></h4>
+        <h6 class="de-trans">#{post['author']} | #{l(post['updated_at'], :human)}</h6>
         <hr>
       <p class="de-trans"><a class="btn btn-default" href="/#{locale?}/blog" role="button">#{t.home.visitblog} &raquo;</a></p>
     </div>

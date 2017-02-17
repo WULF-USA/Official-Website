@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'securerandom'
+require_relative '../models/accounts'
 
 module Routing
     module SSO
@@ -16,7 +17,7 @@ module Routing
                 # Set locale
                 set_locale!
                 # Check if user is already logged in.
-                redirect '/author/home' if is_logged_in?
+                redirect "/#{locale?}/author/home" if is_logged_in?
                 # CVA-001: Protects from CSRF attack.
                 session[:xs_key] = SecureRandom.urlsafe_base64(25)
                 @xs_key = session[:xs_key]
@@ -37,7 +38,7 @@ module Routing
                 if(session[:xs_key] != params['xskey'])
                   session[:xs_key] = nil
                   flash[:error] = t.notifications.xsrf
-                  redirect '/sso/author/login'
+                  redirect "/#{locale?}/sso/author/login"
                 end
                 
                 # First check for super user
@@ -49,7 +50,7 @@ module Routing
                   session[:auth_uname] = 'super'
                   # Redirect to dashboard.
                   flash[:info] = t.notifications.loginsucc(uname)
-                  redirect '/author/home'
+                  redirect "/#{locale?}/author/home"
                   return
                 end
               
@@ -65,7 +66,7 @@ module Routing
                     session[:auth_uname] = uname
                     flash[:info] = t.notifications.loginsucc(uname)
                     # Redirect to dashboard.
-                    redirect '/author/home'
+                    redirect "/#{locale?}/author/home"
                     return
                   end
                 rescue ActiveRecord::RecordNotFound
@@ -75,7 +76,7 @@ module Routing
                 end
                 
                 # Invalid login credentials. Redirect to log in page.
-                redirect '/sso/author/login'
+                redirect "/#{locale?}/sso/author/login"
               end
               
               ##
@@ -88,7 +89,7 @@ module Routing
                 session[:auth_uname] = nil
                 flash[:info] = t.notifications.loggedout
                 # Redirect to home page.
-                redirect '/'
+                redirect "/#{locale?}"
               end
               
               ##
@@ -106,7 +107,7 @@ module Routing
                   flash[:error] = t.notifications.deleteerror('user')
                 end
                 # Redirect to users dashboard page.
-                redirect '/author/users'
+                redirect "/#{locale?}/author/users"
               end
               
               ##
@@ -128,7 +129,7 @@ module Routing
                   flash[:error] = t.notifications.saveerror('user')
                 end
                 # Redirect to users dashboard page.
-                redirect '/author/users'
+                redirect "/#{locale?}/author/users"
               end
               
               ##
@@ -144,7 +145,7 @@ module Routing
                   flash[:error] = t.notifications.saveerror('user')
                 end
                 # Redirect to users dashboard page.
-                redirect '/author/users'
+                redirect "/#{locale?}/author/users"
               end
         end
     end

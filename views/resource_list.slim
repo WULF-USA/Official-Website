@@ -11,7 +11,7 @@
           <h1 class="page-header">#{t.resource.header}</h1>
           - @resources.each do |resource|
               <h2>#{resource.title}</h2>
-              <h5>#{t.resource.meta(resource.author, resource.updated_at)}</h5>
+              <h5>#{t.resource.meta(resource.author, l(resource.updated_at))}</h5>
               <p>#{resource.description}</p>
               <p><a href="#{resource.url}">#{t.resource.visit} >></a></p>
               <hr>

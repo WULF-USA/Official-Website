@@ -1,7 +1,7 @@
 require_relative './spec_helper'
 require_relative '../models/articles'
 
-describe Article do
+describe Article, :unit do
     describe "#validation" do
         it "should not allow empty model" do
             article = Article.new()

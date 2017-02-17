@@ -1,6 +1,6 @@
 require_relative './spec_helper'
 
-describe WulfApp do
+describe WulfApp, :integration do
     it "shows empty videos list" do
         visit "/en/"
     end
@@ -17,6 +17,7 @@ describe WulfApp do
         fill_in 'create-uri', with: '5kIe6UZHSXw'
         fill_in 'create-description', with: 'Testing description.'
         click_on 'Create'
+        expect(page).to have_content 'successfully saved to the database. Click to refresh.'
         visit "/en/"
         expect(page).to have_content 'Testing Title'
         visit "/en/videos"
@@ -35,6 +36,7 @@ describe WulfApp do
         fill_in 'edit-title', with: 'Testing Title Edited'
         fill_in 'edit-description', with: 'Testing description extended.'
         click_on 'Edit', match: :first
+        expect(page).to have_content 'successfully saved to the database. Click to refresh.'
         visit "/en/"
         expect(page).to have_content 'Testing Title Edited'
         visit "/en/videos"
@@ -51,6 +53,7 @@ describe WulfApp do
         end
         expect(page).to have_current_path "/en/author/videos"
         click_on 'Delete', match: :first
+        expect(page).to have_content 'successfully deleted from the database. Click to refresh.'
         visit "/en/"
         expect(page).to have_no_content 'Testing Title Edited'
         visit "/en/videos"

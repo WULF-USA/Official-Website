@@ -38,12 +38,23 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link rel="stylesheet" href="/src/css/site.css">
+    <script src="/src/js/jobtracking.min.js"></script>
   </head>
 
   <body>
+    <noscript>
+      <div>
+        <p>You currently have JavaScript disabled. Certain features of this site won't work without it.</p>
+      </div>
+    </noscript>
     ==yield
+    <div id="msgHolder">
+      - if flash[:pid] != nil
+        <div value="#{flash[:pid]}"></div>
+    </div>
     - flash.each do |key, value|
-      <script type="text/javascript">$.notify("#{value}", "#{key}");</script>
-    </script>
+      - unless !['pid'].include?(key)
+        javascript:
+          $.notify("#{value}", "#{key}");
   </body>
 </html>

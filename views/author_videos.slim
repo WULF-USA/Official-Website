@@ -44,8 +44,8 @@
                           </td>
                           <td><input type="text" name="uri" id="edit-uri" value="#{video.uri}" form="editForm#{video.id}" /></td>
                           <td><input type="text" name="description" id="edit-description" value="#{video.description}" form="editForm#{video.id}" /></td>
-                          <td>#{video.created_at}</td>
-                          <td>#{video.updated_at}</td>
+                          <td>#{l(video.created_at)}</td>
+                          <td>#{l(video.updated_at)}</td>
                           <td>
                               <input type="submit" name="operation" value="#{t.author.videos.actions.edit}" form="editForm#{video.id}"/><br>
                               <input type="submit" name="operation" value="#{t.author.videos.actions.delete}" form="deleteForm#{video.id}">
@@ -58,8 +58,8 @@
                           <td>#{video.host}</td>
                           <td>#{video.link}</td>
                           <td>#{video.description}</td>
-                          <td>#{video.created_at}</td>
-                          <td>#{video.updated_at}</td>
+                          <td>#{l(video.created_at)}</td>
+                          <td>#{l(video.updated_at)}</td>
                           <td></td>
                         </tr>
                 <tr>

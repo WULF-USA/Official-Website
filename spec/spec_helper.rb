@@ -1,11 +1,18 @@
 require 'capybara/dsl'
 require 'capybara/poltergeist'
+require 'rspec-benchmark'
 require 'simplecov'
 SimpleCov.start
 require_relative '../wulf_app.rb'
 
 Capybara.default_driver = :poltergeist
-Capybara.app = proc { |env| WulfApp.new.call(env) }
+if ENV['TEST_TYPE'] == 'performance'
+  Capybara.app_host = 'http://localhost:8080'
+  Capybara.run_server = false
+else
+  Capybara.app = proc { |env| WulfApp.new.call(env) }
+  Resque.inline = true
+end
 
 options = {js_errors: false}
 Capybara.register_driver :poltergeist do |app|
@@ -14,7 +21,7 @@ end
 
 RSpec.configure do |config|
   config.include Capybara::DSL
-  
+  config.include RSpec::Benchmark::Matchers
   config.after(:each) do
     page.driver.clear_cookies
   end

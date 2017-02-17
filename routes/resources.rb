@@ -12,6 +12,10 @@ module Routing
               ##
               # Resources listing of site.
               app.get '/:locale/resources' do
+                if params[:locale] == "author"
+                    forward_notifications!
+                    redirect "/#{locale?}/author/resources"
+                end
                 # Set locale
                 set_locale!
                 # Retrieve resource list.

@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'resque-status'
 
 module Routing
     module Blog

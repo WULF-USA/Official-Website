@@ -6,6 +6,10 @@ require 'rest-client'
 require 'sinatra/activerecord'
 require 'rack-flash'
 require 'action_view'
+require 'resque'
+require 'resque-status'
+require 'redis'
+require 'dalli'
 require 'sinatra/r18n'
 require 'sinatra/flash'
 require_relative './config/environments'
@@ -15,6 +19,7 @@ require_relative './models/articles'
 require_relative './models/resources'
 require_relative './models/videos'
 require_relative './routes/about'
+require_relative './routes/api_jobs'
 require_relative './routes/blog'
 require_relative './routes/errors'
 require_relative './routes/home'
@@ -40,6 +45,8 @@ class WulfApp < Sinatra::Base
   include Lib::Tracking
   include R18n::Helpers
   
+  #use ActiveRecord::QueryCache
+  
   R18n.default_places = './i18n/'
   
   enable :sessions
@@ -53,6 +60,7 @@ class WulfApp < Sinatra::Base
   set :root, File.dirname(__FILE__)
   
   register Routing::About
+  register Routing::API::Jobs
   register Routing::Blog
   register Routing::Errors
   register Routing::Home
@@ -67,4 +75,10 @@ class WulfApp < Sinatra::Base
   register Routing::Author::Traffic
   register Routing::Author::Users
   register Routing::Author::Videos
+  
+  configure do
+    #enable :logging
+    Resque.redis = ENV['REDIS_URL']
+    Resque::Plugins::Status::Hash.expire_in = (60 * 5) # 24hrs in seconds
+  end
 end
