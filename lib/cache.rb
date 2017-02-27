@@ -6,7 +6,7 @@ module Lib
     module Cache
         
         # Create a static Dalli object to handle Memcache connections.
-        DC = Dalli::Client.new(ENV['MEMCACHIER_SERVERS'], { :namespace => ENV['MEMCACHIER_NAMESPACE'], :compress => true })
+        DC = Dalli::Client.new(nil, { :namespace => ENV['MEMCACHIER_NAMESPACE'], :expires_in => 30.minutes, :compress => true })
         
         ##
         # Read a key from the cache.
