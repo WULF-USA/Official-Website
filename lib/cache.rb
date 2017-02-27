@@ -8,7 +8,7 @@ module Lib
         # Create a static Dalli object to handle Memcache connections.
         DC = Dalli::Client.new(ENV['MEMCACHIER_SERVERS'], {
             :expires_in => 30.minutes,
-            :compress => true
+            :compress => true,
             :namespace => ENV['MEMCACHIER_NAMESPACE'],
             :username => ENV['MEMCACHIER_USERNAME'],
             :password => ENV['MEMCACHIER_PASSWORD']})
