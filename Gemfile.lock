@@ -41,7 +41,7 @@ GEM
     codeclimate-test-reporter (1.0.6)
       simplecov
     coderay (1.1.1)
-    concurrent-ruby (1.0.4)
+    concurrent-ruby (1.0.5)
     cvss (0.99.0)
     dalli (2.7.6)
     data_mapper (1.2.0)
