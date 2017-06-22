@@ -50,3 +50,4 @@ group :test, :development do
     gem 'rubocop', require: false
     gem 'i18n-spec'
 end
+gem 'nokogiri', '>= 1.7.2'
